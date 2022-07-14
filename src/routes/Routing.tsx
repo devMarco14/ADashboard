@@ -1,7 +1,7 @@
 import LandingPage from 'pages/LandingPage';
 import NotFoundPage from 'pages/NotFoundPage';
 import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Path from './Path';
 
 function Routing() {
