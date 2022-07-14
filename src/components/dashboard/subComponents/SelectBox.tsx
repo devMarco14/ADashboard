@@ -1,40 +1,73 @@
 import React from 'react';
+import { format } from 'date-fns';
 import styled from 'styled-components';
 
 type SelectBoxPropsType = {
-  week: string;
+  week: string[];
+  weeksList: string[];
+  setWeek: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
-export default function SelectBox({ week }: SelectBoxPropsType) {
+const koreanFormat = 'yyyy년 MM월 dd일';
+
+export default function SelectBox({
+  week,
+  weeksList,
+  setWeek,
+}: SelectBoxPropsType) {
   const [isSelectBoxVisible, setIsSelectBoxVisible] =
     React.useState<boolean>(false);
 
   function handleClick(event: React.MouseEvent): void {
     setIsSelectBoxVisible(!isSelectBoxVisible);
   }
+
+  // function handleListClick(event: React.MouseEvent): void {
+  //   // setWeek()
+  //   const HTMLEventTarget = event.target as HTMLButtonElement;
+  //   setWeek(HTMLEventTarget.innerText);
+  // }
+
+  const formattedWeeks = weeksList.map(
+    (weekList: string | string[], index: number) => {
+      const [firstDate, lastDate] = weekList as string[];
+      return (
+        <li key={`${firstDate}_${index}`}>
+          <button onClick={() => setWeek(weekList as string[])} type="button">
+            {format(new Date(firstDate), koreanFormat)} ~{' '}
+            {format(new Date(lastDate), koreanFormat)}
+          </button>
+        </li>
+      );
+    },
+  );
+
   return (
     <SelectBoxLayout>
-      <span>{week}</span>
+      <span>
+        {format(new Date(week[0]), koreanFormat)} ~{' '}
+        {format(new Date(week[1]), koreanFormat)}
+      </span>
       <button type="button" onClick={handleClick}>
         ▽
       </button>
       <SelectItemsContainer isVisible={isSelectBoxVisible}>
-        <li>날짜 1</li>
-        <li>날짜 2</li>
-        <li>날짜 3</li>
-        <li>날짜 4</li>
-        <li>날짜 5</li>
+        {formattedWeeks}
       </SelectItemsContainer>
     </SelectBoxLayout>
   );
 }
 
 const SelectBoxLayout = styled.section`
-  width: 75px;
+  min-width: 75px;
+  width: max-content;
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: relative;
+  button {
+    margin-left: 5px;
+  }
 `;
 const SelectItemsContainer = styled.ul<{ isVisible: boolean }>`
   width: 100%;
