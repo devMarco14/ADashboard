@@ -1,3 +1,4 @@
+import AppHeader from 'components/header/AppHeader';
 import LandingPage from 'pages/LandingPage';
 import NotFoundPage from 'pages/NotFoundPage';
 import React from 'react';
@@ -8,7 +9,9 @@ function Routing() {
   return (
     <Routes>
       <Route path="*" element={<NotFoundPage />} />
-      <Route path={Path.LandingPage} element={<LandingPage />} />
+      <Route element={<AppHeader />}>
+        <Route path={Path.LandingPage} element={<LandingPage />} />
+      </Route>
     </Routes>
   );
 }
