@@ -1,3 +1,4 @@
+export type FontSizes = typeof fontSizes;
 const fontSizes = {
   xsmall: '10px',
   small: '12px',
@@ -7,6 +8,7 @@ const fontSizes = {
   xxlarge: '20px',
 };
 
+export type Colors = typeof colors;
 const colors = {
   backgroundColor: '#f6f7f9',
   whiteColor: '#fcfcfc',
@@ -22,6 +24,7 @@ export const mediaQuery = (maxWidth: number) => `
 @media (max-width: ${maxWidth}px)
 `;
 
+export type Media = typeof media;
 const media = {
   xxlarge: mediaQuery(2020),
   xlarge: mediaQuery(1640),
