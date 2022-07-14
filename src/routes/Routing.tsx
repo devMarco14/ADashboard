@@ -9,7 +9,9 @@ function Routing() {
   return (
     <Routes>
       <Route path="*" element={<NotFoundPage />} />
+
       <Route element={<AppHeader />}>
+        <Route path={Path.ADManagementPage} element={<LandingPage />} />
         <Route path={Path.LandingPage} element={<LandingPage />} />
       </Route>
     </Routes>
