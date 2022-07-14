@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { AiFillCaretLeft as ExitIcon } from 'react-icons/ai';
+import SideBarInner from './SideBarInner';
 
 interface MobileSideBarProps {
   isSideBar: boolean;
@@ -9,12 +11,14 @@ interface MobileSideBarProps {
 function MobileSideBar({ isSideBar, onToggleSideBar }: MobileSideBarProps) {
   return (
     <SideBarBlock>
-      <SideBarInner isSideBar={isSideBar}>
-        <button type="button" onClick={onToggleSideBar}>
-          asd
-        </button>
-      </SideBarInner>
-      <NavBackground isSideBar={isSideBar} onClick={onToggleSideBar} />
+      <InnerBox isSideBar={isSideBar}>
+        <DashBoardHeader>
+          <ExitIcon onClick={onToggleSideBar} size={18} />
+        </DashBoardHeader>
+
+        <SideBarInner />
+      </InnerBox>
+      <Background isSideBar={isSideBar} onClick={onToggleSideBar} />
     </SideBarBlock>
   );
 }
@@ -25,9 +29,17 @@ const SideBarBlock = styled.div`
     display: block;
   }
 `;
+const DashBoardHeader = styled.div`
+  height: 45px;
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  margin: 0 6px;
+  color: ${({ theme }) => theme.colors.fontColor};
+`;
 
-const SideBarInner = styled.div<{ isSideBar: boolean }>`
-  width: 200px;
+const InnerBox = styled.div<{ isSideBar: boolean }>`
+  width: 250px;
   position: fixed;
   height: 100vh;
   top: 0;
@@ -38,9 +50,10 @@ const SideBarInner = styled.div<{ isSideBar: boolean }>`
   background-color: ${({ theme }) => theme.colors.backgroundColor};
   transition: all 0.3s ease-in-out;
   transform: translateX(${({ isSideBar }) => (isSideBar ? 0 : -75)}vw);
+  box-shadow: 5px;
 `;
 
-const NavBackground = styled.div<{ isSideBar: boolean }>`
+const Background = styled.div<{ isSideBar: boolean }>`
   width: 100%;
   height: 100vh;
   background-color: black;
