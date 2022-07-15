@@ -1,12 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import StackedBarChart from './StackedBarChart';
+import TableChart from './TableChart';
 
 function MediaStatus() {
   return (
     <MediaStatusLayout>
       <Title>매체 현황</Title>
       <StackedBarChart />
+      <TableChart />
     </MediaStatusLayout>
   );
 }
