@@ -34,17 +34,17 @@ const AdManagement = styled.main`
 
 const AdManagementTitle = styled.div`
   width: 80%;
+  margin: 20px auto 0 auto;
   font-size: ${({ theme }) => theme.fontSizes.xxlarge};
   font-weight: bold;
-  margin: 20px auto 0 auto;
 `;
 
 const AdManagementSection = styled.section`
-  background-color: ${({ theme }) => theme.colors.whiteColor};
   width: 80%;
   height: 80%;
   margin: 40px auto;
   border-radius: 15px;
+  background-color: ${({ theme }) => theme.colors.whiteColor};
 `;
 
 const AdManagementHeader = styled.header`
@@ -53,7 +53,7 @@ const AdManagementHeader = styled.header`
   margin: 30px;
 `;
 
-const AdManagementButton = styled.div`
+const AdManagementButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;

@@ -45,23 +45,23 @@ function AdManagementArtcle() {
   ];
 
   return (
-    <AdArtcle>
+    <AdBox>
       <AdArtcleTitle>{`${data.adType}_${data.title}`}</AdArtcleTitle>
       {array.map((value, index) => (
         <Section key={index}>
-          <Category>{value.category}</Category>
-          <Value>{value.contents}</Value>
+          <AdCategory>{value.category}</AdCategory>
+          <AdContents>{value.contents}</AdContents>
         </Section>
       ))}
       <EditSection>
         <EditButton>수정하기</EditButton>
       </EditSection>
-    </AdArtcle>
+    </AdBox>
   );
 }
 
-const AdArtcle = styled.article`
-  width: 90%;
+const AdBox = styled.article`
+  width: 270px;
   margin: 0 auto 10px auto;
   border: 1px solid ${({ theme }) => theme.colors.lightGrayColor};
   border-radius: 5px;
@@ -84,17 +84,15 @@ const Section = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors.lightGrayColor};
 `;
 
-const Category = styled.span`
+const AdCategory = styled.span`
   flex: 1;
   margin: 10px 0;
   font-size: ${({ theme }) => theme.fontSizes.medium};
   color: ${({ theme }) => theme.colors.lightGrayColor};
 `;
 
-const Value = styled.span`
+const AdContents = styled(AdCategory)`
   flex: 2;
-  margin: 10px 0;
-  font-size: ${({ theme }) => theme.fontSizes.medium};
   color: ${({ theme }) => theme.colors.fontColor};
 `;
 
@@ -103,7 +101,7 @@ const EditSection = styled.div`
   margin: 20px auto;
 `;
 
-const EditButton = styled.div`
+const EditButton = styled.button`
   display: flex;
   justify-content: center;
   width: 100px;
