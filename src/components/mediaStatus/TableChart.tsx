@@ -5,7 +5,7 @@ function TableChart() {
   return (
     <TableLayout>
       <Table>
-        <TableHeader>
+        <thead>
           <tr>
             <th className="col flatform" aria-label="플랫폼" />
             <th className="col" scope="col">
@@ -29,8 +29,11 @@ function TableChart() {
             <th className="col" scope="col">
               클릭당 비용(CTC)
             </th>
+            <th className="col" scope="col">
+              전환당 비용(CPA)
+            </th>
           </tr>
-        </TableHeader>
+        </thead>
         <tbody>
           <tr>
             <th className="flatform row" scope="row">
@@ -47,6 +50,12 @@ function TableChart() {
           <tr>
             <th className="flatform row" scope="row">
               구글
+            </th>
+            <td>123</td>
+          </tr>
+          <tr>
+            <th className="flatform row" scope="row">
+              카카오
             </th>
             <td>123</td>
           </tr>
@@ -78,7 +87,7 @@ const Table = styled.table`
   flex-direction: column;
   & th,
   & td {
-    min-width: 100px;
+    min-width: 125px;
     border-bottom: 1px solid ${({ theme }) => theme.colors.lightGrayColor};
     padding: 12px;
     text-align: right;
@@ -95,9 +104,4 @@ const Table = styled.table`
   & .total {
     color: ${({ theme }) => theme.colors.blueColor};
   }
-`;
-
-const TableHeader = styled.thead`
-  display: flex;
-  justify-content: space-between;
 `;

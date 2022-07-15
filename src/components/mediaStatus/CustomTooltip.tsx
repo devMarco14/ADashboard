@@ -16,6 +16,7 @@ function CustomTooltip({ active, payload }: any) {
 export default CustomTooltip;
 
 const ToolTip = styled.strong`
+  position: relative;
   display: block;
   padding: 16px 32px;
   border-radius: 8px;
