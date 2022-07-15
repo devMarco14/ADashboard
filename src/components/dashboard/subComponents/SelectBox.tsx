@@ -1,6 +1,7 @@
 import React from 'react';
 import { format } from 'date-fns';
 import styled from 'styled-components';
+import { WeekContext } from 'libs/context';
 
 // 데이터 표시 + 컨텍스트 저장을 위해 week, setWeek 전달
 // weeksList는 DashboardLayout의 totalWeeks로, 드롭다운 목록을 표시하기 위함임
@@ -19,6 +20,12 @@ export default function SelectBox({
 }: SelectBoxPropsType) {
   const [isSelectBoxVisible, setIsSelectBoxVisible] =
     React.useState<boolean>(false);
+
+  const { currentWeek, changeWeek } = React.useContext(WeekContext);
+
+  React.useEffect(() => {
+    changeWeek({ type: 'WEEK_REQUESTED', payload: week });
+  }, [week]);
 
   function handleClick(event: React.MouseEvent): void {
     setIsSelectBoxVisible(!isSelectBoxVisible);

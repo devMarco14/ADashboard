@@ -3,6 +3,7 @@ import axios from 'axios';
 import { getDay, addDays, format } from 'date-fns';
 import styled from 'styled-components';
 import SelectBox from './subComponents/SelectBox';
+import Test from './subComponents/Test';
 
 const dateFormat = 'yyyy-MM-dd';
 
@@ -74,6 +75,7 @@ export default function DashboardLayout() {
     <ChangeOrDeleteThisLater>
       <DashboardHeader>대시보드</DashboardHeader>
       <SelectBox week={week} weeksList={totalWeeks} setWeek={setWeek} />
+      <Test />
     </ChangeOrDeleteThisLater>
   );
 }
