@@ -100,12 +100,18 @@ type PositionData = {
 function StackedBarChart() {
   // 차트의 말풍선 position을 고정하기 위해 state를 사용
   const [positionData, setPositionData] = useState<PositionData>({});
-  console.log(positionData);
+
+  // bar에 마우스가 올라오면 말풍선의 위치를 변경하기 위해 Position 상태를 업데이트 한다
+  // 말풍선의 y축 위치는 고정하고, x만 변경한다
+  // 이 때 렌더링 최적화를 위해, 현재 x와 이전 x(positionData.x)를 비교하고, 상태가 같지 않을 때에만 업데이트를 한다
+  const changeTooltipPosition = (positionX: number): void => {
+    positionX !== positionData.x && setPositionData({ x: positionX, y: 5 });
+  };
 
   return (
     <ChartLayout
-      width="50%"
-      minWidth="400px"
+      width="90%"
+      minWidth="320px"
       height="40%"
       minHeight="300px"
       // debounce={1} 옵션을 주면
@@ -128,7 +134,6 @@ function StackedBarChart() {
 
         <XAxis
           dataKey="name"
-          // fill 색상을 ${({ theme }) => theme.colors.whiteColor}로 주면 에러가 난다
           tick={{ fill: '#c8ced8' }}
           tickLine={{ fill: '#c8ced8' }}
         />
@@ -148,7 +153,7 @@ function StackedBarChart() {
           // 이것도 커스텀 할 수 있어서 바꿀 예정
           cursor={false}
           // position 속성을 주지 않으면, 말풍선이 마우스를 졸졸 따라온다
-          position={{ x: positionData?.x, y: positionData.y }}
+          position={{ x: positionData.x, y: positionData.y }}
         />
         <Bar
           barSize={30}
@@ -159,21 +164,14 @@ function StackedBarChart() {
           // onMouseOver에 함수를 전달하면, bar에 마우스가 올라왔을 때 그 함수를 실행할 수 있다
           // 이 함수는 recharts에 의해 자동으로 data라는 객체 인자를 전달받는다
           // data에는 마우스의 위치를 알려주는 x, y와 같은 값이 들어있다
-          // bar에 마우스가 올라오면 말풍선의 위치를 변경하기 위해 Position 상태를 업데이트 한다
-          // 말풍선의 y축 위치는 고정하고, x만 변경한다
-          // 이 때 렌더링 최적화를 위해, 현재 x와 이전 x(positionData.x)를 비교하고, 상태가 같지 않을 때에만 업데이트를 한다
-          onMouseOver={({ x }) => {
-            x !== positionData.x && setPositionData({ x, y: 5 });
-          }}
+          onMouseOver={({ x }) => changeTooltipPosition(x)}
         />
         <Bar
           barSize={30}
           dataKey="uv"
           stackId="a"
           fill="#85da47"
-          onMouseOver={({ x }) => {
-            x !== positionData.x && setPositionData({ x, y: 5 });
-          }}
+          onMouseOver={({ x }) => changeTooltipPosition(x)}
         />
         <Bar
           barSize={30}
@@ -181,9 +179,7 @@ function StackedBarChart() {
           stackId="a"
           fill="#4fadf7"
           radius={[6, 6, 0, 0]}
-          onMouseOver={({ x }) => {
-            x !== positionData.x && setPositionData({ x, y: 5 });
-          }}
+          onMouseOver={({ x }) => changeTooltipPosition(x)}
         />
         <Legend align="right" iconType="circle" iconSize={10} />
       </BarChart>
@@ -194,6 +190,7 @@ function StackedBarChart() {
 const ChartLayout = styled(ResponsiveContainer)`
   background-color: ${({ theme }) => theme.colors.whiteColor};
   border-radius: 8px;
+  margin: 0 auto 16px;
 `;
 
 export default StackedBarChart;
