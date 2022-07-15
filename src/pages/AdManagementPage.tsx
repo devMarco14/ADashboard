@@ -1,11 +1,14 @@
 import AdManagementArtcle from 'components/adManagement/AdManagementArticle';
+import useAdLoad from 'components/adManagement/hooks/useAdLoad';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
 function AdManagementPage() {
   const [selectedAd, setSelectedAd] = useState<number | null>(null);
   /* 추 후 수정되고 있는 섹션의 보더를 변경 */
-
+  const { adData } = useAdLoad();
+  console.log(adData);
+  const { ads } = adData;
   return (
     <AdManagement>
       <AdManagementTitle>광고관리</AdManagementTitle>
@@ -15,10 +18,9 @@ function AdManagementPage() {
           <AdManagementButton>광고 만들기</AdManagementButton>
         </AdManagementHeader>
         <AdManagementArticle>
-          <AdManagementArtcle />
-          <AdManagementArtcle />
-          <AdManagementArtcle />
-          <AdManagementArtcle />
+          {ads.map((ad, index) => (
+            <AdManagementArtcle key={ad.id} ad={ad} />
+          ))}
         </AdManagementArticle>
       </AdManagementSection>
     </AdManagement>
@@ -28,7 +30,6 @@ function AdManagementPage() {
 const AdManagement = styled.main`
   display: flex;
   flex-direction: column;
-  width: 100vw;
   background-color: ${({ theme }) => theme.colors.backgroundColor};
 `;
 
@@ -40,8 +41,7 @@ const AdManagementTitle = styled.div`
 `;
 
 const AdManagementSection = styled.section`
-  width: 80%;
-  height: 80%;
+  width: 90%;
   margin: 40px auto;
   border-radius: 15px;
   background-color: ${({ theme }) => theme.colors.whiteColor};
@@ -71,7 +71,7 @@ const AdManagementArticle = styled.article`
   justify-content: space-between;
   margin: 30px 15px;
   grid-template-columns: repeat(3, 1fr);
-  ${({ theme }) => theme.media.medium} {
+  ${({ theme }) => theme.media.large} {
     grid-template-columns: repeat(2, 1fr);
   }
   ${({ theme }) => theme.media.xsmall} {
