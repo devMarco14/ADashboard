@@ -1,7 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import { AdsData } from 'types/ad';
 
-function AdManagementArtcle() {
+interface AdArtcleProps {
+  ad: AdsData;
+}
+
+function AdManagementArtcle({ ad }: AdArtcleProps) {
+  const { adType, budget, endDate, id } = ad;
   const data = {
     id: 1,
     adType: 'web',
