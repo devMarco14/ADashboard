@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { ReportData } from 'types/dashboard';
 import WeekProvider from 'libs/context';
-import { INITIAL_WEEK_STATE } from 'libs/utils/constants';
 import useFormatize from './hooks/useFormatize';
 import useReportLoad from './hooks/useReportLoad';
 import SelectBox from './subComponents/SelectBox';
@@ -21,6 +20,7 @@ export default function DashboardLayout() {
       <DashboardContainer>
         <DashboardHeaderBox>
           <DashboardHeader>대시보드</DashboardHeader>
+          {/* 전체 Week 리스트 셀렉트 박스로 전달 */}
           <SelectBox weeksList={processedWeeks} />
         </DashboardHeaderBox>
         <Test />

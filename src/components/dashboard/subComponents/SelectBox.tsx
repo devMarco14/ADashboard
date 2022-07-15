@@ -6,26 +6,31 @@ import { formatize } from 'components/dashboard/util';
 import { INITIAL_WEEK_STATE } from 'libs/utils/constants';
 import WeekList from './WeekList';
 
-// 데이터 표시 + 컨텍스트 저장을 위해 week, setWeek 전달
-// weeksList는 DashboardLayout의 totalWeeks로, 드롭다운 목록을 표시하기 위함임
+// weeksList는 DashboardLayout의 totalWeeks로, 드롭다운 목록을 표시 + 컨텍스트에 업데이트하기 위함임
 export default function SelectBox({ weeksList }: { weeksList: string[][] }) {
+  // 현재 선택된 주
   const [selectedWeek, setSelectedWeek] =
     React.useState<string[]>(INITIAL_WEEK_STATE);
+  // 드롭다운 메뉴 표시용
   const [isSelectBoxVisible, setIsSelectBoxVisible] =
     React.useState<boolean>(false);
 
+  // 컨텍스트를 업데이트하는 dispatch 함수
   const { changeWeek } = React.useContext(WeekContext);
 
+  // 서버에서 받은 데이터를 가공해 Week 리스트를 얻으면 selectedWeek를 갱신
   React.useEffect(() => {
     if (weeksList[0]) {
       setSelectedWeek(weeksList[0]);
     }
   }, [weeksList]);
 
+  // 드롭다운 메뉴에서 선택한 주를 selectedWeek로 갱신
   React.useEffect(() => {
     changeWeek({ type: 'WEEK_REQUESTED', payload: selectedWeek });
   }, [selectedWeek]);
 
+  // 셀렉트 박스 혹은 드롭다운 메뉴 아이템을 클릭할 경우 목록을 숨김
   const onClick = React.useCallback(handleClick, [isSelectBoxVisible]);
 
   function handleClick(event: React.MouseEvent): void {

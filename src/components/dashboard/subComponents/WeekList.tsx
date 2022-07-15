@@ -2,7 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { WeekListPropsType } from 'types/dashboard';
 import { formatize } from 'components/dashboard/util';
+import { BASIC_SCROLL_TIMER } from 'libs/utils/constants';
 
+// 스크롤 감지에 사용되는 setTimeout 타입
 type Timeout = ReturnType<typeof setTimeout>;
 
 export default function WeekList({
@@ -11,14 +13,17 @@ export default function WeekList({
   isVisible,
   onClick,
 }: WeekListPropsType) {
+  // 스크롤 발생 여부를 감지하는 state - 스크롤이 가능하다는 것을 알리기 위해 기본값을 true로 설정
   const [isScrollCaptured, setIsScrollCaptured] = React.useState<boolean>(true);
 
+  // 스크롤이 발생할 경우 isScrollCaptured를 true로 설정
   const onScrollCapture = React.useCallback(handleScrollCapture, []);
 
   function handleScrollCapture(event: React.SyntheticEvent): void {
     setIsScrollCaptured(true);
   }
 
+  // 스크롤을 마친 뒤 일정 시간 후에 스크롤 바를 숨기기 위한 핸들러
   const onScroll = React.useCallback(handleScroll, []);
 
   const timer = React.useRef<Timeout | null>(null);
@@ -28,19 +33,24 @@ export default function WeekList({
     }
     timer.current = setTimeout(() => {
       setIsScrollCaptured(false);
-    }, 500);
+    }, BASIC_SCROLL_TIMER);
   }
 
+  // 리스트 아이템을 클릭하면 목록을 닫음
   function handleClick(event: React.SyntheticEvent): void {
     onClick(!isVisible);
   }
 
+  // 리스트 아이템 목록이 드러나면 일정 시간 후 스크롤 바를 숨김 - 스크롤이 가능하다는 것을 알리기 위함
   React.useEffect(() => {
-    let foo: Timeout | null = null;
+    let scrollTimer: Timeout | null = null;
     if (isVisible) {
-      foo = setTimeout(() => setIsScrollCaptured(false), 500);
+      scrollTimer = setTimeout(
+        () => setIsScrollCaptured(false),
+        BASIC_SCROLL_TIMER,
+      );
     }
-    return () => clearTimeout(foo as Timeout);
+    return () => clearTimeout(scrollTimer as Timeout);
   }, [isVisible]);
 
   // 전체 주 목록을 li로 표시, 각 목록을 누를 경우 컨텍스트에 저장될 week state 갱신

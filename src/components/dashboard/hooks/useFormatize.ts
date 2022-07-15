@@ -4,8 +4,10 @@ import { ReportData } from 'types/dashboard';
 import { COMMON_DATE_FORMAT } from 'libs/utils/constants';
 
 export default function useFormatize(totalDays: ReportData[]) {
+  // 가공 후 반환할 Week 데이터를 저장하기 위한 state
   const [processedWeeks, setProcessedWeeks] = React.useState<string[][]>([]);
 
+  // Date 객체를 yyyy-MM-dd 포맷 문자열을 저장하는 배열로 변환하는 함수
   const processDatesToWeeks = (date: string): string[] => {
     const firstDate = new Date(date);
     const firstDateDay = getDay(firstDate);
@@ -15,6 +17,7 @@ export default function useFormatize(totalDays: ReportData[]) {
     return [date, formattedLast];
   };
 
+  // 전체 데이터(totalDays)에서 날짜 정보만 추출해 [첫째날, 마지막날] 배열로 변환
   React.useEffect(() => {
     if (totalDays) {
       // 받아온 데이터에서 date만 추출
