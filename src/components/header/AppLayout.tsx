@@ -5,7 +5,7 @@ import MobileSideBar from './MobileSideBar';
 import WebSideBar from './WebSideBar';
 import Header from './Header';
 
-function AppHeader() {
+function AppLayout() {
   const [isSideBar, onToggleSideBar] = useToggle(false);
   return (
     <HeaderLayout>
@@ -20,4 +20,4 @@ const HeaderLayout = styled.article`
   display: flex;
 `;
 
-export default AppHeader;
+export default AppLayout;
