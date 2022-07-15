@@ -32,6 +32,9 @@ function TableChart() {
             <th className="col" scope="col">
               전환당 비용 <br /> (CPA)
             </th>
+            <th className="col" scope="col">
+              전환당 비용(CPA)
+            </th>
           </tr>
         </thead>
         <tbody>
