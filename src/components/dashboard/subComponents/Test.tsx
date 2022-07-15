@@ -1,9 +1,8 @@
 import React from 'react';
 import { WeekContext } from 'libs/context';
-import axios from 'axios';
 import styled from 'styled-components';
-
-const initialValue = '1900-01-01';
+import useMediaLoad from '../hooks/useMediaLoad';
+import useReportLoad from '../hooks/useReportLoad';
 
 /*
   대시보드 내 컴포넌트 자리를 표시하기 위해 만든 테스트용 컴포넌트
@@ -11,18 +10,31 @@ const initialValue = '1900-01-01';
 */
 
 export default function Test() {
+  // 컨텍스트에서 currentWeek 호출
   const { currentWeek } = React.useContext(WeekContext);
 
+  // ReportData 예시: 파라미터를 전달할 경우 특정 기간 동안의 데이터만 반환
+  const { totalDataContainingDates: reportData } = useReportLoad(
+    currentWeek[0],
+    currentWeek[1],
+  );
   React.useEffect(() => {
-    if (currentWeek[0] && currentWeek[0] !== initialValue) {
-      // 데이터 요청 양식
-      axios
-        .get(
-          `http://localhost:8080/report?date_gte=${currentWeek[0]}&date_lte=${currentWeek[1]}`,
-        )
-        .then((res) => console.log(res.data));
+    if (reportData) {
+      console.log(reportData);
     }
-  }, [currentWeek]);
+  }, [reportData]);
+
+  // MediaData 예시: 파라미터를 전달해야 데이터가 반환됨
+  const { totalDataContainingDates: mediaData } = useMediaLoad(
+    currentWeek[0],
+    currentWeek[1],
+  );
+  React.useEffect(() => {
+    if (mediaData) {
+      // 데이터 요청 양식
+      console.log(mediaData);
+    }
+  }, [mediaData]);
 
   return (
     <ChangeOrDeleteThisLater>

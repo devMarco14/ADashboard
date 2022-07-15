@@ -12,6 +12,20 @@ export interface ReportData {
   date: string;
 }
 
+export interface MediaData {
+  channel: string;
+  date: string;
+  imp: number;
+  click: number;
+  cost: number;
+  convValue: number;
+  ctr: number;
+  cvr: number;
+  cpc: number;
+  cpa: number;
+  roas: number;
+}
+
 export interface WeekListPropsType {
   weeksList: string[][];
   setWeek: React.Dispatch<React.SetStateAction<string[]>>;
