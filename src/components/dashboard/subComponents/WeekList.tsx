@@ -8,6 +8,7 @@ type OmitSelectBoxPropsType = Omit<SelectBoxPropsType, 'week'>;
 // &: Intersection 타입 - &으로 묶인 타입들의 속성을 동시에 보유
 type WeekListPropsType = OmitSelectBoxPropsType & {
   isVisible: boolean;
+  onClick: any;
 };
 type Timeout = ReturnType<typeof setTimeout>;
 
@@ -15,6 +16,7 @@ export default function WeekList({
   weeksList,
   setWeek,
   isVisible,
+  onClick,
 }: WeekListPropsType) {
   const [isScrollCaptured, setIsScrollCaptured] = React.useState<boolean>(true);
 
@@ -36,6 +38,10 @@ export default function WeekList({
     }, 500);
   }
 
+  function handleClick(event: React.SyntheticEvent): void {
+    onClick(!isVisible);
+  }
+
   React.useEffect(() => {
     let foo: Timeout | null = null;
     if (isVisible) {
@@ -49,7 +55,8 @@ export default function WeekList({
     (weekList: string | string[], index: number) => {
       const [firstDate, lastDate] = weekList as string[];
       return (
-        <li key={`${firstDate}_${index}`}>
+        // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+        <li key={`${firstDate}_${index}`} onClick={handleClick}>
           {/* 화살표 함수 외에 다른 방법이 있으면 추천좀... */}
           <button onClick={() => setWeek(weekList as string[])} type="button">
             {formatize(firstDate, lastDate)}

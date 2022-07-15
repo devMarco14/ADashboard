@@ -42,6 +42,7 @@ export default function SelectBox({
         weeksList={weeksList}
         setWeek={setWeek}
         isVisible={isSelectBoxVisible}
+        onClick={onClick}
       />
     </SelectBoxLayout>
   );
