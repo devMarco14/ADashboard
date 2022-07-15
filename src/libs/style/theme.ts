@@ -15,7 +15,7 @@ const colors = {
   blueColor: '#596cf6',
   lightBlueColor: '#878fc4',
   fontColor: '#595f62',
-  lightGrayColor: '#878fc4',
+  lightGrayColor: '#c8ced8',
   redColor: '#ea3a4a',
   greenColor: '#85da47',
 };
