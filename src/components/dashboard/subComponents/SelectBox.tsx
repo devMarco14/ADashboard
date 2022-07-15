@@ -1,18 +1,12 @@
 import React from 'react';
 import { format } from 'date-fns';
 import styled from 'styled-components';
+import { SelectBoxPropsType } from 'types/dashboard';
 import { WeekContext } from 'libs/context';
+import { KOREAN_DATE_FORMAT } from 'libs/utils/constants';
 
 // 데이터 표시 + 컨텍스트 저장을 위해 week, setWeek 전달
 // weeksList는 DashboardLayout의 totalWeeks로, 드롭다운 목록을 표시하기 위함임
-type SelectBoxPropsType = {
-  week: string[];
-  weeksList: string[];
-  setWeek: React.Dispatch<React.SetStateAction<string[]>>;
-};
-
-const koreanFormat = 'yyyy년 MM월 dd일';
-
 export default function SelectBox({
   week,
   weeksList,
@@ -21,7 +15,7 @@ export default function SelectBox({
   const [isSelectBoxVisible, setIsSelectBoxVisible] =
     React.useState<boolean>(false);
 
-  const { currentWeek, changeWeek } = React.useContext(WeekContext);
+  const { changeWeek } = React.useContext(WeekContext);
 
   React.useEffect(() => {
     changeWeek({ type: 'WEEK_REQUESTED', payload: week });
@@ -31,12 +25,6 @@ export default function SelectBox({
     setIsSelectBoxVisible(!isSelectBoxVisible);
   }
 
-  // function handleListClick(event: React.MouseEvent): void {
-  //   // setWeek()
-  //   const HTMLEventTarget = event.target as HTMLButtonElement;
-  //   setWeek(HTMLEventTarget.innerText);
-  // }
-
   // 전체 주 목록을 li로 표시, 각 목록을 누를 경우 컨텍스트에 저장될 week state 갱신
   const formattedWeeks = weeksList.map(
     (weekList: string | string[], index: number) => {
@@ -45,8 +33,8 @@ export default function SelectBox({
         <li key={`${firstDate}_${index}`}>
           {/* 화살표 함수 외에 다른 방법이 있으면 추천좀... */}
           <button onClick={() => setWeek(weekList as string[])} type="button">
-            {format(new Date(firstDate), koreanFormat)} ~{' '}
-            {format(new Date(lastDate), koreanFormat)}
+            {format(new Date(firstDate), KOREAN_DATE_FORMAT)} ~{' '}
+            {format(new Date(lastDate), KOREAN_DATE_FORMAT)}
           </button>
         </li>
       );
@@ -57,8 +45,8 @@ export default function SelectBox({
     <SelectBoxLayout>
       {/* [첫째날, 마지막날] 형태의 데이터를 2022년 2월 1일 ~ 2022년 2월 5일 형태로 변환 */}
       <span>
-        {format(new Date(week[0]), koreanFormat)} ~{' '}
-        {format(new Date(week[1]), koreanFormat)}
+        {format(new Date(week[0]), KOREAN_DATE_FORMAT)} ~{' '}
+        {format(new Date(week[1]), KOREAN_DATE_FORMAT)}
       </span>
       <button type="button" onClick={handleClick}>
         ▽
