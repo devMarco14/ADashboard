@@ -12,8 +12,9 @@ export interface ReportData {
   date: string;
 }
 
-export interface SelectBoxPropsType {
-  week: string[];
+export interface WeekListPropsType {
   weeksList: string[][];
   setWeek: React.Dispatch<React.SetStateAction<string[]>>;
+  isVisible: boolean;
+  onClick: (event: MouseEvent<Element, MouseEvent>) => void;
 }

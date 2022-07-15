@@ -9,8 +9,6 @@ import SelectBox from './subComponents/SelectBox';
 import Test from './subComponents/Test';
 
 export default function DashboardLayout() {
-  // 셀렉트 박스 표시 데이터 + 컨텍스트 저장 데이터
-  const [week, setWeek] = React.useState<string[]>(INITIAL_WEEK_STATE);
   // get 요청으로 받아온 전체 데이터 저장
   const { totalDataContainingDates } = useReportLoad();
   // 추출된 date를 dateFormat 형태로 가공한 데이터 저장
@@ -18,18 +16,12 @@ export default function DashboardLayout() {
     totalDataContainingDates as ReportData[],
   );
 
-  React.useEffect(() => {
-    if (processedWeeks[0]) {
-      setWeek(processedWeeks[0]);
-    }
-  }, [processedWeeks]);
-
   return (
     <WeekProvider>
       <DashboardContainer>
         <DashboardHeaderBox>
           <DashboardHeader>대시보드</DashboardHeader>
-          <SelectBox week={week} weeksList={processedWeeks} setWeek={setWeek} />
+          <SelectBox weeksList={processedWeeks} />
         </DashboardHeaderBox>
         <Test />
         <Test />

@@ -1,15 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { SelectBoxPropsType } from 'types/dashboard';
+import { WeekListPropsType } from 'types/dashboard';
 import { formatize } from 'components/dashboard/util';
 
-// Omit<원본 타입(인터페이스), 뺄 속성>: 원본 타입 혹은 인터페이스에서 특정 속성만 빼고 상속
-type OmitSelectBoxPropsType = Omit<SelectBoxPropsType, 'week'>;
-// &: Intersection 타입 - &으로 묶인 타입들의 속성을 동시에 보유
-type WeekListPropsType = OmitSelectBoxPropsType & {
-  isVisible: boolean;
-  onClick: any;
-};
 type Timeout = ReturnType<typeof setTimeout>;
 
 export default function WeekList({
