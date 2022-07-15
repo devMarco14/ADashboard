@@ -24,13 +24,13 @@ function TableChart() {
               클릭수
             </th>
             <th className="col" scope="col">
-              클릭률 (CTR)
+              클릭률 <br /> (CTR)
             </th>
             <th className="col" scope="col">
-              클릭당 비용(CTC)
+              클릭당 비용 <br /> (CTC)
             </th>
             <th className="col" scope="col">
-              전환당 비용(CPA)
+              전환당 비용 <br /> (CPA)
             </th>
           </tr>
         </thead>
