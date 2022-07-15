@@ -1,3 +1,4 @@
+import AdManagementPage from 'pages/AdManagementPage';
 import LandingPage from 'pages/LandingPage';
 import NotFoundPage from 'pages/NotFoundPage';
 import React from 'react';
@@ -9,6 +10,7 @@ function Routing() {
     <Routes>
       <Route path="*" element={<NotFoundPage />} />
       <Route path={Path.LandingPage} element={<LandingPage />} />
+      <Route path={Path.AdManagementPage} element={<AdManagementPage />} />
     </Routes>
   );
 }
