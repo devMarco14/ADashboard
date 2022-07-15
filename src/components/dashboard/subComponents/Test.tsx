@@ -1,6 +1,7 @@
 import React from 'react';
 import { WeekContext } from 'libs/context';
 import axios from 'axios';
+import styled from 'styled-components';
 
 const initialValue = '1900-01-01';
 
@@ -17,5 +18,21 @@ export default function Test() {
     }
   }, [currentWeek]);
 
-  return <h1>{currentWeek}</h1>;
+  return (
+    <ChangeOrDeleteThisLater>
+      <h1>
+        _gte={currentWeek[0]} & _lte={currentWeek[1]}
+      </h1>
+    </ChangeOrDeleteThisLater>
+  );
 }
+
+const ChangeOrDeleteThisLater = styled.div`
+  margin-bottom: 50px;
+  background-color: ${({ theme }) => theme.colors.whiteColor};
+  width: 50%;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;

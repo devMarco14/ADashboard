@@ -1,10 +1,9 @@
 import React from 'react';
-import { format } from 'date-fns';
 import styled from 'styled-components';
+import { BsChevronDown } from 'react-icons/bs';
 import { SelectBoxPropsType } from 'types/dashboard';
 import { WeekContext } from 'libs/context';
-import { KOREAN_DATE_FORMAT } from 'libs/utils/constants';
-import { formatize } from 'components/dashboard/util/formatize';
+import { formatize } from 'components/dashboard/util';
 import WeekList from './WeekList';
 
 // 데이터 표시 + 컨텍스트 저장을 위해 week, setWeek 전달
@@ -23,6 +22,8 @@ export default function SelectBox({
     changeWeek({ type: 'WEEK_REQUESTED', payload: week });
   }, [week]);
 
+  const onClick = React.useCallback(handleClick, [isSelectBoxVisible]);
+
   function handleClick(event: React.MouseEvent): void {
     setIsSelectBoxVisible(!isSelectBoxVisible);
   }
@@ -30,10 +31,12 @@ export default function SelectBox({
   return (
     <SelectBoxLayout>
       {/* [첫째날, 마지막날] 형태의 데이터를 2022년 2월 1일 ~ 2022년 2월 5일 형태로 변환 */}
-      <span>{formatize(week[0], week[1])}</span>
-      <button type="button" onClick={handleClick}>
-        ▽
-      </button>
+      <SelectedWeek onClick={onClick}>
+        <strong>{formatize(week[0], week[1])}</strong>
+        <button type="button">
+          <BsChevronDown />
+        </button>
+      </SelectedWeek>
       {/* isSelectBoxVisible은 드롭다운 목록을 표시/숨기는 state, 위 버튼에서 조절함 */}
       <WeekList
         weeksList={weeksList}
@@ -47,11 +50,23 @@ export default function SelectBox({
 const SelectBoxLayout = styled.section`
   min-width: 75px;
   width: max-content;
+  height: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   position: relative;
-  button {
-    margin-left: 5px;
+  strong {
+    min-width: 235px;
   }
+  button {
+    margin-left: 10px;
+    padding-top: 5px;
+  }
+`;
+const SelectedWeek = styled.section`
+  width: max-content;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  cursor: pointer;
 `;

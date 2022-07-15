@@ -26,24 +26,32 @@ export default function DashboardLayout() {
 
   return (
     <WeekProvider>
-      <ChangeOrDeleteThisLater>
-        <DashboardHeader>대시보드</DashboardHeader>
-        <SelectBox week={week} weeksList={processedWeeks} setWeek={setWeek} />
+      <DashboardContainer>
+        <DashboardHeaderBox>
+          <DashboardHeader>대시보드</DashboardHeader>
+          <SelectBox week={week} weeksList={processedWeeks} setWeek={setWeek} />
+        </DashboardHeaderBox>
         <Test />
-      </ChangeOrDeleteThisLater>
+        <Test />
+      </DashboardContainer>
     </WeekProvider>
   );
 }
 
-const ChangeOrDeleteThisLater = styled.article`
+const DashboardContainer = styled.article`
+  padding: 30px;
   width: 100vw;
   height: 100vh;
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: column;
   align-items: center;
-  * {
-    border: 1px solid black;
-  }
+  background-color: ${({ theme }) => theme.colors.backgroundColor};
+`;
+const DashboardHeaderBox = styled.section`
+  margin-bottom: 50px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 `;
 const DashboardHeader = styled.h1`
   font-size: calc(${({ theme }) => theme.fontSizes.xxlarge} * 1.5);
