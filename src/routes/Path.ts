@@ -1,8 +1,6 @@
 enum Path {
   LandingPage = '/',
-
-  LandingPage2 = '/asd',
-  AdManagementPage = '/admanagementpage',
+  ADManagementPage = '/admanage',
 }
 
 export default Path;
