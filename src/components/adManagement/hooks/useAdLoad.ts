@@ -1,5 +1,5 @@
 import { getTotalAdAPI } from 'libs/api/adAPI';
-import { Ads } from 'types/ad';
+import { AdsData } from 'types/ad';
 import { useEffect, useState } from 'react';
 import { INITIAL_AD_DATA } from 'libs/utils/initalDatas';
 
@@ -7,7 +7,7 @@ import { INITIAL_AD_DATA } from 'libs/utils/initalDatas';
  * @decoration 이건 ad를 불러오는 훅 입니다.
  */
 const useAdLoad = () => {
-  const [adData, setAdData] = useState<Ads>(INITIAL_AD_DATA);
+  const [adData, setAdData] = useState<AdsData[]>(INITIAL_AD_DATA);
 
   // useEffect로 첫 렌더링때 data를 adData에 보관
   useEffect(() => {

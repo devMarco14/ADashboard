@@ -7,8 +7,6 @@ function AdManagementPage() {
   const [selectedAd, setSelectedAd] = useState<number | null>(null);
   /* 추 후 수정되고 있는 섹션의 보더를 변경 */
   const { adData } = useAdLoad();
-  console.log(adData);
-  const { ads } = adData;
   return (
     <AdManagement>
       <AdManagementTitle>광고관리</AdManagementTitle>
@@ -18,8 +16,8 @@ function AdManagementPage() {
           <AdManagementButton>광고 만들기</AdManagementButton>
         </AdManagementHeader>
         <AdManagementArticle>
-          {ads.map((ad, index) => (
-            <AdManagementArtcle key={ad.id} ad={ad} />
+          {adData.map((item) => (
+            <AdManagementArtcle key={item.id} ad={item} />
           ))}
         </AdManagementArticle>
       </AdManagementSection>
