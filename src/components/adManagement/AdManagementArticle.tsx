@@ -1,66 +1,98 @@
+import useToggle from 'hooks/useToggle';
+import { FlexAround, FlexCenter } from 'libs/style/commonStyles';
 import React from 'react';
 import styled from 'styled-components';
 import { AdsData } from 'types/ad';
+import AdCard from './CardInner';
+import useAdUpdateForm from './hooks/useAdUpdateForm';
 
 interface AdArtcleProps {
   ad: AdsData;
+  setDetectData: () => void;
 }
 
-function AdManagementArtcle({ ad }: AdArtcleProps) {
-  const { adType, budget, endDate, id } = ad;
-  const data = {
-    id: 1,
-    adType: 'web',
-    title: '광고 1234',
-    budget: 500000,
-    status: 'active',
-    startDate: '2020-10-19T00:00:00',
-    endDate: null,
-    report: {
-      cost: 267144117,
-      convValue: 1157942685,
-      roas: 433,
-    },
+function AdManagementArtcle({ ad, setDetectData }: AdArtcleProps) {
+  const [isUpdate, onToggleUpdate] = useToggle(false);
+  const { status, startDate, report, budget, adType, title } = ad;
+  const { form, onChangeForm, onChangeReportForm, onUpdateForm } =
+    useAdUpdateForm(ad);
+  const handleRevise = () => {
+    setDetectData();
+    onUpdateForm();
   };
-  // 데이터 받아오면 받아오느 데이터로 전환
+
   const array = [
     {
       category: '상태',
-      contents: `${data.status === 'active' ? '진행중' : '종료'}`,
+      name: 'status',
+      contents: `${status === 'active' ? '진행중' : '종료'}`,
     },
     {
       category: '광고 생성일',
-      contents: data.startDate.slice(0, 10),
+      name: 'startDate',
+      contents: startDate.slice(0, 10),
     },
     {
       category: '일 희망 예산',
-      contents: data.budget,
+      name: 'budget',
+      contents: budget,
     },
+  ];
+
+  const reportArray = [
     {
       category: '광고 수익률',
-      contents: data.report.roas,
+      name: 'roas',
+      contents: report.roas,
     },
     {
       category: '매출',
-      contents: data.report.convValue,
+      name: 'convValue',
+      contents: report.convValue,
     },
     {
       category: '광고 비용',
-      contents: data.report.cost,
+      name: 'cost',
+      contents: report.cost,
     },
   ];
 
   return (
     <AdBox>
-      <AdArtcleTitle>{`${data.adType}_${data.title}`}</AdArtcleTitle>
-      {array.map((value, index) => (
-        <Section key={index}>
-          <AdCategory>{value.category}</AdCategory>
-          <AdContents>{value.contents}</AdContents>
+      <AdArtcleTitle>{`${adType}_${title}`}</AdArtcleTitle>
+
+      <AdCard
+        ad={ad}
+        form={form}
+        isUpdate={isUpdate}
+        onChangeForm={onChangeForm}
+        onChangeReportForm={onChangeReportForm}
+      />
+      {/* {reportArray.map((item, index) => (
+        <Section>
+          <AdCategory>{item.category}</AdCategory>
+          {isUpdate ? (
+            <AdInputBox>
+              <AdInput
+                name={item.name}
+                onChange={onChangeReportForm}
+                value={form.report.convValue}
+              />
+            </AdInputBox>
+          ) : (
+            <AdContents>{item.contents}</AdContents>
+          )}
         </Section>
-      ))}
+      ))} */}
       <EditSection>
-        <EditButton>수정하기</EditButton>
+        {isUpdate ? (
+          <FlexAround>
+            <EditButton onClick={onToggleUpdate}>취소</EditButton>
+            <EditButton onClick={handleRevise}>수정완료</EditButton>
+          </FlexAround>
+        ) : (
+          <EditButton onClick={onToggleUpdate}>수정하기</EditButton>
+        )}
       </EditSection>
     </AdBox>
   );
@@ -81,25 +113,6 @@ const AdArtcleTitle = styled.div`
   color: ${({ theme }) => theme.colors.fontColor};
   font-size: ${({ theme }) => theme.fontSizes.large};
   font-weight: bold;
-`;
-
-const Section = styled.div`
-  display: flex;
-  width: 90%;
-  margin: 0 auto;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.lightGrayColor};
-`;
-
-const AdCategory = styled.span`
-  flex: 1;
-  margin: 10px 0;
-  font-size: ${({ theme }) => theme.fontSizes.medium};
-  color: ${({ theme }) => theme.colors.lightGrayColor};
-`;
-
-const AdContents = styled(AdCategory)`
-  flex: 2;
-  color: ${({ theme }) => theme.colors.fontColor};
 `;
 
 const EditSection = styled.div`
