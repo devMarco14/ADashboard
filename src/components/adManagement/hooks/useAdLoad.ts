@@ -11,6 +11,7 @@ const useAdLoad = () => {
   const [adData, setAdData] = useState<AdsData[]>(INITIAL_AD_DATA);
   const [detectData, setDetectData] = useToggle(true);
   // useEffect로 첫 렌더링때 data를 adData에 보관
+
   useEffect(() => {
     const getData = async () => {
       // 트라이 캐치로 에러처리

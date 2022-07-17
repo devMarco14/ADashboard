@@ -14,3 +14,17 @@ export const INITIAL_AD_DATA = [
     },
   },
 ];
+export const ADD_DATA = {
+  id: Math.floor(Math.random() * 1000),
+  adType: '',
+  title: '',
+  budget: 0,
+  status: '',
+  startDate: '달력',
+  endDate: null,
+  report: {
+    cost: 0,
+    convValue: 0,
+    roas: 0,
+  },
+};

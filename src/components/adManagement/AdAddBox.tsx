@@ -3,24 +3,18 @@ import { FlexAround, FlexCenter } from 'libs/style/commonStyles';
 import React from 'react';
 import styled from 'styled-components';
 import { AdsData } from 'types/ad';
-import AdCard from './CardInner';
+import AdCard from './AddCardInner';
+import useAdPost from './hooks/useAdPost';
 import useAdUpdateForm from './hooks/useAdUpdateForm';
 
-interface AdArtcleProps {
-  ad: AdsData;
-  setDetectData: () => void;
-}
+// interface AdArtcleProps {
+//   // ad: AdsData;
+//   // setDetectData: () => void;
+// }
 
-function AdManagementArtcle({ ad, setDetectData }: AdArtcleProps) {
+function AdAddBox() {
   const [isUpdate, onToggleUpdate] = useToggle(false);
-  const { status, startDate, report, budget, adType, title } = ad;
-  const { form, onChangeForm, onChangeReportForm, onUpdateForm } =
-    useAdUpdateForm(ad);
-  const handleRevise = () => {
-    setDetectData();
-    onUpdateForm();
-  };
-
+  const { onPostForm, onChangeForm, onChangeReportForm, form } = useAdPost();
   return (
     <AdBox>
       <AdArtcleTitle>{`${adType}_${title}`}</AdArtcleTitle>
@@ -32,14 +26,10 @@ function AdManagementArtcle({ ad, setDetectData }: AdArtcleProps) {
         onChangeReportForm={onChangeReportForm}
       />
       <EditSection>
-        {isUpdate ? (
-          <FlexAround>
-            <EditButton onClick={onToggleUpdate}>취소</EditButton>
-            <EditButton onClick={handleRevise}>수정완료</EditButton>
-          </FlexAround>
-        ) : (
-          <EditButton onClick={onToggleUpdate}>수정하기</EditButton>
-        )}
+        <FlexAround>
+          <EditButton onClick={onToggleUpdate}>취소</EditButton>
+          <EditButton onClick={onPostForm}>생성하기</EditButton>
+        </FlexAround>
       </EditSection>
     </AdBox>
   );
@@ -78,4 +68,4 @@ const EditButton = styled.button`
   font-weight: bold;
   align-items: center;
 `;
-export default AdManagementArtcle;
+export default AdAddBox;
