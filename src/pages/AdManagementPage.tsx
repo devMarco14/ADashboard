@@ -6,7 +6,7 @@ import styled from 'styled-components';
 function AdManagementPage() {
   const [selectedAd, setSelectedAd] = useState<number | null>(null);
   /* 추 후 수정되고 있는 섹션의 보더를 변경 */
-  const { adData } = useAdLoad();
+  const { adData, setDetectData } = useAdLoad();
   return (
     <AdManagement>
       <AdManagementTitle>광고관리</AdManagementTitle>
@@ -17,7 +17,11 @@ function AdManagementPage() {
         </AdManagementHeader>
         <AdManagementArticle>
           {adData.map((item) => (
-            <AdManagementArtcle key={item.id} ad={item} />
+            <AdManagementArtcle
+              key={item.id}
+              ad={item}
+              setDetectData={setDetectData}
+            />
           ))}
         </AdManagementArticle>
       </AdManagementSection>
