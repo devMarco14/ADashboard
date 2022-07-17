@@ -13,17 +13,39 @@ interface AdArtcleProps {
 
 function AdManagementArtcle({ ad, setDetectData }: AdArtcleProps) {
   const [isUpdate, onToggleUpdate] = useToggle(false);
-  const { status, startDate, report, budget, adType, title } = ad;
+  const { adType, title } = ad;
   const { form, onChangeForm, onChangeReportForm, onUpdateForm } =
     useAdUpdateForm(ad);
+
   const handleRevise = () => {
     setDetectData();
     onUpdateForm();
+    onToggleUpdate();
   };
 
   return (
     <AdBox>
+<<<<<<< HEAD
       <AdArtcleTitle>{`${adType}_${title}`}</AdArtcleTitle>
+=======
+      {isUpdate ? (
+        <UpdateTitle>
+          <select name="adType" value={form.adType} onChange={onChangeForm}>
+            <option value="web">web</option>
+            <option value="app">app</option>
+          </select>
+          <input
+            type="text"
+            name="title"
+            value={form.title}
+            onChange={onChangeForm}
+          />
+        </UpdateTitle>
+      ) : (
+        <AdArtcleTitle>{`${adType}_${title}`}</AdArtcleTitle>
+      )}
+
+>>>>>>> d367a4adb14a60e7347d743af003bf3aad9bc5c7
       <AdCard
         ad={ad}
         form={form}
@@ -53,6 +75,8 @@ const AdBox = styled.article`
 `;
 
 const AdArtcleTitle = styled.div`
+  display: flex;
+  gap: 8px;
   width: 90%;
   margin: 0 auto;
   border-bottom: 1px solid ${({ theme }) => theme.colors.lightGrayColor};
@@ -60,6 +84,22 @@ const AdArtcleTitle = styled.div`
   color: ${({ theme }) => theme.colors.fontColor};
   font-size: ${({ theme }) => theme.fontSizes.large};
   font-weight: bold;
+`;
+
+const UpdateTitle = styled(AdArtcleTitle)`
+  padding: 14px 0;
+  input {
+    font-weight: bold;
+    color: ${({ theme }) => theme.colors.fontColor};
+    border: 1px solid ${({ theme }) => theme.colors.lightBlueColor};
+    width: 110px;
+    border-radius: 4px;
+    padding: 4px;
+  }
+  select {
+    border: 1px solid ${({ theme }) => theme.colors.lightBlueColor};
+    border-radius: 4px;
+  }
 `;
 
 const EditSection = styled.div`
