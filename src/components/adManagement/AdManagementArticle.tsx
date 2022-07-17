@@ -25,9 +25,6 @@ function AdManagementArtcle({ ad, setDetectData }: AdArtcleProps) {
 
   return (
     <AdBox>
-<<<<<<< HEAD
-      <AdArtcleTitle>{`${adType}_${title}`}</AdArtcleTitle>
-=======
       {isUpdate ? (
         <UpdateTitle>
           <select name="adType" value={form.adType} onChange={onChangeForm}>
@@ -45,7 +42,6 @@ function AdManagementArtcle({ ad, setDetectData }: AdArtcleProps) {
         <AdArtcleTitle>{`${adType}_${title}`}</AdArtcleTitle>
       )}
 
->>>>>>> d367a4adb14a60e7347d743af003bf3aad9bc5c7
       <AdCard
         ad={ad}
         form={form}
@@ -86,7 +82,7 @@ const AdArtcleTitle = styled.div`
   font-weight: bold;
 `;
 
-const UpdateTitle = styled(AdArtcleTitle)`
+export const UpdateTitle = styled(AdArtcleTitle)`
   padding: 14px 0;
   input {
     font-weight: bold;

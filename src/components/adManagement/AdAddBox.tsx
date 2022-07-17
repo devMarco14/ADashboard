@@ -4,6 +4,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { AdsData } from 'types/ad';
 import AdCard from './AddCardInner';
+import { UpdateTitle } from './AdManagementArticle';
 import useAdPost from './hooks/useAdPost';
 import useAdUpdateForm from './hooks/useAdUpdateForm';
 
@@ -11,17 +12,31 @@ import useAdUpdateForm from './hooks/useAdUpdateForm';
 //   // ad: AdsData;
 //   // setDetectData: () => void;
 // }
-
-function AdAddBox() {
+interface AdAddBoxProps {
+  setDetectData: () => void;
+}
+function AdAddBox({ setDetectData }: AdAddBoxProps) {
   const [isUpdate, onToggleUpdate] = useToggle(false);
-  const { onPostForm, onChangeForm, onChangeReportForm, form } = useAdPost();
+  const { onPostForm, onChangeForm, onChangeReportForm, form } =
+    useAdPost(setDetectData);
+
   return (
     <AdBox>
-      <AdArtcleTitle>{`${adType}_${title}`}</AdArtcleTitle>
+      <UpdateTitle>
+        <select name="adType" value={form.adType} onChange={onChangeForm}>
+          <option value="web">web</option>
+          <option value="app">app</option>
+        </select>
+        <input
+          type="text"
+          name="title"
+          value={form.title}
+          onChange={onChangeForm}
+        />
+      </UpdateTitle>
       <AdCard
-        ad={ad}
         form={form}
-        isUpdate={isUpdate}
+        setDetectData={setDetectData}
         onChangeForm={onChangeForm}
         onChangeReportForm={onChangeReportForm}
       />

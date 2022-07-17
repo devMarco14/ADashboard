@@ -2,11 +2,8 @@ import { FlexCenter } from 'libs/style/commonStyles';
 import React from 'react';
 import styled from 'styled-components';
 import { AdsData } from 'types/ad';
-import { ADD_DATA } from 'libs/utils/initalDatas';
 
 interface CardInnerProps {
-  ad: AdsData;
-  isUpdate: boolean;
   form: AdsData;
   onChangeForm: (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -14,104 +11,67 @@ interface CardInnerProps {
   onChangeReportForm: (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => void;
+  setDetectData: () => void;
 }
 
 function AddCardInner({
-  ad,
-  isUpdate,
   form,
   onChangeForm,
   onChangeReportForm,
+  setDetectData,
 }: CardInnerProps) {
-  const { status, startDate, report, budget, adType, title } = ad;
-  console.log(ADD_DATA);
+  const { adType, budget, endDate, id, report, startDate, status, title } =
+    form;
   return (
     <>
       <CardInnerStyled>
         <AdCategory>상태</AdCategory>
-        {isUpdate ? (
-          <AdInputBox>
-            <AdInput
-              name="status"
-              onChange={onChangeForm}
-              value={ADD_DATA.status}
-            />
-          </AdInputBox>
-        ) : (
-          <AdContents>{{ active: '진행중', ended: '종료' }[status]}</AdContents>
-        )}
+        <AdInputBox>
+          <AdInput name="status" onChange={onChangeForm} value={status} />
+        </AdInputBox>
       </CardInnerStyled>
-
       <CardInnerStyled>
         <AdCategory>광고 생성일</AdCategory>
-        {isUpdate ? (
-          <AdInputBox>
-            <AdInput
-              name="startDate"
-              onChange={onChangeForm}
-              value={ADD_DATA.startDate}
-            />
-          </AdInputBox>
-        ) : (
-          <AdContents>{startDate.slice(0, 10)}</AdContents>
-        )}
+        <AdInputBox>
+          <AdInput name="startDate" onChange={onChangeForm} value={startDate} />
+        </AdInputBox>
       </CardInnerStyled>
       <CardInnerStyled>
         <AdCategory>일 회망 예산</AdCategory>
-        {isUpdate ? (
-          <AdInputBox>
-            <AdInput
-              name="budget"
-              onChange={onChangeForm}
-              value={ADD_DATA.budget}
-            />
-          </AdInputBox>
-        ) : (
-          <AdContents>{budget.toLocaleString('ko-kr')}원</AdContents>
-        )}
+        <AdInputBox>
+          <AdInput name="budget" onChange={onChangeForm} value={budget} />
+        </AdInputBox>
       </CardInnerStyled>
       <CardInnerStyled>
         <AdCategory>광고 수익률</AdCategory>
-        {isUpdate ? (
-          <AdInputBox>
-            <AdInput
-              name="roas"
-              onChange={onChangeReportForm}
-              value={ADD_DATA.report.roas}
-              disabled
-            />
-          </AdInputBox>
-        ) : (
-          <AdContents>{report.roas}%</AdContents>
-        )}
+        <AdInputBox>
+          <AdInput
+            name="roas"
+            onChange={onChangeReportForm}
+            value={report.roas}
+            disabled
+          />
+        </AdInputBox>
       </CardInnerStyled>
       <CardInnerStyled>
         <AdCategory>매출</AdCategory>
-        {isUpdate ? (
-          <AdInputBox>
-            <AdInput
-              name="convValue"
-              onChange={onChangeReportForm}
-              value={ADD_DATA.report.convValue}
-            />
-          </AdInputBox>
-        ) : (
-          <AdContents>{report.convValue.toLocaleString('ko-kr')}원</AdContents>
-        )}
+        <AdInputBox>
+          <AdInput
+            name="convValue"
+            onChange={onChangeReportForm}
+            value={report.convValue}
+          />
+        </AdInputBox>
       </CardInnerStyled>
       <CardInnerStyled>
         <AdCategory>광고 비용</AdCategory>
-        {isUpdate ? (
-          <AdInputBox>
-            <AdInput
-              name="cost"
-              onChange={onChangeReportForm}
-              value={ADD_DATA.report.cost}
-            />
-          </AdInputBox>
-        ) : (
-          <AdContents>{report.cost.toLocaleString('ko-kr')}원</AdContents>
-        )}
+        <AdInputBox>
+          <AdInput
+            name="cost"
+            onChange={onChangeReportForm}
+            value={report.cost}
+          />
+        </AdInputBox>
       </CardInnerStyled>
     </>
   );

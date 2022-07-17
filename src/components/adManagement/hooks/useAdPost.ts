@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { postAddAPI } from 'libs/api/adAPI';
 import { ADD_DATA } from 'libs/utils/initalDatas';
 
-const useAdPost = () => {
+const useAdPost = (setDetectData: () => void) => {
   const [form, setForms] = useState(ADD_DATA);
 
   const onChangeForm = useCallback(
@@ -32,7 +32,9 @@ const useAdPost = () => {
   );
 
   const onPostForm = async () => {
-    await postAddAPI(form);
+    const response = await postAddAPI(form);
+    setDetectData();
+    console.log(response);
   };
 
   return { onPostForm, onChangeForm, onChangeReportForm, form };

@@ -26,7 +26,7 @@ function AdManagementPage() {
         </AdManagementHeader>
 
         <AdManagementBox>
-          {isAddData && <AdAddBox />}
+          {isAddData && <AdAddBox setDetectData={setDetectData} />}
           {adData.map((item) => (
             <AdManagementArtcle
               key={item.id}

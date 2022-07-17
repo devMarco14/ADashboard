@@ -17,7 +17,7 @@ const useAdLoad = () => {
       // 트라이 캐치로 에러처리
       try {
         const data = await getTotalAdAPI();
-        setAdData(data);
+        setAdData(data.reverse());
       } catch (error) {
         console.log(error);
       }
