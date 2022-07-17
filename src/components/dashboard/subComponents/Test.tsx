@@ -1,6 +1,7 @@
 import React from 'react';
 import { WeekContext } from 'libs/context';
 import styled from 'styled-components';
+import { INITIAL_WEEK_STATE } from 'libs/utils/constants';
 import useMediaLoad from '../hooks/useMediaLoad';
 import useReportLoad from '../hooks/useReportLoad';
 

@@ -1,48 +1,45 @@
 import React from 'react';
 import { getDay, addDays, format } from 'date-fns';
-import { ReportData } from 'types/dashboard';
+import { AxiosResponse } from 'axios';
 import { COMMON_DATE_FORMAT } from 'libs/utils/constants';
 
-export default function useFormatize(totalDays: ReportData[]) {
-  // 가공 후 반환할 Week 데이터를 저장하기 위한 state
+export default function useFormatize(
+  firstReportData: AxiosResponse | undefined,
+) {
   const [processedWeeks, setProcessedWeeks] = React.useState<string[][]>([]);
 
-  // Date 객체를 yyyy-MM-dd 포맷 문자열을 저장하는 배열로 변환하는 함수
-  const processDatesToWeeks = (date: string): string[] => {
-    const firstDate = new Date(date);
-    const firstDateDay = getDay(firstDate);
-    const lastDate = addDays(firstDate, 6 - firstDateDay);
-    const formattedLast = format(lastDate, COMMON_DATE_FORMAT);
-
-    return [date, formattedLast];
-  };
-
-  // 전체 데이터(totalDays)에서 날짜 정보만 추출해 [첫째날, 마지막날] 배열로 변환
   React.useEffect(() => {
-    if (totalDays) {
-      // 받아온 데이터에서 date만 추출
-      const extractedDates = totalDays.map(
-        (reportData: ReportData) => reportData.date,
-      );
-      // date를 [주 첫째 날, 주 마지막 날] 형태로 가공하기 위한 배열
-      const temporaryWeeks: string[][] = [];
-      // 받아온 date를 yyyy-MM-dd 형태로 가공
-      extractedDates.forEach((date: string, index: number) => {
-        // 첫 번째 인덱스인 2022-02-01의 경우 일주일을 채울 수 없어 예외처리
-        if (index === 0) {
-          const processedFirstWeekSet = processDatesToWeeks(date);
-          temporaryWeeks.push(processedFirstWeekSet);
-          // 나머지 요일 중 일요일인 날짜만 추출
-        } else if (getDay(new Date(date)) === 0) {
-          // 이하 동일
-          const processedWeekSet = processDatesToWeeks(date);
-          temporaryWeeks.push(processedWeekSet);
-        }
+    if (firstReportData) {
+      // json-server의 x-total-count 헤더로 확인한 총 데이터 개수
+      const totalItems = firstReportData.headers['x-total-count'];
+      // 총 데이터 개수를 7로 나눈 후 올림처리해 산출한 총 주
+      const totalWeeks = Math.ceil(Number(totalItems) / 7);
+      // 루프를 위해 생성한 임시 배열
+      const weekIndexes = Array.from({ length: totalWeeks }, (v, k) => k);
+      // Week 리스트를 저장하기 위한 배열
+      const testWeekList: string[][] = [];
+      // 매 주의 첫째날을 저장할 변수 - 기본값: 첫 번째 데이터의 date
+      let currentFirstDate = firstReportData.data[0].date;
+      // Week 리스트를 생성하는 루프
+      weekIndexes.forEach(() => {
+        // 첫째날 Date객체로 변환
+        const firstDate = new Date(currentFirstDate);
+        // 첫째날의 요일의 인덱스 값
+        const firstDateDay = getDay(firstDate);
+        // addDays로 산출한 해당 주의 마지막날의 날짜
+        const lastDate = addDays(firstDate, 6 - firstDateDay);
+        // 첫째날을 yyyy-MM-dd 형식으로 수정
+        const formattedFirst = format(firstDate, COMMON_DATE_FORMAT);
+        // 마지막날을 yyyy-MM-dd 형식으로 수정
+        const formattedLast = format(lastDate, COMMON_DATE_FORMAT);
+        // 현재 루프를 도는 주의 첫째날, 마지막날 조합을 Week리스트에 추가
+        testWeekList.push([formattedFirst, formattedLast]);
+        // 첫째날 변수의 값을 다음주의 첫째날로 갱신
+        currentFirstDate = addDays(firstDate, 6 - firstDateDay + 1);
       });
-      // [첫째날, 마지막날] 배열을 원소로 하는 배열을 state에 저장
-      setProcessedWeeks(temporaryWeeks);
+      setProcessedWeeks(testWeekList);
     }
-  }, [totalDays]);
+  }, [firstReportData]);
 
   return { processedWeeks };
 }
