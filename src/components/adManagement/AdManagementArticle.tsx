@@ -13,53 +13,34 @@ interface AdArtcleProps {
 
 function AdManagementArtcle({ ad, setDetectData }: AdArtcleProps) {
   const [isUpdate, onToggleUpdate] = useToggle(false);
-  const { status, startDate, report, budget, adType, title } = ad;
+  const { adType, title } = ad;
   const { form, onChangeForm, onChangeReportForm, onUpdateForm } =
     useAdUpdateForm(ad);
+
   const handleRevise = () => {
     setDetectData();
     onUpdateForm();
+    onToggleUpdate();
   };
-
-  const array = [
-    {
-      category: '상태',
-      name: 'status',
-      contents: `${status === 'active' ? '진행중' : '종료'}`,
-    },
-    {
-      category: '광고 생성일',
-      name: 'startDate',
-      contents: startDate.slice(0, 10),
-    },
-    {
-      category: '일 희망 예산',
-      name: 'budget',
-      contents: budget,
-    },
-  ];
-
-  const reportArray = [
-    {
-      category: '광고 수익률',
-      name: 'roas',
-      contents: report.roas,
-    },
-    {
-      category: '매출',
-      name: 'convValue',
-      contents: report.convValue,
-    },
-    {
-      category: '광고 비용',
-      name: 'cost',
-      contents: report.cost,
-    },
-  ];
 
   return (
     <AdBox>
-      <AdArtcleTitle>{`${adType}_${title}`}</AdArtcleTitle>
+      {isUpdate ? (
+        <UpdateTitle>
+          <select name="adType" value={form.adType} onChange={onChangeForm}>
+            <option value="web">web</option>
+            <option value="app">app</option>
+          </select>
+          <input
+            type="text"
+            name="title"
+            value={form.title}
+            onChange={onChangeForm}
+          />
+        </UpdateTitle>
+      ) : (
+        <AdArtcleTitle>{`${adType}_${title}`}</AdArtcleTitle>
+      )}
 
       <AdCard
         ad={ad}
@@ -68,22 +49,6 @@ function AdManagementArtcle({ ad, setDetectData }: AdArtcleProps) {
         onChangeForm={onChangeForm}
         onChangeReportForm={onChangeReportForm}
       />
-      {/* {reportArray.map((item, index) => (
-        <Section>
-          <AdCategory>{item.category}</AdCategory>
-          {isUpdate ? (
-            <AdInputBox>
-              <AdInput
-                name={item.name}
-                onChange={onChangeReportForm}
-                value={form.report.convValue}
-              />
-            </AdInputBox>
-          ) : (
-            <AdContents>{item.contents}</AdContents>
-          )}
-        </Section>
-      ))} */}
       <EditSection>
         {isUpdate ? (
           <FlexAround>
@@ -106,6 +71,8 @@ const AdBox = styled.article`
 `;
 
 const AdArtcleTitle = styled.div`
+  display: flex;
+  gap: 8px;
   width: 90%;
   margin: 0 auto;
   border-bottom: 1px solid ${({ theme }) => theme.colors.lightGrayColor};
@@ -113,6 +80,22 @@ const AdArtcleTitle = styled.div`
   color: ${({ theme }) => theme.colors.fontColor};
   font-size: ${({ theme }) => theme.fontSizes.large};
   font-weight: bold;
+`;
+
+const UpdateTitle = styled(AdArtcleTitle)`
+  padding: 14px 0;
+  input {
+    font-weight: bold;
+    color: ${({ theme }) => theme.colors.fontColor};
+    border: 1px solid ${({ theme }) => theme.colors.lightBlueColor};
+    width: 110px;
+    border-radius: 4px;
+    padding: 4px;
+  }
+  select {
+    border: 1px solid ${({ theme }) => theme.colors.lightBlueColor};
+    border-radius: 4px;
+  }
 `;
 
 const EditSection = styled.div`
