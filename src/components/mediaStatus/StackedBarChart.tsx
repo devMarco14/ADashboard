@@ -21,8 +21,8 @@ type PositionData = {
 
 function StackedBarChart() {
   const [positionData, setPositionData] = useState<PositionData>({});
-  const { getTransformedData } = useTransformedData();
-  const transformedData = getTransformedData();
+  const { getStackedBarData } = useTransformedData();
+  const stackedBarData = getStackedBarData();
 
   const changeTooltipPosition = (positionX: number): void => {
     positionX !== positionData.x && setPositionData({ x: positionX, y: 5 });
@@ -45,10 +45,9 @@ function StackedBarChart() {
           left: 20,
           bottom: 5,
         }}
-        data={transformedData}
+        data={stackedBarData}
       >
         <CartesianGrid />
-
         <XAxis
           dataKey="name"
           tick={{ fill: '#c8ced8' }}
@@ -56,6 +55,7 @@ function StackedBarChart() {
         />
         <YAxis
           ticks={[20, 40, 60, 80, 100]}
+          domain={[0, 100]}
           type="number"
           tick={{ fill: '#c8ced8' }}
           tickLine={{ fill: '#c8ced8' }}

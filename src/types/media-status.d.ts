@@ -1,11 +1,9 @@
 /* eslint-disable prettier/prettier */
-export type MediaData = {
-    [key: string]: number | string;
+export interface MediaData {
     channel: string;
     imp: number;
     click: number;
     cost: number;
-    conv: number;
     convValue: number;
     ctr: number;
     cvr: number;
@@ -15,16 +13,14 @@ export type MediaData = {
     date: string;
 };
 
-export type TransformedMediaData = {
-    [key: string]: number | string;
-    name: string;
+export type TargetType = 'cost' | 'imp' | 'click' | 'convValue' | 'ctr' | 'cvr' | 'cpc' | 'cpa' | 'roas';
+export interface TransformedMediaData {
+    name: TargetType;
     google: number;
     facebook: number;
     naver: number;
     kakao: number;
     total: number;
 };
-
-export type TargetType = 'cost' | 'convValue' | 'imp' | 'click' | 'conv';
 
 export type CompanyType = 'google' | 'facebook' | 'naver' | 'kakao';

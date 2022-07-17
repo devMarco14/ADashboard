@@ -1,7 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import useTransformedData from './hooks/useTransformedData';
 
 function TableChart() {
+  const { getTableData } = useTransformedData();
+  const tableData = getTableData();
+
   return (
     <TableLayout>
       <Table>
@@ -24,13 +28,16 @@ function TableChart() {
               클릭수
             </th>
             <th className="col" scope="col">
-              클릭률 (CTR)
+              클릭률 <br /> (CTR)
             </th>
             <th className="col" scope="col">
-              클릭당 비용(CTC)
+              전환율 <br /> (CVR)
             </th>
             <th className="col" scope="col">
-              전환당 비용(CPA)
+              클릭당 비용 <br /> (CPC)
+            </th>
+            <th className="col" scope="col">
+              전환당 비용 <br /> (CPA)
             </th>
           </tr>
         </thead>
@@ -39,29 +46,39 @@ function TableChart() {
             <th className="flatform row" scope="row">
               페이스북
             </th>
-            <td>123</td>
+            {tableData.map((data) => (
+              <td>{Math.round(data.facebook)}</td>
+            ))}
           </tr>
           <tr>
             <th className="flatform row" scope="row">
               네이버
             </th>
-            <td>123</td>
+            {tableData.map((data) => (
+              <td>{Math.round(data.naver)}</td>
+            ))}
           </tr>
           <tr>
             <th className="flatform row" scope="row">
               구글
             </th>
-            <td>123</td>
+            {tableData.map((data) => (
+              <td>{Math.round(data.google)}</td>
+            ))}
           </tr>
           <tr>
             <th className="flatform row" scope="row">
               카카오
             </th>
-            <td>123</td>
+            {tableData.map((data) => (
+              <td>{Math.round(data.kakao)}</td>
+            ))}
           </tr>
           <tr>
             <th className="total row">총계</th>
-            <td className="total">123</td>
+            {tableData.map((data) => (
+              <td className="total">{Math.round(data.total)}</td>
+            ))}
           </tr>
         </tbody>
       </Table>

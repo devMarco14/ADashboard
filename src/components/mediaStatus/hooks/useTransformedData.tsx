@@ -10,7 +10,7 @@ import {
 function useTransformedData() {
   const [data, setData] = useState<MediaData[]>([]);
 
-  // 데이터 받아오기
+  // 더미 데이터 받아오기
   useEffect(() => {
     apiClient('/media?date_like=2022-02') //
       .then((response) => setData(response.data));
@@ -27,9 +27,8 @@ function useTransformedData() {
   // sumTargetDataByCompany('naver', 'cost') => naver의 모든 cost를 더한 숫자 반환
   const sumTargetDataByCompany = useCallback(
     (company: CompanyType, target: TargetType) => {
-      const targetData = target;
       return filterDataByCompany(company)
-        .map((item) => item[targetData])
+        .map((item) => item[target])
         .reduce((prev, current) => prev + current, 0);
     },
     [filterDataByCompany],
@@ -38,23 +37,26 @@ function useTransformedData() {
   // sumTargetDataOfCompanies(cost) => 모든 회사의 cost를 더한 숫자 반환
   const sumTargetDataOfCompanies = useCallback(
     (target: TargetType): number => {
-      return (
-        sumTargetDataByCompany('google', target) +
-        sumTargetDataByCompany('facebook', target) +
-        sumTargetDataByCompany('naver', target) +
-        sumTargetDataByCompany('kakao', target)
-      );
+      const companies: CompanyType[] = ['google', 'facebook', 'kakao', 'naver'];
+      let total = 0;
+
+      companies.forEach((company) => {
+        total += sumTargetDataByCompany(company, target);
+      });
+
+      return total;
     },
     [sumTargetDataByCompany],
   );
 
-  // 차트에 전달해야 하는 데이터를 얻을 수 있다
-  // [{name: cost, google: 123, naver: 456...}, {name: convValue...},...]
-  const getTransformedData = useCallback((): TransformedMediaData[] => {
-    const transformedData: TransformedMediaData[] = [];
-    const targets: TargetType[] = ['cost', 'convValue', 'imp', 'click', 'conv'];
+  // cost와 cpa를 이용해서 conv 계산하는 함수
 
-    data.length !== 0 &&
+  // 스택바 차트에 전달해야 하는 백분율 데이터를 얻을 수 있다
+  const getStackedBarData = useCallback((): TransformedMediaData[] => {
+    const transformedData: TransformedMediaData[] = [];
+    const targets: TargetType[] = ['cost', 'convValue', 'imp', 'click', 'cpa'];
+
+    data &&
       targets.forEach((target: TargetType) => {
         transformedData.push({
           name: target,
@@ -78,9 +80,38 @@ function useTransformedData() {
         });
       });
     return transformedData;
-  }, [data.length, sumTargetDataByCompany, sumTargetDataOfCompanies]);
+  }, [data, sumTargetDataByCompany, sumTargetDataOfCompanies]);
 
-  return { getTransformedData };
+  // 테이블 차트에 전달해야 하는 데이터를 얻을 수 있다
+  const getTableData = useCallback((): TransformedMediaData[] => {
+    const transformedData: TransformedMediaData[] = [];
+    const targets: TargetType[] = [
+      'cost',
+      'convValue',
+      'roas',
+      'imp',
+      'click',
+      'ctr',
+      'cvr',
+      'cpc',
+      'cpa',
+    ];
+
+    data &&
+      targets.forEach((target: TargetType) => {
+        transformedData.push({
+          name: target,
+          google: sumTargetDataByCompany('google', target),
+          facebook: sumTargetDataByCompany('facebook', target),
+          naver: sumTargetDataByCompany('naver', target),
+          kakao: sumTargetDataByCompany('kakao', target),
+          total: sumTargetDataOfCompanies(target),
+        });
+      });
+    return transformedData;
+  }, [data, sumTargetDataByCompany, sumTargetDataOfCompanies]);
+
+  return { getStackedBarData, getTableData };
 }
 
 export default useTransformedData;
