@@ -1,11 +1,10 @@
-import { ReportData, MediaData } from 'types/dashboard';
 import apiClient from '.';
 
 // report 데이터를 받아오는 api
-export const getTotalDataAPI = async (
+export const getTotalDataAPI = async <T>(
   property: string,
   param = '',
-): Promise<ReportData[] | MediaData[]> => {
+): Promise<T> => {
   const response = await apiClient.get(`/${property}${param}`);
   return response.data;
 };

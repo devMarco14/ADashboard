@@ -15,10 +15,10 @@ const useReportLoad = (gteDate = '', lteDate = '') => {
   React.useEffect(() => {
     const getReportData = async () => {
       try {
-        const totalData = (await getTotalDataAPI(
+        const totalData = await getTotalDataAPI<ReportData[]>(
           'report',
           optionalParam,
-        )) as ReportData[];
+        );
         setTotalData(totalData);
       } catch (error) {
         console.log(error);

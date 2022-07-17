@@ -37,6 +37,10 @@ export default function SelectBox({ weeksList }: { weeksList: string[][] }) {
     setIsSelectBoxVisible(!isSelectBoxVisible);
   }
 
+  const setWeekFunction = (value: string[]) => {
+    setSelectedWeek(value);
+  };
+
   return (
     <SelectBoxLayout>
       {/* [첫째날, 마지막날] 형태의 데이터를 2022년 2월 1일 ~ 2022년 2월 5일 형태로 변환 */}
@@ -49,7 +53,7 @@ export default function SelectBox({ weeksList }: { weeksList: string[][] }) {
       {/* isSelectBoxVisible은 드롭다운 목록을 표시/숨기는 state, 위 버튼에서 조절함 */}
       <WeekList
         weeksList={weeksList}
-        setWeek={setSelectedWeek}
+        setWeek={setWeekFunction}
         isVisible={isSelectBoxVisible}
         onClick={onClick}
       />

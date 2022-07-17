@@ -28,7 +28,7 @@ export interface MediaData {
 
 export interface WeekListPropsType {
   weeksList: string[][];
-  setWeek: React.Dispatch<React.SetStateAction<string[]>>;
+  setWeek: (value: string[]) => void;
   isVisible: boolean;
   onClick: (event: MouseEvent<Element, MouseEvent>) => void;
 }

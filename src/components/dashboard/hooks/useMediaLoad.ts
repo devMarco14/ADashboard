@@ -10,10 +10,10 @@ const useMediaLoad = (gteDate: string, lteDate: string) => {
   React.useEffect(() => {
     const getMediaData = async () => {
       try {
-        const totalData = (await getTotalDataAPI(
+        const totalData = await getTotalDataAPI<MediaData[]>(
           'media',
           `?date_gte=${gteDate}&date_lte=${lteDate}`,
-        )) as MediaData[];
+        );
         setTotalData(totalData);
       } catch (error) {
         console.log(error);
