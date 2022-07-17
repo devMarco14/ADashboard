@@ -13,9 +13,23 @@ export default function DashboardLayout() {
   // 추출된 date를 dateFormat 형태로 가공한 데이터 저장
   const { processedWeeks } = useFormatize(firstReportData);
   const { componentLoadingState } = React.useContext(LoadContext);
+  const [childrenLoadingStates, setChildrenLoadingStates] =
+    React.useState<boolean>(false);
+
+  React.useEffect(() => {
+    const foo = Object.values(componentLoadingState).filter(
+      (childLoadingState: boolean | undefined) => childLoadingState,
+    );
+    console.log(foo);
+    if (foo.length === 0) {
+      setChildrenLoadingStates(false);
+    } else {
+      setChildrenLoadingStates(true);
+    }
+  }, [componentLoadingState]);
 
   return (
-    <DashboardContainer isLoading={componentLoadingState.reportData as boolean}>
+    <DashboardContainer isLoading={childrenLoadingStates}>
       <DashboardHeaderBox>
         <DashboardHeader>대시보드</DashboardHeader>
         {/* 전체 Week 리스트 셀렉트 박스로 전달 */}
@@ -23,8 +37,8 @@ export default function DashboardLayout() {
       </DashboardHeaderBox>
       {/* <Test />
           <Test /> */}
-      <TestLayout />
-      <TestLayout />
+      <TestLayout target="report" />
+      <TestLayout target="media" />
     </DashboardContainer>
   );
 }

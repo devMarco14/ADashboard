@@ -41,7 +41,12 @@ export default function SelectBox({ weeksList }: { weeksList: string[][] }) {
   function handleClick(event: React.MouseEvent): void {
     setIsSelectBoxVisible(!isSelectBoxVisible);
     if (!event.currentTarget) {
-      changeLoadingState({ type: 'TEST', payload: { reportData: true } });
+      Object.keys(componentLoadingState).forEach((childLoadingState: string) =>
+        changeLoadingState({
+          type: 'TEST',
+          payload: { [childLoadingState]: true },
+        }),
+      );
     }
   }
 

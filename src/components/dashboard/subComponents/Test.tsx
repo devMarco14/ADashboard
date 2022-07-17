@@ -22,16 +22,18 @@ export default function Test(props: any) {
     currentWeek[1],
   );
 
+  const { target } = props;
+
   React.useEffect(() => {
-    changeLoadingState({ type: 'TEST', payload: { reportData: true } });
+    changeLoadingState({ type: 'TEST', payload: { [target]: true } });
   }, []);
 
   React.useEffect(() => {
     if (reportData) {
       console.log(reportData);
       setTimeout(() => {
-        changeLoadingState({ type: 'TEST', payload: { reportData: false } });
-      }, 3000);
+        changeLoadingState({ type: 'TEST', payload: { [target]: false } });
+      }, 1000);
     }
   }, [reportData]);
 

@@ -8,22 +8,25 @@ import spinner from '../assets/Spinner-1s-200px.svg';
 
 export default function TestLayout(props: any) {
   const { componentLoadingState } = React.useContext(LoadContext);
+  const [childLoadingState, setChildLoadingState] =
+    React.useState<boolean>(false);
 
   React.useEffect(() => {
-    console.log(
-      'loadingState from test layout: ',
-      componentLoadingState.reportData,
-    );
-  }, [componentLoadingState.reportData]);
+    if (componentLoadingState[props.target]) {
+      setChildLoadingState(true);
+    } else {
+      setChildLoadingState(false);
+    }
+  }, [componentLoadingState]);
   return (
     // <React.Suspense fallback={<h1>Loading...</h1>}>
     //   <TestPage />
     // </React.Suspense>
     <TestContainer>
-      <Test foo={props.fooState} setFoo={props.setFoo} />
+      <Test target={props.target} />
       <Div
         id="foo"
-        loadingState={componentLoadingState.reportData as boolean}
+        loadingState={childLoadingState}
         // loadingState={props.foo.reportData as boolean}
       >
         <img src={spinner} alt="spinner" />
