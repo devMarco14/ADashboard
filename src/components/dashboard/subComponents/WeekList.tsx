@@ -5,7 +5,7 @@ import { formatize } from 'components/dashboard/util';
 import { BASIC_SCROLL_TIMER } from 'libs/utils/constants';
 
 // 스크롤 감지에 사용되는 setTimeout 타입
-type Timeout = ReturnType<typeof setTimeout>;
+type Timeout = ReturnType<typeof setTimeout> | undefined;
 
 export default function WeekList({
   weeksList,
@@ -43,31 +43,29 @@ export default function WeekList({
 
   // 리스트 아이템 목록이 드러나면 일정 시간 후 스크롤 바를 숨김 - 스크롤이 가능하다는 것을 알리기 위함
   React.useEffect(() => {
-    let scrollTimer: Timeout | null = null;
+    let scrollTimer: Timeout;
     if (isVisible) {
       scrollTimer = setTimeout(
         () => setIsScrollCaptured(false),
         BASIC_SCROLL_TIMER,
       );
     }
-    return () => clearTimeout(scrollTimer as Timeout);
+    return () => clearTimeout(scrollTimer);
   }, [isVisible]);
 
   // 전체 주 목록을 li로 표시, 각 목록을 누를 경우 컨텍스트에 저장될 week state 갱신
-  const formattedWeeks = weeksList.map(
-    (weekList: string | string[], index: number) => {
-      const [firstDate, lastDate] = weekList as string[];
-      return (
-        // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-        <li key={`${firstDate}_${index}`} onClick={handleClick}>
-          {/* 화살표 함수 외에 다른 방법이 있으면 추천좀... */}
-          <button onClick={() => setWeek(weekList as string[])} type="button">
-            {formatize(firstDate, lastDate)}
-          </button>
-        </li>
-      );
-    },
-  );
+  const formattedWeeks = weeksList.map((weekList: string[], index: number) => {
+    const [firstDate, lastDate] = weekList;
+    return (
+      // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+      <li key={`${firstDate}_${index}`} onClick={handleClick}>
+        {/* 화살표 함수 외에 다른 방법이 있으면 추천좀... */}
+        <button onClick={() => setWeek(weekList)} type="button">
+          {formatize(firstDate, lastDate)}
+        </button>
+      </li>
+    );
+  });
 
   return (
     <SelectItemsContainer
@@ -92,6 +90,7 @@ const SelectItemsContainer = styled.ul<{
   display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
   background-color: ${({ theme }) => theme.colors.backgroundColor};
   overflow-y: scroll;
+  z-index: 1;
 
   ::-webkit-scrollbar {
     width: 7px;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { WeekContext } from 'libs/context';
+import { WeekContext, LoadContext } from 'libs/context';
 import styled from 'styled-components';
 import { INITIAL_WEEK_STATE } from 'libs/utils/constants';
 import useMediaLoad from '../hooks/useMediaLoad';
@@ -10,32 +10,46 @@ import useReportLoad from '../hooks/useReportLoad';
   - 삭제 부탁드립니다!!!!
 */
 
-export default function Test() {
+export default function Test(props: any) {
   // 컨텍스트에서 currentWeek 호출
   const { currentWeek } = React.useContext(WeekContext);
+  const { componentLoadingState, changeLoadingState } =
+    React.useContext(LoadContext);
 
   // ReportData 예시: 파라미터를 전달할 경우 특정 기간 동안의 데이터만 반환
   const { totalDataContainingDates: reportData } = useReportLoad(
     currentWeek[0],
     currentWeek[1],
   );
+
+  React.useEffect(() => {
+    changeLoadingState({ type: 'TEST', payload: { reportData: true } });
+  }, []);
+
   React.useEffect(() => {
     if (reportData) {
       console.log(reportData);
+      setTimeout(() => {
+        changeLoadingState({ type: 'TEST', payload: { reportData: false } });
+      }, 3000);
     }
   }, [reportData]);
 
-  // MediaData 예시: 파라미터를 전달해야 데이터가 반환됨
-  const { totalDataContainingDates: mediaData } = useMediaLoad(
-    currentWeek[0],
-    currentWeek[1],
-  );
   React.useEffect(() => {
-    if (mediaData) {
-      // 데이터 요청 양식
-      console.log(mediaData);
-    }
-  }, [mediaData]);
+    console.log(componentLoadingState);
+  }, [componentLoadingState]);
+
+  // MediaData 예시: 파라미터를 전달해야 데이터가 반환됨
+  // const { totalDataContainingDates: mediaData } = useMediaLoad(
+  //   currentWeek[0],
+  //   currentWeek[1],
+  // );
+  // React.useEffect(() => {
+  //   if (mediaData) {
+  //     // 데이터 요청 양식
+  //     console.log(mediaData);
+  //   }
+  // }, [mediaData]);
 
   return (
     <ChangeOrDeleteThisLater>
@@ -49,8 +63,8 @@ export default function Test() {
 const ChangeOrDeleteThisLater = styled.div`
   margin-bottom: 50px;
   background-color: ${({ theme }) => theme.colors.whiteColor};
-  width: 50%;
-  height: 50%;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;

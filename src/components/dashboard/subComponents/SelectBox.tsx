@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { BsChevronDown } from 'react-icons/bs';
-import { WeekContext } from 'libs/context';
+import { WeekContext, LoadContext } from 'libs/context';
 import { formatize } from 'components/dashboard/util';
 import { INITIAL_WEEK_STATE } from 'libs/utils/constants';
 import WeekList from './WeekList';
@@ -17,6 +17,8 @@ export default function SelectBox({ weeksList }: { weeksList: string[][] }) {
 
   // 컨텍스트를 업데이트하는 dispatch 함수
   const { changeWeek } = React.useContext(WeekContext);
+  const { changeLoadingState, componentLoadingState } =
+    React.useContext(LoadContext);
 
   // 서버에서 받은 데이터를 가공해 Week 리스트를 얻으면 selectedWeek를 갱신
   React.useEffect(() => {
@@ -31,10 +33,16 @@ export default function SelectBox({ weeksList }: { weeksList: string[][] }) {
   }, [selectedWeek]);
 
   // 셀렉트 박스 혹은 드롭다운 메뉴 아이템을 클릭할 경우 목록을 숨김
-  const onClick = React.useCallback(handleClick, [isSelectBoxVisible]);
+  const onClick = React.useCallback(handleClick, [
+    isSelectBoxVisible,
+    componentLoadingState,
+  ]);
 
   function handleClick(event: React.MouseEvent): void {
     setIsSelectBoxVisible(!isSelectBoxVisible);
+    if (!event.currentTarget) {
+      changeLoadingState({ type: 'TEST', payload: { reportData: true } });
+    }
   }
 
   const setWeekFunction = (value: string[]) => {
