@@ -22,8 +22,7 @@ function CardInner({
   onChangeForm,
   onChangeReportForm,
 }: CardInnerProps) {
-  const { status, startDate, report, budget, adType, title } = ad;
-  console.log(form);
+  const { status, startDate, report, budget } = ad;
   return (
     <>
       <CardInnerStyled>
