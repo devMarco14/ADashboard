@@ -32,10 +32,25 @@ export default function SelectBox({ weeksList }: { weeksList: string[][] }) {
     changeWeek({ type: 'WEEK_REQUESTED', payload: selectedWeek });
   }, [selectedWeek]);
 
+  const checkClickedInSelectBox = React.useCallback((event: MouseEvent) => {
+    if (event.target) {
+      const clickedElement = event.target as HTMLElement;
+      if (clickedElement.closest('#selectbox') == null) {
+        setIsSelectBoxVisible(false);
+      }
+    }
+  }, []);
+
+  React.useEffect(() => {
+    window.addEventListener('click', checkClickedInSelectBox);
+    return () => window.removeEventListener('click', checkClickedInSelectBox);
+  }, [checkClickedInSelectBox]);
+
   // 셀렉트 박스 혹은 드롭다운 메뉴 아이템을 클릭할 경우 목록을 숨김
   const onClick = React.useCallback(handleClick, [
     isSelectBoxVisible,
     componentLoadingState,
+    changeLoadingState,
   ]);
 
   function handleClick(event: React.MouseEvent): void {
@@ -55,7 +70,7 @@ export default function SelectBox({ weeksList }: { weeksList: string[][] }) {
   };
 
   return (
-    <SelectBoxLayout>
+    <SelectBoxLayout id="selectbox">
       {/* [첫째날, 마지막날] 형태의 데이터를 2022년 2월 1일 ~ 2022년 2월 5일 형태로 변환 */}
       <SelectedWeek onClick={onClick}>
         <strong>{formatize(selectedWeek[0], selectedWeek[1])}</strong>
