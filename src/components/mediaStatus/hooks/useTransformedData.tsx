@@ -6,10 +6,9 @@ import {
   DataType,
   CompanyType,
 } from 'types/media-status';
-import { MediaData } from 'types/dashboard';
 
 function useTransformedData() {
-  const [data, setData] = useState<MediaData[]>([]);
+  const [data, setData] = useState<any[]>([]);
   const { currentWeek } = useContext(WeekContext);
   const { totalDataContainingDates: mediaData } = useMediaLoad(
     currentWeek[0],
@@ -17,8 +16,20 @@ function useTransformedData() {
   );
 
   // 선택된 주간의 데이터 받아오기
+  // 받아온 데이터에 매출 추가하기 (roas = (매출/cost) * 100 이용)
   useEffect(() => {
-    mediaData && setData(mediaData);
+    if (mediaData) {
+      // totalMediaData: MediaData[]로 하면 에러 남
+      const addRevenueToMediaData = (totalMediaData: any[]): void => {
+        totalMediaData.forEach((dataItem) => {
+          // eslint-disable-next-line no-param-reassign
+          dataItem.revenue = (dataItem.roas * dataItem.cost) / 100;
+        });
+      };
+
+      addRevenueToMediaData(mediaData);
+      setData(mediaData);
+    }
   }, [mediaData]);
 
   // filterDataByCompany('naver') => naver에 해당되는 데이터만 포함된 배열 반환
@@ -59,7 +70,13 @@ function useTransformedData() {
   // 스택바 차트에 전달해야 하는 백분율 데이터를 얻을 수 있다
   const getStackedBarData = useCallback((): TransformedMediaData[] => {
     const transformedData: TransformedMediaData[] = [];
-    const targets: DataType[] = ['cost', 'convValue', 'imp', 'click', 'cpa'];
+    const targets: DataType[] = [
+      'cost',
+      'revenue',
+      'imp',
+      'click',
+      'convValue',
+    ];
 
     data &&
       targets.forEach((target: DataType) => {
