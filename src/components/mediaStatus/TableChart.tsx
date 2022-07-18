@@ -10,18 +10,18 @@ function TableChart() {
   const companeis: CompanyType[] = ['google', 'naver', 'kakao', 'facebook'];
 
   const columnHeader = tableData.map((data) => (
-    <th className="col" scope="col">
+    <th key={data.name} className="col" scope="col">
       {data.name}
     </th>
   ));
 
   const dataByCompany = companeis.map((company) => (
-    <tr>
-      <th className="flatform row" scope="row">
+    <tr key={Math.random().toString()}>
+      <th key={company} className="flatform row" scope="row">
         {company}
       </th>
       {tableData.map((data) => (
-        <td>{Math.round(data[company])}</td>
+        <td key={`${company}_${data.name}`}>{Math.round(data[company])}</td>
       ))}
     </tr>
   ));
@@ -30,7 +30,9 @@ function TableChart() {
     <tr>
       <th className="total row">총계</th>
       {tableData.map((data) => (
-        <td className="total">{Math.round(data.total)}</td>
+        <td key={`${data.name}_total`} className="total">
+          {Math.round(data.total)}
+        </td>
       ))}
     </tr>
   );
