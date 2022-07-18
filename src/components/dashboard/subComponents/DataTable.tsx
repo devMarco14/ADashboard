@@ -2,25 +2,10 @@ import React, { useState } from 'react';
 import { IoTriangle as Triangle } from 'react-icons/io5';
 import styled from 'styled-components';
 
-import { WeekContext } from 'libs/context';
-import { ReportData } from 'types/dashboard';
-import useReportLoad from '../hooks/useReportLoad';
+import useTotalData from '../hooks/useTotalData';
 
 export default function DataTable() {
-  const { currentWeek } = React.useContext(WeekContext);
-  const [data, setData] = useState<ReportData>();
-
-  // ReportData 예시: 파라미터를 전달할 경우 특정 기간 동안의 데이터만 반환
-  const { totalDataContainingDates: reportData } = useReportLoad(
-    currentWeek[0],
-    currentWeek[1],
-  );
-  React.useEffect(() => {
-    if (reportData) {
-      console.log(reportData);
-    }
-  }, [reportData]);
-
+  const { sumData, averageData } = useTotalData();
   return (
     <Div>
       <Section>
