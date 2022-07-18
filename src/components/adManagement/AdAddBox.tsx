@@ -1,22 +1,16 @@
-import useToggle from 'hooks/useToggle';
-import { FlexAround, FlexCenter } from 'libs/style/commonStyles';
+import { FlexAround } from 'libs/style/commonStyles';
 import React from 'react';
 import styled from 'styled-components';
-import { AdsData } from 'types/ad';
 import AdCard from './AddCardInner';
 import { UpdateTitle } from './AdManagementArticle';
 import useAdPost from './hooks/useAdPost';
-import useAdUpdateForm from './hooks/useAdUpdateForm';
 
-// interface AdArtcleProps {
-//   // ad: AdsData;
-//   // setDetectData: () => void;
-// }
 interface AdAddBoxProps {
   setDetectData: () => void;
+  handleAdd: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
-function AdAddBox({ setDetectData }: AdAddBoxProps) {
-  const [isUpdate, onToggleUpdate] = useToggle(false);
+
+function AdAddBox({ setDetectData, handleAdd }: AdAddBoxProps) {
   const { onPostForm, onChangeForm, onChangeReportForm, form } =
     useAdPost(setDetectData);
 
@@ -42,7 +36,7 @@ function AdAddBox({ setDetectData }: AdAddBoxProps) {
       />
       <EditSection>
         <FlexAround>
-          <EditButton onClick={onToggleUpdate}>취소</EditButton>
+          <EditButton onClick={handleAdd}>취소</EditButton>
           <EditButton onClick={onPostForm}>생성하기</EditButton>
         </FlexAround>
       </EditSection>
@@ -55,16 +49,6 @@ const AdBox = styled.article`
   margin: 0 auto 10px auto;
   border: 1px solid ${({ theme }) => theme.colors.lightGrayColor};
   border-radius: 5px;
-`;
-
-const AdArtcleTitle = styled.div`
-  width: 90%;
-  margin: 0 auto;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.lightGrayColor};
-  padding: 20px 0;
-  color: ${({ theme }) => theme.colors.fontColor};
-  font-size: ${({ theme }) => theme.fontSizes.large};
-  font-weight: bold;
 `;
 
 const EditSection = styled.div`

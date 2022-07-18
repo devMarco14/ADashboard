@@ -2,18 +2,17 @@ import AdAddBox from 'components/adManagement/AdAddBox';
 import AdManagementArtcle from 'components/adManagement/AdManagementArticle';
 import useAdLoad from 'components/adManagement/hooks/useAdLoad';
 import useTogle from 'hooks/useToggle';
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 function AdManagementPage() {
-  const [selectedAd, setSelectedAd] = useState<number | null>(null);
-  /* 추 후 수정되고 있는 섹션의 보더를 변경 */
   const { adData, setDetectData } = useAdLoad();
   const [isAddData, setIsAddData] = useTogle(false);
 
   const handleAdd = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setIsAddData();
   };
+
   return (
     <AdManagement>
       <AdManagementTitle>광고관리</AdManagementTitle>
@@ -26,7 +25,9 @@ function AdManagementPage() {
         </AdManagementHeader>
 
         <AdManagementBox>
-          {isAddData && <AdAddBox setDetectData={setDetectData} />}
+          {isAddData && (
+            <AdAddBox setDetectData={setDetectData} handleAdd={handleAdd} />
+          )}
           {adData.map((item) => (
             <AdManagementArtcle
               key={item.id}

@@ -90,11 +90,6 @@ const AdCategory = styled.span`
   color: ${({ theme }) => theme.colors.lightGrayColor};
 `;
 
-const AdContents = styled(AdCategory)`
-  flex: 2;
-  color: ${({ theme }) => theme.colors.fontColor};
-`;
-
 const AdInputBox = styled(FlexCenter)`
   align-items: center;
 `;
