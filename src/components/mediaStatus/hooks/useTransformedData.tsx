@@ -80,25 +80,20 @@ function useTransformedData() {
 
     data &&
       targets.forEach((target: DataType) => {
+        const totalTargetData = sumTargetDataOfCompanies(target);
+
         transformedData.push({
           name: target,
           google:
-            (sumTargetDataByCompany('google', target) /
-              sumTargetDataOfCompanies(target)) *
-            100,
+            (sumTargetDataByCompany('google', target) / totalTargetData) * 100,
           facebook:
-            (sumTargetDataByCompany('facebook', target) /
-              sumTargetDataOfCompanies(target)) *
+            (sumTargetDataByCompany('facebook', target) / totalTargetData) *
             100,
           naver:
-            (sumTargetDataByCompany('naver', target) /
-              sumTargetDataOfCompanies(target)) *
-            100,
+            (sumTargetDataByCompany('naver', target) / totalTargetData) * 100,
           kakao:
-            (sumTargetDataByCompany('kakao', target) /
-              sumTargetDataOfCompanies(target)) *
-            100,
-          total: sumTargetDataOfCompanies(target),
+            (sumTargetDataByCompany('kakao', target) / totalTargetData) * 100,
+          total: totalTargetData,
         });
       });
     return transformedData;
