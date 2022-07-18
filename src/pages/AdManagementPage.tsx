@@ -84,7 +84,13 @@ const AdManagementBox = styled.article`
   display: grid;
   justify-content: space-between;
   margin: 30px 15px;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(5, 1fr);
+  ${({ theme }) => theme.media.xxlarge} {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  ${({ theme }) => theme.media.xlarge} {
+    grid-template-columns: repeat(3, 1fr);
+  }
   ${({ theme }) => theme.media.large} {
     grid-template-columns: repeat(2, 1fr);
   }
