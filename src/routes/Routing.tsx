@@ -14,7 +14,7 @@ function Routing() {
       <Route path="*" element={<NotFoundPage />} />
 
       <Route element={<AppLayout />}>
-        <Route path={Path.LandingPage} element={<DashboardLayout />} />
+        <Route path={Path.LandingPage} element={<ContextLayout />} />
         <Route path={Path.ADManagementPage} element={<AdManagementPage />} />
       </Route>
     </Routes>
