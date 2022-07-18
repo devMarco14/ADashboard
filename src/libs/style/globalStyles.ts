@@ -5,7 +5,9 @@ const GlobalStyles = createGlobalStyle`
 html,
 body,
 #root {
-  height: 100%;;
+  height: 100%;
+  color:${({ theme }) => theme.colors.fontColor};
+  background-color:${({ theme }) => theme.colors.backgroundColor}
 }
 * {
   box-sizing: border-box;

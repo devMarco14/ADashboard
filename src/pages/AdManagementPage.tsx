@@ -75,9 +75,8 @@ const AdManagementButton = styled.button`
   width: 100px;
   height: 30px;
   background-color: ${({ theme }) => theme.colors.blueColor};
-  border: 1px solid ${({ theme }) => theme.colors.lightGrayColor};
   border-radius: 5px;
-  color: ${({ theme }) => theme.colors.whiteColor};
+  color: #fcfcfc;
   font-weight: bold;
 `;
 
