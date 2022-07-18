@@ -15,6 +15,7 @@ function MediaStatus() {
 
 const MediaStatusLayout = styled.section`
   background-color: ${({ theme }) => theme.colors.backgroundColor};
+  width: 100%;
 `;
 
 const Title = styled.h2`
