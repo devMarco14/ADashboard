@@ -23,17 +23,21 @@ function CardInner({
   onChangeReportForm,
 }: CardInnerProps) {
   const { status, startDate, report, budget, adType, title } = ad;
+  console.log(form);
   return (
     <>
       <CardInnerStyled>
         <AdCategory>상태</AdCategory>
         {isUpdate ? (
           <AdInputBox>
-            <AdInput
+            <AdSelectBox
               name="status"
-              onChange={onChangeForm}
               value={form.status}
-            />
+              onChange={onChangeForm}
+            >
+              <option value="active">진행중</option>
+              <option value="ended">종료</option>
+            </AdSelectBox>
           </AdInputBox>
         ) : (
           <AdContents>{{ active: '진행중', ended: '종료' }[status]}</AdContents>
@@ -45,6 +49,7 @@ function CardInner({
         {isUpdate ? (
           <AdInputBox>
             <AdInput
+              type="date"
               name="startDate"
               onChange={onChangeForm}
               value={form.startDate}
@@ -137,7 +142,17 @@ const AdInputBox = styled(FlexCenter)`
   align-items: center;
 `;
 
+const AdSelectBox = styled.select`
+  border: 1px solid ${({ theme }) => theme.colors.lightBlueColor};
+  border-radius: 4px;
+  height: 28px;
+  padding: 0 6px;
+  width: 160px;
+  font-weight: 600;
+`;
+
 const AdInput = styled.input`
+  font-weight: 600;
   height: 28px;
   padding: 0 6px;
   width: 160px;
