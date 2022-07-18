@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { WeekContext } from 'libs/context';
-import { ReportData } from 'types/dashboard';
-import { TargetType } from 'types/media-status';
+import { ReportData, ReportType } from 'types/dashboard';
 import useReportLoad from './useReportLoad';
 
 export default function useTotalData() {
@@ -19,7 +18,7 @@ export default function useTotalData() {
   }, [reportData]);
 
   const sumData = useCallback(
-    (key: TargetType): number => {
+    (key: ReportType): any => {
       const result = report
         .map((item) => item[key])
         .reduce(
@@ -32,8 +31,8 @@ export default function useTotalData() {
   );
 
   const averageData = useCallback(
-    (key: TargetType): number => {
-      const average = sumData(key) / report.length;
+    (key: ReportType): number => {
+      const average = parseInt(sumData(key), 10) / report.length;
       return average;
     },
     [report, sumData],

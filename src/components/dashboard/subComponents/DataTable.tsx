@@ -7,11 +7,11 @@ import useTotalData from '../hooks/useTotalData';
 export default function DataTable() {
   const { sumData, averageData } = useTotalData();
   return (
-    <Div>
+    <TableContainer>
       <Section>
         <TitleData>
           <h3>ROAS</h3>
-          <p>697%</p>
+          <p>{Math.round(averageData('roas'))}%</p>
         </TitleData>
         <RateChange>
           <Triangle />
@@ -20,8 +20,8 @@ export default function DataTable() {
       </Section>
       <Section>
         <TitleData>
-          <h3>ROAS</h3>
-          <p>697%</p>
+          <h3>광고비</h3>
+          <p>{sumData('cost').toLocaleString('ko-KR')}원</p>
         </TitleData>
         <RateChange>
           <Triangle />
@@ -30,8 +30,8 @@ export default function DataTable() {
       </Section>
       <Section>
         <TitleData>
-          <h3>ROAS</h3>
-          <p>697%</p>
+          <h3>노출수</h3>
+          <p>{sumData('imp').toLocaleString('ko-KR')}회</p>
         </TitleData>
         <RateChange>
           <Triangle />
@@ -40,8 +40,8 @@ export default function DataTable() {
       </Section>
       <Section>
         <TitleData>
-          <h3>ROAS</h3>
-          <p>697%</p>
+          <h3>클릭수</h3>
+          <p>{sumData('click').toLocaleString('ko-KR')}회</p>
         </TitleData>
         <RateChange>
           <Triangle />
@@ -50,8 +50,8 @@ export default function DataTable() {
       </Section>
       <Section>
         <TitleData>
-          <h3>ROAS</h3>
-          <p>697%</p>
+          <h3>전환수</h3>
+          <p>{sumData('conv').toLocaleString('ko-KR')}회</p>
         </TitleData>
         <RateChange>
           <Triangle />
@@ -60,17 +60,23 @@ export default function DataTable() {
       </Section>
       <Section>
         <TitleData>
-          <h3>ROAS</h3>
-          <p>697%</p>
+          <h3>매출</h3>
+          <p>{sumData('convValue').toLocaleString('ko-KR')}원</p>
         </TitleData>
         <RateChange>
           <Triangle />
           <p>18%</p>
         </RateChange>
       </Section>
-    </Div>
+    </TableContainer>
   );
 }
+
+const TableContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+`;
 
 const Section = styled.section`
   width: 300px;
@@ -82,12 +88,15 @@ const Section = styled.section`
   display: flex;
   justify-content: space-between;
   align-items: center;
-`;
 
-const Div = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  & h3 {
+    margin-bottom: 10px;
+    color: ${({ theme }) => theme.colors.fontColor};
+    font-weight: normal;
+  }
+  & p {
+    font-weight: bold;
+  }
 `;
 
 const TitleData = styled.div`
