@@ -1,14 +1,15 @@
 import { getTotalAdAPI } from 'libs/api/adAPI';
-import { Ads } from 'types/ad';
+import { AdsData } from 'types/ad';
 import { useEffect, useState } from 'react';
 import { INITIAL_AD_DATA } from 'libs/utils/initalDatas';
+import useToggle from 'hooks/useToggle';
 
 /**
  * @decoration 이건 ad를 불러오는 훅 입니다.
  */
 const useAdLoad = () => {
-  const [adData, setAdData] = useState<Ads>(INITIAL_AD_DATA);
-
+  const [adData, setAdData] = useState<AdsData[]>(INITIAL_AD_DATA);
+  const [detectData, setDetectData] = useToggle(true);
   // useEffect로 첫 렌더링때 data를 adData에 보관
   useEffect(() => {
     const getData = async () => {
@@ -21,10 +22,10 @@ const useAdLoad = () => {
       }
     };
     getData();
-  }, []);
+  }, [detectData]);
 
   // 보관한 adData 리턴
-  return { adData };
+  return { adData, setDetectData };
 };
 
 export default useAdLoad;

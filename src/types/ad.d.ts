@@ -14,8 +14,3 @@ export interface AdsData {
   status: string;
   title: string;
 }
-
-export interface Ads {
-  count: number;
-  ads: AdsData[];
-}
