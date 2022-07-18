@@ -19,22 +19,34 @@ function useTransformedData() {
   );
 
   // 선택된 주간의 데이터 받아오기
-  // 받아온 데이터에 매출 추가하기 (roas = (매출/cost) * 100 이용)
   useEffect(() => {
     if (mediaData) {
       const mediaDataCopy = [...mediaData];
+
+      // 받아온 데이터에 매출 추가하기 (roas = (매출/cost) * 100 이용)
       const addRevenueToMediaData = (CopyData: any[]) => {
         CopyData.forEach((dataItem) => {
-          dataItem['광고비'] = dataItem['cost'];
           dataItem.revenue = (dataItem.roas * dataItem.cost) / 100;
+        });
+      };
+
+      // 받아온 데이터에 한글 프로퍼티 추가하기
+      const addKoreanToMediaData = (CopyData: any[]) => {
+        CopyData.forEach((dataItem) => {
+          dataItem['광고비'] = dataItem['cost'];
           dataItem['매출'] = dataItem['revenue'];
           dataItem['노출수'] = dataItem['imp'];
           dataItem['클릭수'] = dataItem['click'];
           dataItem['전환수'] = dataItem['convValue'];
+          dataItem['클릭률 (CTR)'] = dataItem['ctr'];
+          dataItem['전환율 (CVR)'] = dataItem['cvr'];
+          dataItem['클릭당비용 (CPC)'] = dataItem['cpc'];
+          dataItem['전환당비용 (CPA)'] = dataItem['cpa'];
         });
       };
 
       addRevenueToMediaData(mediaDataCopy);
+      addKoreanToMediaData(mediaDataCopy);
       setData(mediaDataCopy);
     }
   }, [mediaData]);
@@ -109,20 +121,20 @@ function useTransformedData() {
   // 테이블 차트에 전달해야 하는 데이터를 얻을 수 있다
   const getTableData = useCallback((): TransformedMediaData[] => {
     const transformedData: TransformedMediaData[] = [];
-    const targets: DataType[] = [
-      'cost',
-      'convValue',
+    const targets: (DataType | KoreanDataType)[] = [
+      '광고비',
+      '노출수',
+      '클릭수',
+      '전환수',
       'roas',
-      'imp',
-      'click',
-      'ctr',
-      'cvr',
-      'cpc',
-      'cpa',
+      '클릭률 (CTR)',
+      '전환율 (CVR)',
+      '클릭당비용 (CPC)',
+      '전환당비용 (CPA)',
     ];
 
     data &&
-      targets.forEach((target: DataType) => {
+      targets.forEach((target: DataType | KoreanDataType) => {
         transformedData.push({
           name: target,
           google: sumTargetDataByCompany('google', target),

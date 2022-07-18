@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 export type DataType = 'cost' | 'imp' | 'click' | 'convValue' | 'ctr' | 'cvr' | 'cpc' | 'cpa' | 'roas' | 'revenue';
-export type KoreanDataType = '광고비' | '매출' | '노출수' | '클릭수' | '전환수'
+export type KoreanDataType = '광고비' | '매출' | '노출수' | '클릭수' | '전환수' | '클릭률 (CTR)' | '전환율 (CVR)' | '클릭당비용 (CPC)' | '전환당비용 (CPA)'
 
 export type CompanyType = 'google' | 'facebook' | 'naver' | 'kakao';
 export interface TransformedMediaData {
@@ -30,4 +30,8 @@ export interface ExtendedMediaData {
     노출수: number,
     클릭수: number,
     전환수: number,
+    '클릭률 (CTR)': number,
+    '전환율 (CVR)': number,
+    '클릭당비용 (CPC)': number,
+    '전환당비용 (CPA)': number,
 }
