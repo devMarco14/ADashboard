@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { WeekProvider } from 'libs/context';
+import MediaStatus from 'components/mediaStatus/MediaStatus';
 import useReportLoad from './hooks/useReportLoad';
 import SelectBox from './subComponents/SelectBox';
-import Test from './subComponents/Test';
 import DataTable from './subComponents/DataTable';
 import useFormatize from './hooks/useFormatize';
 import LineGraph from './subComponents/LineGraph';
@@ -24,6 +24,7 @@ export default function DashboardLayout() {
           <SelectBox weeksList={processedWeeks} />
         </DashboardHeaderBox>
         <TotalAdStatus />
+        <MediaStatus />
       </DashboardContainer>
     </WeekProvider>
   );

@@ -1,3 +1,5 @@
+/* eslint-disable dot-notation */
+/* eslint-disable no-param-reassign */
 import useMediaLoad from 'components/dashboard/hooks/useMediaLoad';
 import { WeekContext } from 'libs/context';
 import { useCallback, useContext, useEffect, useState } from 'react';
@@ -5,6 +7,7 @@ import {
   TransformedMediaData,
   DataType,
   CompanyType,
+  KoreanDataType,
 } from 'types/media-status';
 
 function useTransformedData() {
@@ -19,16 +22,20 @@ function useTransformedData() {
   // 받아온 데이터에 매출 추가하기 (roas = (매출/cost) * 100 이용)
   useEffect(() => {
     if (mediaData) {
-      // totalMediaData: MediaData[]로 하면 에러 남
-      const addRevenueToMediaData = (totalMediaData: any[]): void => {
-        totalMediaData.forEach((dataItem) => {
-          // eslint-disable-next-line no-param-reassign
+      const mediaDataCopy = [...mediaData];
+      const addRevenueToMediaData = (CopyData: any[]) => {
+        CopyData.forEach((dataItem) => {
+          dataItem['광고비'] = dataItem['cost'];
           dataItem.revenue = (dataItem.roas * dataItem.cost) / 100;
+          dataItem['매출'] = dataItem['revenue'];
+          dataItem['노출수'] = dataItem['imp'];
+          dataItem['클릭수'] = dataItem['click'];
+          dataItem['전환수'] = dataItem['convValue'];
         });
       };
 
-      addRevenueToMediaData(mediaData);
-      setData(mediaData);
+      addRevenueToMediaData(mediaDataCopy);
+      setData(mediaDataCopy);
     }
   }, [mediaData]);
 
@@ -42,7 +49,7 @@ function useTransformedData() {
 
   // sumTargetDataByCompany('naver', 'cost') => naver의 모든 cost를 더한 숫자 반환
   const sumTargetDataByCompany = useCallback(
-    (company: CompanyType, target: DataType) => {
+    (company: CompanyType, target: DataType | KoreanDataType) => {
       return filterDataByCompany(company)
         .map((item) => item[target])
         .reduce((prev, current) => prev + current, 0);
@@ -52,7 +59,7 @@ function useTransformedData() {
 
   // sumTargetDataOfCompanies(cost) => 모든 회사의 cost를 더한 숫자 반환
   const sumTargetDataOfCompanies = useCallback(
-    (target: DataType): number => {
+    (target: DataType | KoreanDataType): number => {
       const companies: CompanyType[] = ['google', 'facebook', 'kakao', 'naver'];
       let total = 0;
 
@@ -70,16 +77,16 @@ function useTransformedData() {
   // 스택바 차트에 전달해야 하는 백분율 데이터를 얻을 수 있다
   const getStackedBarData = useCallback((): TransformedMediaData[] => {
     const transformedData: TransformedMediaData[] = [];
-    const targets: DataType[] = [
-      'cost',
-      'revenue',
-      'imp',
-      'click',
-      'convValue',
+    const targets: KoreanDataType[] = [
+      '광고비',
+      '매출',
+      '노출수',
+      '클릭수',
+      '전환수',
     ];
 
     data &&
-      targets.forEach((target: DataType) => {
+      targets.forEach((target: KoreanDataType) => {
         const totalTargetData = sumTargetDataOfCompanies(target);
 
         transformedData.push({
