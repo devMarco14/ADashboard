@@ -2,11 +2,11 @@ import useMediaLoad from 'components/dashboard/hooks/useMediaLoad';
 import { WeekContext } from 'libs/context';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import {
-  MediaData,
   TransformedMediaData,
-  TargetType,
+  DataType,
   CompanyType,
 } from 'types/media-status';
+import { MediaData } from 'types/dashboard';
 
 function useTransformedData() {
   const [data, setData] = useState<MediaData[]>([]);
@@ -16,7 +16,7 @@ function useTransformedData() {
     currentWeek[1],
   );
 
-  // 더미 데이터 받아오기
+  // 선택된 주간의 데이터 받아오기
   useEffect(() => {
     mediaData && setData(mediaData);
   }, [mediaData]);
@@ -31,7 +31,7 @@ function useTransformedData() {
 
   // sumTargetDataByCompany('naver', 'cost') => naver의 모든 cost를 더한 숫자 반환
   const sumTargetDataByCompany = useCallback(
-    (company: CompanyType, target: TargetType) => {
+    (company: CompanyType, target: DataType) => {
       return filterDataByCompany(company)
         .map((item) => item[target])
         .reduce((prev, current) => prev + current, 0);
@@ -41,7 +41,7 @@ function useTransformedData() {
 
   // sumTargetDataOfCompanies(cost) => 모든 회사의 cost를 더한 숫자 반환
   const sumTargetDataOfCompanies = useCallback(
-    (target: TargetType): number => {
+    (target: DataType): number => {
       const companies: CompanyType[] = ['google', 'facebook', 'kakao', 'naver'];
       let total = 0;
 
@@ -59,10 +59,10 @@ function useTransformedData() {
   // 스택바 차트에 전달해야 하는 백분율 데이터를 얻을 수 있다
   const getStackedBarData = useCallback((): TransformedMediaData[] => {
     const transformedData: TransformedMediaData[] = [];
-    const targets: TargetType[] = ['cost', 'convValue', 'imp', 'click', 'cpa'];
+    const targets: DataType[] = ['cost', 'convValue', 'imp', 'click', 'cpa'];
 
     data &&
-      targets.forEach((target: TargetType) => {
+      targets.forEach((target: DataType) => {
         transformedData.push({
           name: target,
           google:
@@ -90,7 +90,7 @@ function useTransformedData() {
   // 테이블 차트에 전달해야 하는 데이터를 얻을 수 있다
   const getTableData = useCallback((): TransformedMediaData[] => {
     const transformedData: TransformedMediaData[] = [];
-    const targets: TargetType[] = [
+    const targets: DataType[] = [
       'cost',
       'convValue',
       'roas',
@@ -103,7 +103,7 @@ function useTransformedData() {
     ];
 
     data &&
-      targets.forEach((target: TargetType) => {
+      targets.forEach((target: DataType) => {
         transformedData.push({
           name: target,
           google: sumTargetDataByCompany('google', target),
