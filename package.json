@@ -8,12 +8,9 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.11.44",
-<<<<<<< HEAD
-=======
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
     "@types/recharts": "^1.8.23",
->>>>>>> e19de0f98c71807bd7d7ce25a997720b89959ed9
     "@types/styled-components": "^5.1.25",
     "axios": "^0.27.2",
     "date-fns": "^2.28.0",

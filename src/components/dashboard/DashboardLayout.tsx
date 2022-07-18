@@ -5,6 +5,7 @@ import useReportLoad from './hooks/useReportLoad';
 import SelectBox from './subComponents/SelectBox';
 import Test from './subComponents/Test';
 import useFormatize from './hooks/useFormatize';
+import LineGraph from './subComponents/LineGraph';
 
 export default function DashboardLayout() {
   // get 요청으로 받아온 첫 번째 데이터 저장
@@ -21,7 +22,7 @@ export default function DashboardLayout() {
           <SelectBox weeksList={processedWeeks} />
         </DashboardHeaderBox>
         <Test />
-        <Test />
+        <LineGraph />
       </DashboardContainer>
     </WeekProvider>
   );

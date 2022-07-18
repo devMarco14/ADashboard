@@ -43,7 +43,7 @@ export default function LineGraph() {
   }, []);
   console.log('report', report);
   return (
-    <ResponsiveContainer width={800} height="30%">
+    <ResponsiveContainer width={900} height="30%">
       <LineChart
         data={report}
         margin={{
@@ -54,7 +54,12 @@ export default function LineGraph() {
         }}
       >
         <CartesianGrid strokeDasharray="1" vertical={false} />
-        <XAxis dataKey="date" stroke="5550bd" domain={['dataMin', 'dataMax']} />
+        <XAxis
+          dataKey="date"
+          stroke="5550bd"
+          domain={['dataMin', 'dataMax']}
+          padding={{ left: 40, right: 40 }}
+        />
         <YAxis />
         <Tooltip />
         <Line
