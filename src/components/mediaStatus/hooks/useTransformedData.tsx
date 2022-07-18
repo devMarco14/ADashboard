@@ -1,5 +1,6 @@
-import apiClient from 'libs/api';
-import { useCallback, useEffect, useState } from 'react';
+import useMediaLoad from 'components/dashboard/hooks/useMediaLoad';
+import { WeekContext } from 'libs/context';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import {
   MediaData,
   TransformedMediaData,
@@ -9,12 +10,16 @@ import {
 
 function useTransformedData() {
   const [data, setData] = useState<MediaData[]>([]);
+  const { currentWeek } = useContext(WeekContext);
+  const { totalDataContainingDates: mediaData } = useMediaLoad(
+    currentWeek[0],
+    currentWeek[1],
+  );
 
   // 더미 데이터 받아오기
   useEffect(() => {
-    apiClient('/media?date_like=2022-02') //
-      .then((response) => setData(response.data));
-  }, []);
+    mediaData && setData(mediaData);
+  }, [mediaData]);
 
   // filterDataByCompany('naver') => naver에 해당되는 데이터만 포함된 배열 반환
   const filterDataByCompany = useCallback(
