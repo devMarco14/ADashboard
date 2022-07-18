@@ -15,7 +15,7 @@ const colors = {
   blueColor: '#596cf6',
   lightBlueColor: '#878fc4',
   fontColor: '#595f62',
-  lightGrayColor: '#878fc4',
+  lightGrayColor: '#c8ced8',
   redColor: '#ea3a4a',
   greenColor: '#85da47',
 };
@@ -28,10 +28,11 @@ export type Media = typeof media;
 const media = {
   xxlarge: mediaQuery(2020),
   xlarge: mediaQuery(1640),
-  large: mediaQuery(1500),
-  medium: mediaQuery(1160),
-  small: mediaQuery(740),
-  xsmall: mediaQuery(480),
+  large: mediaQuery(1250),
+  medium: mediaQuery(1000),
+  small: mediaQuery(900),
+  xsmall: mediaQuery(640),
+  xxsmall: mediaQuery(480),
   custom: mediaQuery,
 };
 
