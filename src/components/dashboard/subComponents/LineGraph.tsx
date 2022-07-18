@@ -41,9 +41,9 @@ export default function LineGraph() {
     };
     fetchData();
   }, []);
-  console.log('report', report);
+  // console.log('report', report);
   return (
-    <ResponsiveContainer width={900} height="30%">
+    <ResponsiveContainer width="100%" height="50%">
       <LineChart
         data={report}
         margin={{
