@@ -8,11 +8,8 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from 'recharts';
-import { click } from '@testing-library/user-event/dist/click';
-import { randomFillSync } from 'crypto';
 
 type Data = {
   imp: number;
@@ -46,7 +43,7 @@ export default function LineGraph() {
   }, []);
   console.log('report', report);
   return (
-    <ResponsiveContainer width={900} height={500}>
+    <ResponsiveContainer width={800} height="30%">
       <LineChart
         data={report}
         margin={{
@@ -56,13 +53,24 @@ export default function LineGraph() {
           bottom: 5,
         }}
       >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="date" stroke="5550bd" />
+        <CartesianGrid strokeDasharray="1" vertical={false} />
+        <XAxis dataKey="date" stroke="5550bd" domain={['dataMin', 'dataMax']} />
         <YAxis />
         <Tooltip />
-        <Legend />
-        <Line type="monotone" dataKey="roas" stroke="#8884d8" />
-        <Line type="monotone" dataKey="click" stroke="#82ca9d" />
+        <Line
+          type="linear"
+          dataKey="roas"
+          stroke="#596cf6"
+          activeDot={{ r: 6 }}
+          strokeWidth={2}
+        />
+        <Line
+          type="linear"
+          dataKey="click"
+          stroke="#85da47"
+          activeDot={{ r: 6 }}
+          strokeWidth={2}
+        />
       </LineChart>
     </ResponsiveContainer>
   );
