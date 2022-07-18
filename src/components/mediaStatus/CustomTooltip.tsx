@@ -21,6 +21,7 @@ const ToolTip = styled.strong`
   position: absolute;
   left: 50%;
   display: block;
+  text-align: center;
   padding: 16px 32px;
   border-radius: 8px;
   background-color: ${({ theme }) => theme.colors.fontColor};

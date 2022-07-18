@@ -102,9 +102,7 @@ function StackedBarChart() {
 }
 
 const ChartLayout = styled(ResponsiveContainer)`
-  background-color: ${({ theme }) => theme.colors.whiteColor};
-  border-radius: 8px;
-  margin: 0 auto 16px;
+  margin: 0 auto 48px;
 `;
 
 export default StackedBarChart;

@@ -63,8 +63,6 @@ const TableLayout = styled.section`
   width: 90%;
   min-width: 320px;
   margin: 0 auto 16px;
-  background-color: ${({ theme }) => theme.colors.whiteColor};
-  border-radius: 8px;
   font-weight: 300;
 
   &::-webkit-scrollbar {
