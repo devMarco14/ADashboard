@@ -24,11 +24,9 @@ export default function useHideScroll(isScrollNeedsDisplay?: boolean) {
   }, [isScrollNeedsDisplay]);
 
   // 스크롤 발생 여부를 체크해 스크롤바를 보이게 만드는 핸들러 - onScrollCapture에 사용
-  const onScrollCapture = React.useCallback(handleScrollCapture, []);
-
-  function handleScrollCapture(): void {
+  const onScrollCapture = React.useCallback(() => {
     setIsScrollCaptured(true);
-  }
+  }, []);
 
   // 스크롤을 마친 뒤 일정 시간 후에 스크롤 바를 숨기기 위한 핸들러 - onScroll에 사용
   const onScroll = React.useCallback(handleScroll, []);
