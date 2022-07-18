@@ -36,10 +36,10 @@ const media = {
   custom: mediaQuery,
 };
 
-const theme = {
+const defaultTheme = {
   fontSizes,
   colors,
   media,
 };
 
-export default theme;
+export default defaultTheme;
