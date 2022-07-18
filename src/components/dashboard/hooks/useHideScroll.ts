@@ -15,6 +15,7 @@ export default function useHideScroll(isScrollNeedsDisplay?: boolean) {
   React.useEffect(() => {
     let scrollTimer: Timeout;
     if (isScrollNeedsDisplay) {
+      if (!isScrollCaptured) setIsScrollCaptured(true);
       scrollTimer = setTimeout(
         () => setIsScrollCaptured(false),
         BASIC_SCROLL_TIMER,
