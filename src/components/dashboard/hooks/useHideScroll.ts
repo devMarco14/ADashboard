@@ -42,5 +42,5 @@ export default function useHideScroll(isScrollNeedsDisplay?: boolean) {
     }, BASIC_SCROLL_TIMER);
   }
 
-  return { isScrollCaptured, setIsScrollCaptured, onScrollCapture, onScroll };
+  return { isScrollCaptured, onScrollCapture, onScroll };
 }
