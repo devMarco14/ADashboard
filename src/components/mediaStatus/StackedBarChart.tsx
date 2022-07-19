@@ -43,8 +43,7 @@ function StackedBarChart() {
         margin={{
           top: 60,
           right: 30,
-          left: 20,
-          bottom: 5,
+          bottom: 15,
         }}
         data={stackedBarData}
       >

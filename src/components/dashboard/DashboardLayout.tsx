@@ -1,16 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-<<<<<<< HEAD
-import { WeekProvider } from 'libs/context';
-import MediaStatus from 'components/mediaStatus/MediaStatus';
-import useReportLoad from './hooks/useReportLoad';
-import SelectBox from './subComponents/SelectBox';
-import DataTable from './subComponents/DataTable';
-=======
 import { LoadContext } from 'libs/context';
 import useReportLoad from './hooks/useReportLoad';
 import SelectBox from './subComponents/SelectBox';
->>>>>>> 17382e468635e5d990e6539e88485d784af61d8d
 import useFormatize from './hooks/useFormatize';
 import TestLayout from './subComponents/TestLayout';
 
@@ -36,19 +28,6 @@ export default function DashboardLayout() {
   }, [componentLoadingState]);
 
   return (
-<<<<<<< HEAD
-    <WeekProvider>
-      <DashboardContainer>
-        <DashboardHeaderBox>
-          <DashboardHeader>대시보드</DashboardHeader>
-          {/* 전체 Week 리스트 셀렉트 박스로 전달 */}
-          <SelectBox weeksList={processedWeeks} />
-        </DashboardHeaderBox>
-        <TotalAdStatus />
-        <MediaStatus />
-      </DashboardContainer>
-    </WeekProvider>
-=======
     <DashboardContainer isLoading={childrenLoadingStates}>
       <DashboardHeaderBox>
         <DashboardHeader>대시보드</DashboardHeader>
@@ -60,7 +39,6 @@ export default function DashboardLayout() {
       <TestLayout target="report" />
       <TestLayout target="media" />
     </DashboardContainer>
->>>>>>> 17382e468635e5d990e6539e88485d784af61d8d
   );
 }
 
