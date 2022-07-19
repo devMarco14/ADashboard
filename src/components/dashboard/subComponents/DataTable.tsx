@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IoTriangle as Triangle } from 'react-icons/io5';
+import { IoTriangle } from 'react-icons/io5';
 import styled from 'styled-components';
 
 import useTotalData from '../hooks/useTotalData';
@@ -17,8 +17,8 @@ export default function DataTable({ currentData, previousData }: any) {
           <h3>ROAS</h3>
           <p>{Math.round(averageData('roas'))}%</p>
         </TitleData>
-        <RateChange>
-          <Triangle />
+        <RateChange $resultValue={diffData('roas')}>
+          <Triangle $resultValue={diffData('roas')} />
           <p>{diffData('roas') ? `${diffData('roas')}%p` : '-'}</p>
         </RateChange>
       </Section>
@@ -27,8 +27,8 @@ export default function DataTable({ currentData, previousData }: any) {
           <h3>광고비</h3>
           <p>{sumData('cost').toLocaleString('ko-KR')}원</p>
         </TitleData>
-        <RateChange>
-          <Triangle />
+        <RateChange $resultValue={diffData('cost')}>
+          <Triangle $resultValue={diffData('cost')} />
           <p>{diffData('cost') ? `${diffData('cost')}%` : '-'}</p>
         </RateChange>
       </Section>
@@ -37,8 +37,8 @@ export default function DataTable({ currentData, previousData }: any) {
           <h3>노출수</h3>
           <p>{sumData('imp').toLocaleString('ko-KR')}회</p>
         </TitleData>
-        <RateChange>
-          <Triangle />
+        <RateChange $resultValue={diffData('imp')}>
+          <Triangle $resultValue={diffData('imp')} />
           <p>{diffData('imp') ? `${diffData('imp')}%` : '-'}</p>
         </RateChange>
       </Section>
@@ -47,8 +47,8 @@ export default function DataTable({ currentData, previousData }: any) {
           <h3>클릭수</h3>
           <p>{sumData('click').toLocaleString('ko-KR')}회</p>
         </TitleData>
-        <RateChange>
-          <Triangle />
+        <RateChange $resultValue={diffData('click')}>
+          <Triangle $resultValue={diffData('click')} />
           <p>{diffData('click') ? `${diffData('click')}%` : '-'}</p>
         </RateChange>
       </Section>
@@ -57,8 +57,8 @@ export default function DataTable({ currentData, previousData }: any) {
           <h3>전환수</h3>
           <p>{sumData('conv').toLocaleString('ko-KR')}회</p>
         </TitleData>
-        <RateChange>
-          <Triangle />
+        <RateChange $resultValue={diffData('conv')}>
+          <Triangle $resultValue={diffData('conv')} />
           <p>{diffData('conv') ? `${diffData('conv')}%` : '-'}</p>
         </RateChange>
       </Section>
@@ -67,8 +67,8 @@ export default function DataTable({ currentData, previousData }: any) {
           <h3>매출</h3>
           <p>{sumData('convValue').toLocaleString('ko-KR')}원</p>
         </TitleData>
-        <RateChange>
-          <Triangle />
+        <RateChange $resultValue={diffData('convValue')}>
+          <Triangle $resultValue={diffData('convValue')} />
           <p>{diffData('convValue') ? `${diffData('convValue')}%` : '-'}</p>
         </RateChange>
       </Section>
@@ -107,7 +107,21 @@ const TitleData = styled.div`
   margin-left: 30px;
 `;
 
-const RateChange = styled.div`
+const RateChange = styled.div<{ $resultValue: number }>`
   margin-right: 30px;
   display: flex;
+  color: ${({ $resultValue, theme }) =>
+    // eslint-disable-next-line no-nested-ternary
+    $resultValue
+      ? $resultValue > 0
+        ? theme.colors.redColor
+        : theme.colors.blueColor
+      : theme.colors.lightGrayColor};
+`;
+
+const Triangle = styled(IoTriangle)<{ $resultValue: number }>`
+  margin-right: 3px;
+  transform: ${({ $resultValue }) =>
+    $resultValue < 0 ? 'rotate(180deg)' : 'rotate(0)'};
+  visibility: ${({ $resultValue }) => ($resultValue ? 'visible' : 'hidden')};
 `;
