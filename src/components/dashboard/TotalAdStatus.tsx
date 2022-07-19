@@ -5,12 +5,22 @@ import LineGraph from './subComponents/LineGraph';
 
 export default function TotalAdStatus() {
   return (
-    <DataContainer>
-      <DataTable />
-      <LineGraph />
-    </DataContainer>
+    <div>
+      <Title>통합 광고 현황</Title>
+      <DataContainer>
+        <DataTable />
+        <LineGraph />
+      </DataContainer>
+    </div>
   );
 }
+
+const Title = styled.h2`
+  font-size: 20px;
+  text-align: left;
+  color: ${({ theme }) => theme.colors.fontColor};
+  margin-bottom: 18px;
+`;
 
 const DataContainer = styled.section`
   background-color: ${({ theme }) => theme.colors.whiteColor};

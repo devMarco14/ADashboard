@@ -1,6 +1,6 @@
 import React from 'react';
 import { getTotalDataAPI } from 'libs/api/getDataAPI';
-import { MediaData } from 'types/dashboard';
+import { MediaData } from 'types/media-status';
 import { INITIAL_WEEK_STATE } from 'libs/utils/constants';
 
 const useMediaLoad = (gteDate: string, lteDate: string) => {

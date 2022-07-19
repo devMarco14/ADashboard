@@ -10,6 +10,7 @@ export interface ReportData {
   cpa: number;
   roas: number;
   date: string;
+  newDate?: string;
 }
 
 export type ReportType =
@@ -23,20 +24,6 @@ export type ReportType =
   | 'cpa'
   | 'roas'
   | 'conv';
-
-export interface MediaData {
-  channel: string;
-  date: string;
-  imp: number;
-  click: number;
-  cost: number;
-  convValue: number;
-  ctr: number;
-  cvr: number;
-  cpc: number;
-  cpa: number;
-  roas: number;
-}
 
 export interface WeekListPropsType {
   weeksList: string[][];

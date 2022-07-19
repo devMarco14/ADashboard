@@ -3,10 +3,7 @@ import styled from 'styled-components';
 import { WeekProvider } from 'libs/context';
 import useReportLoad from './hooks/useReportLoad';
 import SelectBox from './subComponents/SelectBox';
-import Test from './subComponents/Test';
-import DataTable from './subComponents/DataTable';
 import useFormatize from './hooks/useFormatize';
-import LineGraph from './subComponents/LineGraph';
 import TotalAdStatus from './TotalAdStatus';
 
 export default function DashboardLayout() {
@@ -46,4 +43,5 @@ const DashboardHeaderBox = styled.section`
 `;
 const DashboardHeader = styled.h1`
   font-size: calc(${({ theme }) => theme.fontSizes.xxlarge} * 1.5);
+  color: ${({ theme }) => theme.colors.fontColor};
 `;
