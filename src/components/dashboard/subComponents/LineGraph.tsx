@@ -39,7 +39,7 @@ export default function LineGraph({ firstValue, secondValue }: any) {
   }, [reportData]);
 
   return (
-    <ResponsiveContainer width="100%" height="50%">
+    <ResponsiveContainer width="100%" height="100%">
       <LineChart
         data={report}
         margin={{
@@ -59,10 +59,10 @@ export default function LineGraph({ firstValue, secondValue }: any) {
           <Label value="date" position="bottom" />
         </XAxis>
         <YAxis yAxisId="left">
-          <Label value={firstValue} angle={-90} position="left" />
+          <Label angle={-90} position="left" />
         </YAxis>
         <YAxis yAxisId="right" orientation="right">
-          <Label value={secondValue} angle={90} position="right" />
+          <Label angle={90} position="right" />
         </YAxis>
         <Tooltip />
         <Line

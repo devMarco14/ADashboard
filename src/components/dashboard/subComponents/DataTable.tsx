@@ -74,7 +74,7 @@ export default function DataTable() {
 
 const TableContainer = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   flex-wrap: wrap;
 `;
 
@@ -84,7 +84,7 @@ const Section = styled.section`
   background-color: ${({ theme }) => theme.colors.whiteColor};
   border: 1px solid ${({ theme }) => theme.colors.lightGrayColor};
   border-radius: 8px;
-  margin: 10px;
+  margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -97,13 +97,26 @@ const Section = styled.section`
   & p {
     font-weight: bold;
   }
+
+  ${({ theme }) => theme.media.small} {
+    max-width: 40%;
+    max-height: 30%;
+    margin: 0;
+    font-size: 13px;
+  }
 `;
 
 const TitleData = styled.div`
   margin-left: 30px;
+  ${({ theme }) => theme.media.small} {
+    margin-left: 3px;
+  }
 `;
 
 const RateChange = styled.div`
   margin-right: 30px;
   display: flex;
+  ${({ theme }) => theme.media.small} {
+    margin-right: 3px;
+  }
 `;
