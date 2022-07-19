@@ -3,23 +3,27 @@ import { WeekContext } from 'libs/context';
 import { ReportData, ReportType } from 'types/dashboard';
 import useReportLoad from './useReportLoad';
 
-export default function useTotalData() {
-  const [report, setReport] = useState<ReportData[]>([]);
-  const { currentWeek } = React.useContext(WeekContext);
+export default function useTotalData(currentData: any, previousData: any) {
+  const [currentReport, setCurrentReport] = useState<ReportData[]>([]);
+  const [previousReport, setPreviousReport] = useState<ReportData[]>([]);
+  const isReportsEqual = React.useRef(true);
 
-  const { totalDataContainingDates: reportData } = useReportLoad(
-    currentWeek.data[0],
-    currentWeek.data[1],
-  );
   React.useEffect(() => {
-    if (reportData) {
-      setReport(reportData);
+    if (currentData) {
+      setCurrentReport(currentData);
     }
-  }, [reportData]);
+    if (previousData && previousData.length > 1) {
+      setPreviousReport(previousData);
+      isReportsEqual.current = false;
+    } else {
+      setPreviousReport(currentData);
+      isReportsEqual.current = true;
+    }
+  }, [currentData, previousData]);
 
   const sumData = useCallback(
-    (key: ReportType): any => {
-      const result = report
+    (key: ReportType, dataArray = currentReport): any => {
+      const result = dataArray
         .map((item) => item[key])
         .reduce(
           (previousValue, currentValue) => previousValue + currentValue,
@@ -27,16 +31,31 @@ export default function useTotalData() {
         );
       return result;
     },
-    [report],
+    [currentReport],
   );
 
   const averageData = useCallback(
-    (key: ReportType): number => {
-      const average = parseInt(sumData(key), 10) / report.length;
+    (key: ReportType, dataArray = currentReport): number => {
+      const average = parseInt(sumData(key, dataArray), 10) / dataArray.length;
       return average;
     },
-    [report, sumData],
+    [currentReport, sumData],
   );
 
-  return { sumData, averageData };
+  const diffData = useCallback(
+    (key: ReportType): any => {
+      let result;
+      if (!isReportsEqual.current) {
+        if (key === 'roas') {
+          const diffResult =
+            averageData(key) - averageData(key, previousReport);
+          result = Math.round(diffResult);
+        }
+      }
+      return result;
+    },
+    [currentReport, previousReport],
+  );
+
+  return { sumData, averageData, diffData };
 }

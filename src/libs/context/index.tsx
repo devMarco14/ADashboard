@@ -13,7 +13,7 @@ interface ActionType<T> {
 interface WeekActionType<T> {
   type: string;
   payload: {
-    data: T;
+    currentWeek: T;
     index: number;
   };
 }
@@ -23,12 +23,12 @@ type LoadingState = {
 };
 
 type CurrentWeekType = {
-  data: string[];
+  currentWeek: string[];
   index: number;
 };
 
 interface WeekContextType {
-  currentWeek: CurrentWeekType;
+  currentWeekData: CurrentWeekType;
   changeWeek: (value: WeekActionType<string[]>) => void;
 }
 
@@ -43,7 +43,9 @@ function weekReducer(state: CurrentWeekType, action: WeekActionType<string[]>) {
       // return state.slice(state.length).concat(action.payload);
       return {
         ...state,
-        data: state.data.slice(state.data.length).concat(action.payload.data),
+        currentWeek: state.currentWeek
+          .slice(state.currentWeek.length)
+          .concat(action.payload.currentWeek),
         index: action.payload.index,
       };
     default:
@@ -62,8 +64,8 @@ function loadingReducer(state: LoadingState, action: ActionType<LoadingState>) {
 }
 
 export const WeekContext = React.createContext<WeekContextType>({
-  currentWeek: {
-    data: INITIAL_WEEK_STATE,
+  currentWeekData: {
+    currentWeek: INITIAL_WEEK_STATE,
     index: 0,
   },
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -78,7 +80,7 @@ export const LoadContext = React.createContext<LoadContextType>({
 
 export function WeekProvider({ children }: { children: React.ReactNode }) {
   const [weekState, dispatchWeek] = React.useReducer(weekReducer, {
-    data: INITIAL_WEEK_STATE,
+    currentWeek: INITIAL_WEEK_STATE,
     index: 0,
   });
 
@@ -91,7 +93,7 @@ export function WeekProvider({ children }: { children: React.ReactNode }) {
 
   const memoedValue = React.useMemo(
     () => ({
-      currentWeek: weekState,
+      currentWeekData: weekState,
       changeWeek,
     }),
     [weekState],

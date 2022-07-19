@@ -20,7 +20,7 @@ export default function SelectBox({ weeksList }: { weeksList: string[][] }) {
     React.useState<boolean>(false);
 
   // 컨텍스트를 업데이트하는 dispatch 함수
-  const { changeWeek, currentWeek } = React.useContext(WeekContext);
+  const { changeWeek, currentWeekData } = React.useContext(WeekContext);
   const { changeLoadingState, componentLoadingState } =
     React.useContext(LoadContext);
 
@@ -35,13 +35,16 @@ export default function SelectBox({ weeksList }: { weeksList: string[][] }) {
   React.useEffect(() => {
     changeWeek({
       type: WEEK_CHANGE_TYPE,
-      payload: { data: selectedWeek, index: weeksList.indexOf(selectedWeek) },
+      payload: {
+        currentWeek: selectedWeek,
+        index: weeksList.indexOf(selectedWeek),
+      },
     });
   }, [selectedWeek]);
 
   React.useEffect(() => {
-    console.log(currentWeek);
-  }, [currentWeek]);
+    // console.log(currentWeekData);
+  }, [currentWeekData]);
 
   const checkClickedInSelectBox = React.useCallback((event: MouseEvent) => {
     if (event.target) {

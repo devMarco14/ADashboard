@@ -4,8 +4,12 @@ import styled from 'styled-components';
 
 import useTotalData from '../hooks/useTotalData';
 
-export default function DataTable() {
-  const { sumData, averageData } = useTotalData();
+export default function DataTable({ currentData, previousData }: any) {
+  const { sumData, averageData, diffData } = useTotalData(
+    currentData,
+    previousData,
+  );
+
   return (
     <TableContainer>
       <Section>
@@ -15,7 +19,7 @@ export default function DataTable() {
         </TitleData>
         <RateChange>
           <Triangle />
-          <p>18%</p>
+          <p>{diffData('roas') ? `${diffData('roas')}%p` : '-'}</p>
         </RateChange>
       </Section>
       <Section>

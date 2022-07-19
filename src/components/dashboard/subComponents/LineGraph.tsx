@@ -16,17 +16,17 @@ import { ReportData } from 'types/dashboard';
 import { GRAPH_LOADING_TYPE } from 'libs/utils/constants';
 import useReportLoad from '../hooks/useReportLoad';
 
-export default function LineGraph() {
+export default function LineGraph(props: any) {
   const [report, setReport] = useState<ReportData[]>();
-  const { currentWeek } = React.useContext(WeekContext);
+  const { currentWeekData } = React.useContext(WeekContext);
 
   const { totalDataContainingDates: reportData } = useReportLoad(
-    currentWeek.data[0],
-    currentWeek.data[1],
+    currentWeekData.currentWeek[0],
+    currentWeekData.currentWeek[1],
   );
   React.useEffect(() => {
     if (reportData) {
-      console.log(reportData);
+      // console.log(reportData);
       setReport(reportData);
     }
   }, [reportData]);
