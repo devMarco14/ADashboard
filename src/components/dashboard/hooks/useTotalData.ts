@@ -18,7 +18,7 @@ export default function useTotalData() {
   }, [reportData]);
 
   const sumData = useCallback(
-    (key: ReportType): any => {
+    (key: ReportType): number => {
       const result = report
         .map((item) => item[key])
         .reduce(
@@ -32,7 +32,7 @@ export default function useTotalData() {
 
   const averageData = useCallback(
     (key: ReportType): number => {
-      const average = parseInt(sumData(key), 10) / report.length;
+      const average = sumData(key) / report.length;
       return average;
     },
     [report, sumData],
