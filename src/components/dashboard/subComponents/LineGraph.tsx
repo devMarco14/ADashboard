@@ -11,8 +11,9 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-import { WeekContext } from 'libs/context';
+import { WeekContext, LoadContext } from 'libs/context';
 import { ReportData } from 'types/dashboard';
+import { GRAPH_LOADING_TYPE } from 'libs/utils/constants';
 import useReportLoad from '../hooks/useReportLoad';
 
 export default function LineGraph() {
@@ -20,8 +21,8 @@ export default function LineGraph() {
   const { currentWeek } = React.useContext(WeekContext);
 
   const { totalDataContainingDates: reportData } = useReportLoad(
-    currentWeek[0],
-    currentWeek[1],
+    currentWeek.data[0],
+    currentWeek.data[1],
   );
   React.useEffect(() => {
     if (reportData) {
@@ -29,6 +30,28 @@ export default function LineGraph() {
       setReport(reportData);
     }
   }, [reportData]);
+
+  /* ############### 임시 작성 ############### */
+  const { componentLoadingState, changeLoadingState } =
+    React.useContext(LoadContext);
+  React.useEffect(() => {
+    changeLoadingState({
+      type: GRAPH_LOADING_TYPE,
+      payload: { report: true },
+    });
+  }, []);
+
+  React.useEffect(() => {
+    if (reportData) {
+      setTimeout(() => {
+        changeLoadingState({
+          type: GRAPH_LOADING_TYPE,
+          payload: { report: false },
+        });
+      }, 0);
+    }
+  }, [reportData]);
+  /* ############### 임시 작성 ############### */
 
   return (
     <ResponsiveContainer width="100%" height="50%">

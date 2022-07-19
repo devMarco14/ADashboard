@@ -37,7 +37,7 @@ export default function DashboardLayout() {
       {/* <Test />
           <Test /> */}
       <TestLayout target="report" />
-      <TestLayout target="media" />
+      {/* <TestLayout target="media" /> */}
     </DashboardContainer>
   );
 }

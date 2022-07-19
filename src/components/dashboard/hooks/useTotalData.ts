@@ -8,8 +8,8 @@ export default function useTotalData() {
   const { currentWeek } = React.useContext(WeekContext);
 
   const { totalDataContainingDates: reportData } = useReportLoad(
-    currentWeek[0],
-    currentWeek[1],
+    currentWeek.data[0],
+    currentWeek.data[1],
   );
   React.useEffect(() => {
     if (reportData) {

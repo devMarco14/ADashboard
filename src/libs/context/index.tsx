@@ -10,13 +10,26 @@ interface ActionType<T> {
   payload: T;
 }
 
+interface WeekActionType<T> {
+  type: string;
+  payload: {
+    data: T;
+    index: number;
+  };
+}
+
 type LoadingState = {
   [key in string]?: boolean;
 };
 
+type CurrentWeekType = {
+  data: string[];
+  index: number;
+};
+
 interface WeekContextType {
-  currentWeek: string[];
-  changeWeek: (value: ActionType<string[]>) => void;
+  currentWeek: CurrentWeekType;
+  changeWeek: (value: WeekActionType<string[]>) => void;
 }
 
 interface LoadContextType {
@@ -24,10 +37,15 @@ interface LoadContextType {
   changeLoadingState: (value: ActionType<LoadingState>) => void;
 }
 
-function weekReducer(state: string[], action: ActionType<string[]>) {
+function weekReducer(state: CurrentWeekType, action: WeekActionType<string[]>) {
   switch (action.type) {
     case WEEK_CHANGE_TYPE:
-      return state.slice(state.length).concat(action.payload);
+      // return state.slice(state.length).concat(action.payload);
+      return {
+        ...state,
+        data: state.data.slice(state.data.length).concat(action.payload.data),
+        index: action.payload.index,
+      };
     default:
       return state;
   }
@@ -44,7 +62,10 @@ function loadingReducer(state: LoadingState, action: ActionType<LoadingState>) {
 }
 
 export const WeekContext = React.createContext<WeekContextType>({
-  currentWeek: INITIAL_WEEK_STATE,
+  currentWeek: {
+    data: INITIAL_WEEK_STATE,
+    index: 0,
+  },
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   changeWeek: () => {},
 });
@@ -56,13 +77,13 @@ export const LoadContext = React.createContext<LoadContextType>({
 });
 
 export function WeekProvider({ children }: { children: React.ReactNode }) {
-  const [weekState, dispatchWeek] = React.useReducer(
-    weekReducer,
-    INITIAL_WEEK_STATE,
-  );
+  const [weekState, dispatchWeek] = React.useReducer(weekReducer, {
+    data: INITIAL_WEEK_STATE,
+    index: 0,
+  });
 
   const changeWeek = React.useCallback(
-    (value: ActionType<string[]>): void => {
+    (value: WeekActionType<string[]>): void => {
       dispatchWeek(value);
     },
     [weekState],

@@ -2,7 +2,9 @@
 import React from 'react';
 import { LoadContext } from 'libs/context';
 import styled from 'styled-components';
-import Test from './Test';
+import DataTable from './DataTable';
+import LineGraph from './LineGraph';
+// import Test from './Test';
 import spinner from '../assets/Spinner-1s-200px.svg';
 // const TestPage = React.lazy(() => import('./Test'));
 
@@ -23,7 +25,9 @@ export default function TestLayout(props: any) {
     //   <TestPage />
     // </React.Suspense>
     <TestContainer>
-      <Test target={props.target} />
+      {/* <Test target={props.target} /> */}
+      <DataTable />
+      <LineGraph />
       <Div
         id="foo"
         loadingState={childLoadingState}
