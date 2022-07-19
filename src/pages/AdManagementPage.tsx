@@ -10,6 +10,7 @@ function AdManagementPage() {
   const [stateAD, onChangeStateAD] = useInput('');
   const { adData, setDetectData } = useAdLoad(stateAD as string);
   const [isAddData, setIsAddData] = useToggle(false);
+
   return (
     <AdManagement>
       <AdManagementTitle>광고관리</AdManagementTitle>
@@ -26,7 +27,13 @@ function AdManagementPage() {
               <option value="ended">종료</option>
             </ADFilterSelect>
           </div>
-          <AdManagementButton>광고 만들기</AdManagementButton>
+          <AdManagementButton
+            onClick={() => {
+              setIsAddData();
+            }}
+          >
+            광고 만들기
+          </AdManagementButton>
         </AdManagementHeader>
 
         <AdManagementBox>
