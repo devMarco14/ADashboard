@@ -54,7 +54,7 @@ function AdAddBox({ setDetectData, handleAdd }: AdAddBoxProps) {
 const AdBox = styled.article`
   width: 270px;
   margin: 0 auto 10px auto;
-  border: 1px solid ${({ theme }) => theme.colors.lightGrayColor};
+  border: 1px solid ${({ theme }) => theme.colors.blueColor};
   border-radius: 5px;
 `;
 
