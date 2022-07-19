@@ -5,6 +5,7 @@ import spinner from 'components/dashboard/assets/Spinner-1s-200px.svg';
 import useReportLoad from './hooks/useReportLoad';
 import DataTable from './subComponents/DataTable';
 import LineGraph from './subComponents/LineGraph';
+import SelectGraph from './subComponents/SelectGraph';
 
 interface TotalAdStatusProps {
   weeksList: string[][];
@@ -36,11 +37,19 @@ export default function TotalAdStatus({ weeksList }: TotalAdStatusProps) {
   return (
     <DataContainer>
       <DataTable currentData={currentData} previousData={previousData} />
-      <LineGraph currentData={currentData} />
+      {/* <LineGraph currentData={currentData} /> */}
+      <SelectGraph currentData={currentData} />
       <GraphLoad loadingState={childLoadingState}>
         <img src={spinner} alt="spinner" />
       </GraphLoad>
     </DataContainer>
+    // <div>
+    //   <Title>통합 광고 현황</Title>
+    //   <DataContainer>
+    //     <DataTable />
+    //     <SelectGraph />
+    //   </DataContainer>
+    // </div>
   );
 }
 

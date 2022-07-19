@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { postAddAPI } from 'libs/api/adAPI';
-import { ADD_DATA } from 'libs/utils/initalDatas';
+import { ADD_DATA } from 'libs/utils/initialDatas';
 
 const useAdPost = (setDetectData: () => void) => {
   const [form, setForms] = useState(ADD_DATA);
