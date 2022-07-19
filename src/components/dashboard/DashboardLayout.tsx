@@ -60,4 +60,7 @@ const DashboardHeaderBox = styled.section`
 const DashboardHeader = styled.h1`
   font-size: calc(${({ theme }) => theme.fontSizes.xxlarge} * 1.5);
   color: ${({ theme }) => theme.colors.fontColor};
+  ${({ theme }) => theme.media.small} {
+    font-size: calc(${({ theme }) => theme.fontSizes.large} * 1.5);
+  }
 `;

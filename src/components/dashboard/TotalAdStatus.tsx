@@ -69,6 +69,7 @@ const DataContainer = styled.section`
   box-shadow: 1px 1px 9px 1px ${({ theme }) => theme.colors.lightGrayColor};
   display: flex;
   flex-direction: column;
+<<<<<<< HEAD
   justify-content: center;
   position: relative;
 `;
@@ -82,4 +83,7 @@ const GraphLoad = styled.div<{ loadingState: boolean }>`
   display: ${(props) => (props.loadingState ? 'flex' : 'none')};
   justify-content: center;
   align-items: center;
+=======
+  justify-content: space-evenly;
+>>>>>>> b2f845d (#24 통합 광고 현황 미디어쿼리 적용)
 `;
