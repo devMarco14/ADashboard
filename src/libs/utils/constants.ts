@@ -9,3 +9,5 @@ export const COMMON_DATE_FORMAT = 'yyyy-MM-dd';
 export const KOREAN_DATE_FORMAT = 'yyyy년 MM월 dd일';
 
 export const BASIC_SCROLL_TIMER = 500;
+
+export const GRAPH_LOADING_TYPE = 'GRAPH_LOADING';
