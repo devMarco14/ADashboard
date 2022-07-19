@@ -3,10 +3,10 @@ import useHideScroll from 'components/dashboard/hooks/useHideScroll';
 import React from 'react';
 import styled from 'styled-components';
 import { CompanyType } from 'types/media-status';
-import useTransformedData from './hooks/useTransformedData';
+import useMediaData from '../hooks/useMediaData';
 
 function TableChart() {
-  const { getTableData } = useTransformedData();
+  const { getTableData } = useMediaData();
   const tableData = getTableData();
   const companeis: CompanyType[] = ['google', 'naver', 'kakao', 'facebook'];
   const { onScrollCapture, onScroll, isScrollCaptured } = useHideScroll();
@@ -71,6 +71,7 @@ const TableLayout = styled.section<{ isScrollCaptured: boolean }>`
   width: 90%;
   min-width: 320px;
   margin: 0 auto 16px;
+  padding-bottom: 16px;
   font-weight: 300;
 
   &::-webkit-scrollbar {
@@ -86,7 +87,7 @@ const TableLayout = styled.section<{ isScrollCaptured: boolean }>`
   }
 
   &::-webkit-scrollbar-track {
-    background: ${({ theme }) => theme.colors.backgroundColor};
+    background: ${({ theme }) => theme.colors.whiteColor};
     border-radius: 10px;
   }
 `;

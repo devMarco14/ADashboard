@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { TooltipProps } from 'recharts';
 
-function CustomTooltip({ active, payload }: TooltipProps<number, string>) {
+function StackedBarTooltip({ active, payload }: TooltipProps<number, string>) {
   if (active && payload && payload.length) {
     const { total } = payload[0].payload;
     const format = (data: number) => {
@@ -15,7 +15,7 @@ function CustomTooltip({ active, payload }: TooltipProps<number, string>) {
   return null;
 }
 
-export default CustomTooltip;
+export default StackedBarTooltip;
 
 const ToolTip = styled.strong`
   position: absolute;

@@ -11,8 +11,8 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import styled from 'styled-components';
-import CustomTooltip from './CustomTooltip';
-import useTransformedData from './hooks/useTransformedData';
+import StackedBarTooltip from './StackedBarTooltip';
+import useMediaData from '../hooks/useMediaData';
 
 type tooltipPosition = {
   x?: number;
@@ -21,7 +21,7 @@ type tooltipPosition = {
 
 function StackedBarChart() {
   const [tooltipPosition, setTooltipPosition] = useState<tooltipPosition>({});
-  const { getStackedBarData } = useTransformedData();
+  const { getStackedBarData } = useMediaData();
   const stackedBarData = getStackedBarData();
 
   const changeTooltipPosition = (positionX: number): void => {
@@ -61,7 +61,7 @@ function StackedBarChart() {
           tickLine={{ fill: '#c8ced8' }}
         />
         <Tooltip
-          content={<CustomTooltip />}
+          content={<StackedBarTooltip />}
           cursor={false}
           position={{ x: tooltipPosition.x, y: tooltipPosition.y }}
         />

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { LoadContext } from 'libs/context';
-import MediaStatus from 'components/mediaStatus/MediaStatus';
+import MediaStatus from 'components/dashboard/MediaStatus';
 import useReportLoad from './hooks/useReportLoad';
 import SelectBox from './subComponents/SelectBox';
 import useFormatize from './hooks/useFormatize';

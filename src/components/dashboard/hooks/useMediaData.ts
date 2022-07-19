@@ -12,7 +12,7 @@ import {
 } from 'types/media-status';
 import { MediaData } from 'types/dashboard';
 
-function useTransformedData() {
+function useMediaData() {
   const [data, setData] = useState<MediaData[]>([]);
   const { currentWeek } = useContext(WeekContext);
   const { totalDataContainingDates: mediaData } = useMediaLoad(
@@ -151,4 +151,4 @@ function useTransformedData() {
   return { getStackedBarData, getTableData };
 }
 
-export default useTransformedData;
+export default useMediaData;
