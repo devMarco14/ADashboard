@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { AiFillCaretLeft as ExitIcon } from 'react-icons/ai';
+import { ThemeContext } from 'libs/context/theme';
+import { FlexBetween, FlexCenter } from 'libs/style/commonStyles';
 import SideBarInner from './SideBarInner';
+import ToggleButton from './ToggleButton';
 
 interface MobileSideBarProps {
   isSideBar: boolean;
@@ -9,11 +12,14 @@ interface MobileSideBarProps {
 }
 
 function MobileSideBar({ isSideBar, onToggleSideBar }: MobileSideBarProps) {
+  const { ThemeMode, onToggleTheme } = useContext(ThemeContext);
   return (
     <SideBarBlock>
       <InnerBox isSideBar={isSideBar}>
         <DashBoardHeader>
           <ExitIcon onClick={onToggleSideBar} size={18} />
+          테마 변환
+          <ToggleButton isActive={ThemeMode} onToggle={onToggleTheme} />
         </DashBoardHeader>
 
         <SideBarInner />
@@ -27,14 +33,16 @@ const SideBarBlock = styled.div`
   position: relative;
   ${({ theme }) => theme.media.small} {
     display: block;
+    background-color: ${({ theme }) => theme.colors.backgroundColor};
   }
 `;
-const DashBoardHeader = styled.div`
+const DashBoardHeader = styled(FlexCenter)`
   height: 45px;
   display: flex;
   align-items: center;
   padding: 15px;
   margin: 0 6px;
+  gap: 8px;
   color: ${({ theme }) => theme.colors.fontColor};
 `;
 

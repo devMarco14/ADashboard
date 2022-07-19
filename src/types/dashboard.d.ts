@@ -10,6 +10,7 @@ export interface ReportData {
   cpa: number;
   roas: number;
   date: string;
+  newDate?: string;
 }
 
 export type ReportType =
@@ -36,6 +37,7 @@ export interface MediaData {
   cpc: number;
   cpa: number;
   roas: number;
+  revenue?: number;
 }
 
 export interface WeekListPropsType {

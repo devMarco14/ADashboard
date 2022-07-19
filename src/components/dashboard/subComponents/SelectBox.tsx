@@ -3,7 +3,11 @@ import styled from 'styled-components';
 import { BsChevronDown } from 'react-icons/bs';
 import { WeekContext, LoadContext } from 'libs/context';
 import { formatize } from 'components/dashboard/util';
-import { GRAPH_LOADING_TYPE, INITIAL_WEEK_STATE, WEEK_CHANGE_TYPE } from 'libs/utils/constants';
+import {
+  GRAPH_LOADING_TYPE,
+  INITIAL_WEEK_STATE,
+  WEEK_CHANGE_TYPE,
+} from 'libs/utils/constants';
 import WeekList from './WeekList';
 
 // weeksList는 DashboardLayout의 totalWeeks로, 드롭다운 목록을 표시 + 컨텍스트에 업데이트하기 위함임

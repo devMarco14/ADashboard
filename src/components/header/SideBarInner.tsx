@@ -13,20 +13,18 @@ function SideBarInner() {
   return (
     <InnerLayout>
       <LinkTitle>로고 센터</LinkTitle>
-      <LinkLabel
-        to={Path.LandingPage}
-        isActive={!checkADManagementPage(location.pathname)}
-      >
-        <DashBoardIcon />
-        대시보드
-      </LinkLabel>
-      <LinkLabel
-        to={Path.ADManagementPage}
-        isActive={checkADManagementPage(location.pathname)}
-      >
-        <ChartIcon />
-        광고관리
-      </LinkLabel>
+      <LinkTabStyled isLinked={!checkADManagementPage(location.pathname)}>
+        <LinkLabel to={Path.LandingPage}>
+          <DashBoardIcon />
+          대시보드
+        </LinkLabel>
+      </LinkTabStyled>
+      <LinkTabStyled isLinked={checkADManagementPage(location.pathname)}>
+        <LinkLabel to={Path.ADManagementPage}>
+          <ChartIcon />
+          광고관리
+        </LinkLabel>
+      </LinkTabStyled>
     </InnerLayout>
   );
 }
@@ -38,17 +36,9 @@ const LinkTitle = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.xsmall};
   margin: 4px 4px 8px 4px;
 `;
-const LinkLabel = styled(Link)<{ isActive: boolean }>`
-  width: 100%;
-  font-weight: 500;
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  margin: 2px 0;
-  gap: 4px;
-  transition: all 0.3s ease-in-out;
-  ${({ isActive }) =>
-    isActive &&
+const LinkTabStyled = styled.div<{ isLinked: boolean }>`
+  ${({ isLinked }) =>
+    isLinked &&
     css`
       background-color: ${({ theme }) => theme.colors.lightGrayColor};
       border-radius: 6px;
@@ -59,5 +49,15 @@ const LinkLabel = styled(Link)<{ isActive: boolean }>`
     border-radius: 6px;
     color: ${({ theme }) => theme.colors.blueColor};
   }
+`;
+const LinkLabel = styled(Link)`
+  width: 100%;
+  font-weight: 500;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  margin: 2px 0;
+  gap: 4px;
+  transition: all 0.3s ease-in-out;
 `;
 export default SideBarInner;

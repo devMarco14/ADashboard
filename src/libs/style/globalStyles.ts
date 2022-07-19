@@ -6,7 +6,8 @@ html,
 body,
 #root {
   height: 100%;
-  background-color: ${({ theme }) => theme.colors.backgroundColor};
+  color:${({ theme }) => theme.colors.fontColor};
+  background-color:${({ theme }) => theme.colors.backgroundColor}
 }
 * {
   box-sizing: border-box;

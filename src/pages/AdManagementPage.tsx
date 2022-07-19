@@ -1,23 +1,32 @@
 import AdAddBox from 'components/adManagement/AdAddBox';
 import AdManagementArtcle from 'components/adManagement/AdManagementArticle';
 import useAdLoad from 'components/adManagement/hooks/useAdLoad';
+import useInput from 'hooks/useInput';
 import useToggle from 'hooks/useToggle';
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 function AdManagementPage() {
-  const { adData, setDetectData } = useAdLoad();
+  const [stateAD, onChangeStateAD] = useInput('');
+  const { adData, setDetectData } = useAdLoad(stateAD as string);
   const [isAddData, setIsAddData] = useToggle(false);
-
   return (
     <AdManagement>
       <AdManagementTitle>광고관리</AdManagementTitle>
       <AdManagementSection>
         <AdManagementHeader>
-          <div>드롭다운메뉴</div>
-          <AdManagementButton onClick={() => setIsAddData()}>
-            광고 만들기
-          </AdManagementButton>
+          <div>
+            <ADFilterSelect
+              name="filter"
+              value={stateAD}
+              onChange={onChangeStateAD}
+            >
+              <option value="">전체</option>
+              <option value="active">진행중</option>
+              <option value="ended">종료</option>
+            </ADFilterSelect>
+          </div>
+          <AdManagementButton>광고 만들기</AdManagementButton>
         </AdManagementHeader>
 
         <AdManagementBox>
@@ -73,9 +82,8 @@ const AdManagementButton = styled.button`
   width: 100px;
   height: 30px;
   background-color: ${({ theme }) => theme.colors.blueColor};
-  border: 1px solid ${({ theme }) => theme.colors.lightGrayColor};
   border-radius: 5px;
-  color: ${({ theme }) => theme.colors.whiteColor};
+  color: #fcfcfc;
   font-weight: bold;
 `;
 
@@ -98,4 +106,14 @@ const AdManagementBox = styled.article`
   }
 `;
 
+const ADFilterSelect = styled.select`
+  width: 100px;
+  height: 32px;
+  border-radius: 6px;
+  margin-left: 20px;
+  border: 1px solid ${({ theme }) => theme.colors.lightGrayColor};
+  ${({ theme }) => theme.media.small} {
+    margin-left: 0px;
+  }
+`;
 export default AdManagementPage;
