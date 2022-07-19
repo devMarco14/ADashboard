@@ -37,7 +37,7 @@ export default function LineGraph({ currentData }: LineGraphProps) {
           type: GRAPH_LOADING_TYPE,
           payload: { report: false },
         });
-      }, 0);
+      }, 1000);
     }
   }, [currentData]);
 

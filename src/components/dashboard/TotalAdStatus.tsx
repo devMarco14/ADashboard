@@ -51,10 +51,10 @@ const DataContainer = styled.section`
   height: max-content;
   border-radius: 20px;
   box-shadow: 1px 1px 9px 1px ${({ theme }) => theme.colors.lightGrayColor};
-
   display: flex;
   flex-direction: column;
   justify-content: center;
+  position: relative;
 `;
 const GraphLoad = styled.div<{ loadingState: boolean }>`
   position: absolute;
