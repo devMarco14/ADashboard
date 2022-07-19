@@ -1,8 +1,8 @@
 import { AdsData } from 'types/ad';
 import apiClient from '.';
 
-export const getTotalAdAPI = async () => {
-  const response = await apiClient.get('/ad');
+export const getTotalAdAPI = async (state: string) => {
+  const response = await apiClient.get(`/ad?status_like=${state}`);
   return response.data;
 };
 

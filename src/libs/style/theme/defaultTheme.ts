@@ -1,5 +1,5 @@
 export type FontSizes = typeof fontSizes;
-const fontSizes = {
+export const fontSizes = {
   xsmall: '10px',
   small: '12px',
   medium: '14px',
@@ -25,7 +25,7 @@ export const mediaQuery = (maxWidth: number) => `
 `;
 
 export type Media = typeof media;
-const media = {
+export const media = {
   xxlarge: mediaQuery(2020),
   xlarge: mediaQuery(1640),
   large: mediaQuery(1250),
@@ -36,10 +36,10 @@ const media = {
   custom: mediaQuery,
 };
 
-const theme = {
+const defaultTheme = {
   fontSizes,
   colors,
   media,
 };
 
-export default theme;
+export default defaultTheme;

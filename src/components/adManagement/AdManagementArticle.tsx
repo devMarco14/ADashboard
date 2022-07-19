@@ -88,7 +88,7 @@ export const UpdateTitle = styled(AdArtcleTitle)`
     font-weight: bold;
     color: ${({ theme }) => theme.colors.fontColor};
     border: 1px solid ${({ theme }) => theme.colors.lightBlueColor};
-    width: 110px;
+    width: 100%;
     border-radius: 4px;
     padding: 4px;
   }
