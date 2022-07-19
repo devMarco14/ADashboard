@@ -25,6 +25,21 @@ export type ReportType =
   | 'roas'
   | 'conv';
 
+export interface MediaData {
+  channel: string;
+  date: string;
+  imp: number;
+  click: number;
+  cost: number;
+  convValue: number;
+  ctr: number;
+  cvr: number;
+  cpc: number;
+  cpa: number;
+  roas: number;
+  revenue?: number;
+}
+
 export interface WeekListPropsType {
   weeksList: string[][];
   setWeek: (value: string[]) => void;

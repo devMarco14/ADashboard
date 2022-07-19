@@ -1,7 +1,7 @@
 import React from 'react';
 import { getTotalDataAPI } from 'libs/api/getDataAPI';
-import { MediaData } from 'types/media-status';
 import { INITIAL_WEEK_STATE } from 'libs/utils/constants';
+import { MediaData } from 'types/dashboard';
 
 const useMediaLoad = (gteDate: string, lteDate: string) => {
   // locaohost:json-server/report의 모든 데이터를 저장하는 state: Week 데이터로 가공하기 전 상태

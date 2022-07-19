@@ -82,7 +82,7 @@ const AdArtcleTitle = styled.div`
   font-weight: bold;
 `;
 
-const UpdateTitle = styled(AdArtcleTitle)`
+export const UpdateTitle = styled(AdArtcleTitle)`
   padding: 14px 0;
   input {
     font-weight: bold;
