@@ -1,7 +1,7 @@
 import React from 'react';
 import { WeekContext, LoadContext } from 'libs/context';
 import styled from 'styled-components';
-import { INITIAL_WEEK_STATE } from 'libs/utils/constants';
+import { GRAPH_LOADING_TYPE, INITIAL_WEEK_STATE } from 'libs/utils/constants';
 import useMediaLoad from '../hooks/useMediaLoad';
 import useReportLoad from '../hooks/useReportLoad';
 
@@ -25,14 +25,20 @@ export default function Test(props: any) {
   const { target } = props;
 
   React.useEffect(() => {
-    changeLoadingState({ type: 'TEST', payload: { [target]: true } });
+    changeLoadingState({
+      type: GRAPH_LOADING_TYPE,
+      payload: { [target]: true },
+    });
   }, []);
 
   React.useEffect(() => {
     if (reportData) {
       console.log(reportData);
       setTimeout(() => {
-        changeLoadingState({ type: 'TEST', payload: { [target]: false } });
+        changeLoadingState({
+          type: GRAPH_LOADING_TYPE,
+          payload: { [target]: false },
+        });
       }, 1000);
     }
   }, [reportData]);

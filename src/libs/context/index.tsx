@@ -1,5 +1,9 @@
 import React from 'react';
-import { WEEK_CHANGE_TYPE, INITIAL_WEEK_STATE } from 'libs/utils/constants';
+import {
+  WEEK_CHANGE_TYPE,
+  INITIAL_WEEK_STATE,
+  GRAPH_LOADING_TYPE,
+} from 'libs/utils/constants';
 
 interface ActionType<T> {
   type: string;
@@ -31,7 +35,7 @@ function weekReducer(state: string[], action: ActionType<string[]>) {
 
 function loadingReducer(state: LoadingState, action: ActionType<LoadingState>) {
   switch (action.type) {
-    case 'TEST':
+    case GRAPH_LOADING_TYPE:
       // console.log(state, action.payload, { ...state, ...action.payload });
       return { ...state, ...action.payload };
     default:

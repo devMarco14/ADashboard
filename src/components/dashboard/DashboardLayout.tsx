@@ -16,11 +16,11 @@ export default function DashboardLayout() {
     React.useState<boolean>(false);
 
   React.useEffect(() => {
-    const foo = Object.values(componentLoadingState).filter(
+    const graphsLoadingStates = Object.values(componentLoadingState).filter(
       (childLoadingState: boolean | undefined) => childLoadingState,
     );
-    console.log(foo);
-    if (foo.length === 0) {
+
+    if (graphsLoadingStates.length === 0) {
       setChildrenLoadingStates(false);
     } else {
       setChildrenLoadingStates(true);

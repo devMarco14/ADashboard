@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { BsChevronDown } from 'react-icons/bs';
 import { WeekContext, LoadContext } from 'libs/context';
 import { formatize } from 'components/dashboard/util';
-import { INITIAL_WEEK_STATE } from 'libs/utils/constants';
+import { GRAPH_LOADING_TYPE, INITIAL_WEEK_STATE, WEEK_CHANGE_TYPE } from 'libs/utils/constants';
 import WeekList from './WeekList';
 
 // weeksList는 DashboardLayout의 totalWeeks로, 드롭다운 목록을 표시 + 컨텍스트에 업데이트하기 위함임
@@ -29,7 +29,7 @@ export default function SelectBox({ weeksList }: { weeksList: string[][] }) {
 
   // 드롭다운 메뉴에서 선택한 주를 selectedWeek로 갱신
   React.useEffect(() => {
-    changeWeek({ type: 'WEEK_REQUESTED', payload: selectedWeek });
+    changeWeek({ type: WEEK_CHANGE_TYPE, payload: selectedWeek });
   }, [selectedWeek]);
 
   const checkClickedInSelectBox = React.useCallback((event: MouseEvent) => {
@@ -58,7 +58,7 @@ export default function SelectBox({ weeksList }: { weeksList: string[][] }) {
     if (!event.currentTarget) {
       Object.keys(componentLoadingState).forEach((childLoadingState: string) =>
         changeLoadingState({
-          type: 'TEST',
+          type: GRAPH_LOADING_TYPE,
           payload: { [childLoadingState]: true },
         }),
       );
