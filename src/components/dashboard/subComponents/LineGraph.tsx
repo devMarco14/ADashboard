@@ -11,37 +11,25 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-type Data = {
-  imp: number;
-  click: number;
-  cost: number;
-  conv: number;
-  convValue: number;
-  ctr: number;
-  cvr: number;
-  cpc: number;
-  cpa: number;
-  roas: number;
-  date: string;
-}[];
+import { WeekContext } from 'libs/context';
+import { ReportData } from 'types/dashboard';
+import useReportLoad from '../hooks/useReportLoad';
 
 export default function LineGraph() {
-  const [report, setReport] = useState<Data>([]);
+  const [report, setReport] = useState<ReportData[]>();
+  const { currentWeek } = React.useContext(WeekContext);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          'http://localhost:8080/report?date_gte=2022-02-06&date_lte=2022-02-12',
-        );
-        setReport(response?.data);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    fetchData();
-  }, []);
-  // console.log('report', report);
+  const { totalDataContainingDates: reportData } = useReportLoad(
+    currentWeek[0],
+    currentWeek[1],
+  );
+  React.useEffect(() => {
+    if (reportData) {
+      console.log(reportData);
+      setReport(reportData);
+    }
+  }, [reportData]);
+
   return (
     <ResponsiveContainer width="100%" height="50%">
       <LineChart

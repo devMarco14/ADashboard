@@ -10,3 +10,8 @@ export const putAdByIdAPI = async (body: AdsData) => {
   const response = await apiClient.patch(`/ad/${body.id}`, body);
   return response.data;
 };
+
+export const postAddAPI = async (body: AdsData) => {
+  const response = await apiClient.post(`/ad`, body);
+  return response.data;
+};

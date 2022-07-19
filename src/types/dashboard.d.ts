@@ -12,6 +12,18 @@ export interface ReportData {
   date: string;
 }
 
+export type ReportType =
+  | 'cost'
+  | 'imp'
+  | 'click'
+  | 'convValue'
+  | 'ctr'
+  | 'cvr'
+  | 'cpc'
+  | 'cpa'
+  | 'roas'
+  | 'conv';
+
 export interface MediaData {
   channel: string;
   date: string;
