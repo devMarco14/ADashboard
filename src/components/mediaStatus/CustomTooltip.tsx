@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { TooltipProps } from 'recharts';
 
-// 데이터 타입 any 문제
-function CustomTooltip({ active, payload }: any) {
+function CustomTooltip({ active, payload }: TooltipProps<number, string>) {
   if (active && payload && payload.length) {
     const { total } = payload[0].payload;
     const format = (data: number) => {

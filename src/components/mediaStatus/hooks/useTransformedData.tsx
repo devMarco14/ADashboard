@@ -8,10 +8,12 @@ import {
   DataType,
   CompanyType,
   KoreanDataType,
+  ExtendedMediaData,
 } from 'types/media-status';
+import { MediaData } from 'types/dashboard';
 
 function useTransformedData() {
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<MediaData[]>([]);
   const { currentWeek } = useContext(WeekContext);
   const { totalDataContainingDates: mediaData } = useMediaLoad(
     currentWeek[0],
@@ -24,14 +26,14 @@ function useTransformedData() {
       const mediaDataCopy = [...mediaData];
 
       // 받아온 데이터에 매출 추가하기 (roas = (매출/cost) * 100 이용)
-      const addRevenueToMediaData = (CopyData: any[]) => {
+      const addRevenueToMediaData = (CopyData: MediaData[]) => {
         CopyData.forEach((dataItem) => {
           dataItem.revenue = (dataItem.roas * dataItem.cost) / 100;
         });
       };
 
       // 받아온 데이터에 한글 프로퍼티 추가하기
-      const addKoreanToMediaData = (CopyData: any[]) => {
+      const addKoreanToMediaData = (CopyData: ExtendedMediaData[]) => {
         CopyData.forEach((dataItem) => {
           dataItem['광고비'] = dataItem['cost'];
           dataItem['매출'] = dataItem['revenue'];
@@ -63,7 +65,7 @@ function useTransformedData() {
   const sumTargetDataByCompany = useCallback(
     (company: CompanyType, target: DataType | KoreanDataType) => {
       return filterDataByCompany(company)
-        .map((item) => item[target])
+        .map((item: any) => item[target])
         .reduce((prev, current) => prev + current, 0);
     },
     [filterDataByCompany],
@@ -83,8 +85,6 @@ function useTransformedData() {
     },
     [sumTargetDataByCompany],
   );
-
-  // cost와 cpa를 이용해서 conv 계산하는 함수
 
   // 스택바 차트에 전달해야 하는 백분율 데이터를 얻을 수 있다
   const getStackedBarData = useCallback((): TransformedMediaData[] => {

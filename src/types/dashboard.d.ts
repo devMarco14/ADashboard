@@ -24,6 +24,7 @@ export interface MediaData {
   cpc: number;
   cpa: number;
   roas: number;
+  revenue?: number;
 }
 
 export interface WeekListPropsType {
