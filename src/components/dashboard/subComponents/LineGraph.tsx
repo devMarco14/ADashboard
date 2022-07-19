@@ -8,13 +8,14 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  Label,
 } from 'recharts';
 
 import { WeekContext } from 'libs/context';
-import { ReportData } from 'types/dashboard';
+import { ReportData, ReportType } from 'types/dashboard';
 import useReportLoad from '../hooks/useReportLoad';
 
-export default function LineGraph() {
+export default function LineGraph({ firstValue, secondValue }: any) {
   const [report, setReport] = useState<ReportData[]>();
   const { currentWeek } = React.useContext(WeekContext);
 
@@ -52,21 +53,30 @@ export default function LineGraph() {
         <XAxis
           dataKey="newDate"
           stroke="5550bd"
-          domain={['dataMin', 'dataMax']}
           padding={{ left: 40, right: 40 }}
-        />
-        <YAxis />
+          // domain={['dataMin', 'dataMax']}
+        >
+          <Label value="date" position="bottom" />
+        </XAxis>
+        <YAxis yAxisId="left">
+          <Label value={firstValue} angle={-90} position="left" />
+        </YAxis>
+        <YAxis yAxisId="right" orientation="right">
+          <Label value={secondValue} angle={90} position="right" />
+        </YAxis>
         <Tooltip />
         <Line
+          yAxisId="left"
           type="linear"
-          dataKey="roas"
+          dataKey={firstValue}
           stroke="#596cf6"
           activeDot={{ r: 6 }}
           strokeWidth={2}
         />
         <Line
+          yAxisId="right"
           type="linear"
-          dataKey="click"
+          dataKey={secondValue}
           stroke="#85da47"
           activeDot={{ r: 6 }}
           strokeWidth={2}

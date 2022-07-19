@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import DataTable from './subComponents/DataTable';
 import LineGraph from './subComponents/LineGraph';
+import SelectGraph from './subComponents/SelectGraph';
 
 export default function TotalAdStatus() {
   return (
@@ -9,7 +10,7 @@ export default function TotalAdStatus() {
       <Title>통합 광고 현황</Title>
       <DataContainer>
         <DataTable />
-        <LineGraph />
+        <SelectGraph />
       </DataContainer>
     </div>
   );

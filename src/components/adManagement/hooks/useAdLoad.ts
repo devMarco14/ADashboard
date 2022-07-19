@@ -1,7 +1,7 @@
 import { getTotalAdAPI } from 'libs/api/adAPI';
 import { AdsData } from 'types/ad';
 import { useEffect, useState } from 'react';
-import { INITIAL_AD_DATA } from 'libs/utils/initalDatas';
+import { INITIAL_AD_DATA } from 'libs/utils/initialDatas';
 import useToggle from 'hooks/useToggle';
 
 /**
