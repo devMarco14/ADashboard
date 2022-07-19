@@ -19,6 +19,7 @@ const SideBarBlock = styled.div`
   display: block;
   position: relative;
   min-height: 100vh;
+  background-color: ${({ theme }) => theme.colors.whiteColor};
   box-shadow: 2px 0px 4px 0px rgba(0, 0, 0, 0.22);
   ${({ theme }) => theme.media.small} {
     display: none;
