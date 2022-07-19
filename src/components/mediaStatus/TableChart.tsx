@@ -1,4 +1,5 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
+import useHideScroll from 'components/dashboard/hooks/useHideScroll';
 import React from 'react';
 import styled from 'styled-components';
 import { CompanyType } from 'types/media-status';
@@ -8,6 +9,7 @@ function TableChart() {
   const { getTableData } = useTransformedData();
   const tableData = getTableData();
   const companeis: CompanyType[] = ['google', 'naver', 'kakao', 'facebook'];
+  const { onScrollCapture, onScroll, isScrollCaptured } = useHideScroll();
 
   const columnHeader = tableData.map((data, index) => (
     <th key={`${index}_${data.name}`} className="col" scope="col">
@@ -40,7 +42,11 @@ function TableChart() {
   );
 
   return (
-    <TableLayout>
+    <TableLayout
+      onScrollCapture={onScrollCapture}
+      onScroll={onScroll}
+      isScrollCaptured={isScrollCaptured}
+    >
       <Table>
         <thead aria-label="플랫폼 기준 데이터">
           <tr>
@@ -59,9 +65,9 @@ function TableChart() {
 
 export default TableChart;
 
-const TableLayout = styled.section`
-  overflow-x: scroll;
+const TableLayout = styled.section<{ isScrollCaptured: boolean }>`
   display: block;
+  overflow-x: scroll;
   width: 90%;
   min-width: 320px;
   margin: 0 auto 16px;
@@ -74,6 +80,7 @@ const TableLayout = styled.section`
   &::-webkit-scrollbar-thumb {
     background: ${({ theme }) => theme.colors.lightGrayColor};
     border-radius: 10px;
+    visibility: ${(props) => (props.isScrollCaptured ? 'visible' : 'hidden')};
   }
 
   &::-webkit-scrollbar-track {
