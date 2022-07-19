@@ -24,12 +24,6 @@ export default function GraphLayout({ weeksList }: any) {
   // console.log(currentData, previousData);
 
   React.useEffect(() => {
-    if (weeksList) {
-      // console.log(currentWeek, weeksList[index - 1]);
-    }
-  }, [currentWeek, weeksList]);
-
-  React.useEffect(() => {
     if (componentLoadingState.report) {
       setChildLoadingState(true);
     } else {
@@ -40,7 +34,7 @@ export default function GraphLayout({ weeksList }: any) {
   return (
     <GraphContinaer>
       <DataTable currentData={currentData} previousData={previousData} />
-      <LineGraph />
+      <LineGraph currentData={currentData} />
       <GraphLoad loadingState={childLoadingState}>
         <img src={spinner} alt="spinner" />
       </GraphLoad>

@@ -16,21 +16,7 @@ import { ReportData } from 'types/dashboard';
 import { GRAPH_LOADING_TYPE } from 'libs/utils/constants';
 import useReportLoad from '../hooks/useReportLoad';
 
-export default function LineGraph(props: any) {
-  const [report, setReport] = useState<ReportData[]>();
-  const { currentWeekData } = React.useContext(WeekContext);
-
-  const { totalDataContainingDates: reportData } = useReportLoad(
-    currentWeekData.currentWeek[0],
-    currentWeekData.currentWeek[1],
-  );
-  React.useEffect(() => {
-    if (reportData) {
-      // console.log(reportData);
-      setReport(reportData);
-    }
-  }, [reportData]);
-
+export default function LineGraph({ currentData }: any) {
   /* ############### 임시 작성 ############### */
   const { componentLoadingState, changeLoadingState } =
     React.useContext(LoadContext);
@@ -42,7 +28,7 @@ export default function LineGraph(props: any) {
   }, []);
 
   React.useEffect(() => {
-    if (reportData) {
+    if (currentData) {
       setTimeout(() => {
         changeLoadingState({
           type: GRAPH_LOADING_TYPE,
@@ -50,13 +36,13 @@ export default function LineGraph(props: any) {
         });
       }, 0);
     }
-  }, [reportData]);
+  }, [currentData]);
   /* ############### 임시 작성 ############### */
 
   return (
     <ResponsiveContainer width="100%" height="50%">
       <LineChart
-        data={report}
+        data={currentData}
         margin={{
           top: 30,
           right: 30,
