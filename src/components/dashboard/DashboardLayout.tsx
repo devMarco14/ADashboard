@@ -4,7 +4,7 @@ import { LoadContext } from 'libs/context';
 import useReportLoad from './hooks/useReportLoad';
 import SelectBox from './subComponents/SelectBox';
 import useFormatize from './hooks/useFormatize';
-import GraphLayout from './subComponents/GraphLayout';
+import TotalAdStatus from './TotalAdStatus';
 
 export default function DashboardLayout() {
   // get 요청으로 받아온 첫 번째 데이터 저장
@@ -34,7 +34,7 @@ export default function DashboardLayout() {
         {/* 전체 Week 리스트 셀렉트 박스로 전달 */}
         <SelectBox weeksList={processedWeeks} />
       </DashboardHeaderBox>
-      <GraphLayout weeksList={processedWeeks} />
+      <TotalAdStatus weeksList={processedWeeks} />
     </DashboardContainer>
   );
 }
