@@ -16,7 +16,7 @@ export const INITIAL_AD_DATA = [
 ];
 export const ADD_DATA = {
   id: Math.floor(Math.random() * 1000),
-  adType: '',
+  adType: 'web',
   title: '',
   budget: 0,
   status: '',

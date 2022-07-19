@@ -1,17 +1,13 @@
 import AdAddBox from 'components/adManagement/AdAddBox';
 import AdManagementArtcle from 'components/adManagement/AdManagementArticle';
 import useAdLoad from 'components/adManagement/hooks/useAdLoad';
-import useTogle from 'hooks/useToggle';
+import useToggle from 'hooks/useToggle';
 import React from 'react';
 import styled from 'styled-components';
 
 function AdManagementPage() {
   const { adData, setDetectData } = useAdLoad();
-  const [isAddData, setIsAddData] = useTogle(false);
-
-  const handleAdd = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    setIsAddData();
-  };
+  const [isAddData, setIsAddData] = useToggle(false);
 
   return (
     <AdManagement>
@@ -19,14 +15,17 @@ function AdManagementPage() {
       <AdManagementSection>
         <AdManagementHeader>
           <div>드롭다운메뉴</div>
-          <AdManagementButton onClick={handleAdd}>
+          <AdManagementButton onClick={() => setIsAddData()}>
             광고 만들기
           </AdManagementButton>
         </AdManagementHeader>
 
         <AdManagementBox>
           {isAddData && (
-            <AdAddBox setDetectData={setDetectData} handleAdd={handleAdd} />
+            <AdAddBox
+              setDetectData={setDetectData}
+              handleAdd={() => setIsAddData()}
+            />
           )}
           {adData.map((item) => (
             <AdManagementArtcle

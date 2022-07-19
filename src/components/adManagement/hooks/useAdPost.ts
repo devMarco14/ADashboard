@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { getTotalAdAPI, postAddAPI } from 'libs/api/adAPI';
+import { postAddAPI } from 'libs/api/adAPI';
 import { ADD_DATA } from 'libs/utils/initalDatas';
 
 const useAdPost = (setDetectData: () => void) => {

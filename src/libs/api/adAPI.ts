@@ -1,4 +1,3 @@
-import { config } from 'process';
 import { AdsData } from 'types/ad';
 import apiClient from '.';
 

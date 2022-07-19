@@ -7,7 +7,7 @@ import useAdPost from './hooks/useAdPost';
 
 interface AdAddBoxProps {
   setDetectData: () => void;
-  handleAdd: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  handleAdd: () => void;
 }
 
 function AdAddBox({ setDetectData, handleAdd }: AdAddBoxProps) {
@@ -37,7 +37,14 @@ function AdAddBox({ setDetectData, handleAdd }: AdAddBoxProps) {
       <EditSection>
         <FlexAround>
           <EditButton onClick={handleAdd}>취소</EditButton>
-          <EditButton onClick={onPostForm}>생성하기</EditButton>
+          <EditButton
+            onClick={() => {
+              onPostForm();
+              handleAdd();
+            }}
+          >
+            생성하기
+          </EditButton>
         </FlexAround>
       </EditSection>
     </AdBox>
