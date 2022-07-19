@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { LoadContext } from 'libs/context';
+import MediaStatus from 'components/mediaStatus/MediaStatus';
 import useReportLoad from './hooks/useReportLoad';
 import SelectBox from './subComponents/SelectBox';
 import useFormatize from './hooks/useFormatize';
+import TotalAdStatus from './TotalAdStatus';
 import TestLayout from './subComponents/TestLayout';
 
 export default function DashboardLayout() {
@@ -34,8 +36,8 @@ export default function DashboardLayout() {
         {/* 전체 Week 리스트 셀렉트 박스로 전달 */}
         <SelectBox weeksList={processedWeeks} />
       </DashboardHeaderBox>
-      {/* <Test />
-          <Test /> */}
+      <TotalAdStatus />
+      <MediaStatus />
       <TestLayout target="report" />
       <TestLayout target="media" />
     </DashboardContainer>
@@ -60,4 +62,5 @@ const DashboardHeaderBox = styled.section`
 `;
 const DashboardHeader = styled.h1`
   font-size: calc(${({ theme }) => theme.fontSizes.xxlarge} * 1.5);
+  color: ${({ theme }) => theme.colors.fontColor};
 `;

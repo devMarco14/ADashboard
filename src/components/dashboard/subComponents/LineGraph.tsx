@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import styled from 'styled-components';
+import React, { useState } from 'react';
+import { format } from 'date-fns';
 import {
   LineChart,
   Line,
@@ -25,8 +24,16 @@ export default function LineGraph() {
   );
   React.useEffect(() => {
     if (reportData) {
-      console.log(reportData);
-      setReport(reportData);
+      // console.log(reportData);
+      const newReportData: ReportData[] = [];
+      reportData.forEach((object) => {
+        const newObject = { ...object };
+        const newDate = format(new Date(newObject.date), 'MM월 dd일');
+        newObject.newDate = newDate;
+        newReportData.push(newObject);
+        // console.log(newReportData);
+      });
+      setReport(newReportData);
     }
   }, [reportData]);
 
@@ -43,7 +50,7 @@ export default function LineGraph() {
       >
         <CartesianGrid strokeDasharray="1" vertical={false} />
         <XAxis
-          dataKey="date"
+          dataKey="newDate"
           stroke="5550bd"
           domain={['dataMin', 'dataMax']}
           padding={{ left: 40, right: 40 }}

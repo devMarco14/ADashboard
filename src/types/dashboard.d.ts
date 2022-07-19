@@ -10,6 +10,7 @@ export interface ReportData {
   cpa: number;
   roas: number;
   date: string;
+  newDate?: string;
 }
 
 export type ReportType =
