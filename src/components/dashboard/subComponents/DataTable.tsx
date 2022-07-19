@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { IoTriangle } from 'react-icons/io5';
 import styled from 'styled-components';
-import { ReportData } from 'types/dashboard';
+import { ReportData, ReportType } from 'types/dashboard';
+import { HEADERS_ARRAY, DATA_KEYS } from 'libs/utils/constants';
 
 import useTotalData from '../hooks/useTotalData';
 
@@ -19,70 +20,43 @@ export default function DataTable({
     previousData,
   );
 
-  return (
-    <TableContainer>
-      <Section>
+  const returnUnits = (header: string) => {
+    switch (header) {
+      case 'ROAS':
+        return '%';
+      case '광고비' || '매출':
+        return '원';
+      default:
+        return '회';
+    }
+  };
+
+  const dataSection = HEADERS_ARRAY.map((header: string, index: number) => {
+    const displayingValue =
+      header === 'ROAS'
+        ? Math.round(averageData(DATA_KEYS[index]))
+        : sumData(DATA_KEYS[index]).toLocaleString('ko-KR');
+    const diffValue = diffData(DATA_KEYS[index]);
+    const diffValueUnit = header === 'ROAS' ? '%p' : '%';
+
+    return (
+      <Section key={`${header}_${index}`}>
         <TitleData>
-          <h3>ROAS</h3>
-          <p>{Math.round(averageData('roas'))}%</p>
+          <h3>{header}</h3>
+          <p>
+            {displayingValue}
+            {returnUnits(header)}
+          </p>
         </TitleData>
-        <RateChange $resultValue={diffData('roas')}>
-          <Triangle $resultValue={diffData('roas')} />
-          <p>{diffData('roas') ? `${diffData('roas')}%p` : '-'}</p>
+        <RateChange $resultValue={diffValue}>
+          <Triangle $resultValue={diffValue} />
+          <p>{diffValue ? `${diffValue}${diffValueUnit}` : '-'}</p>
         </RateChange>
       </Section>
-      <Section>
-        <TitleData>
-          <h3>광고비</h3>
-          <p>{sumData('cost').toLocaleString('ko-KR')}원</p>
-        </TitleData>
-        <RateChange $resultValue={diffData('cost')}>
-          <Triangle $resultValue={diffData('cost')} />
-          <p>{diffData('cost') ? `${diffData('cost')}%` : '-'}</p>
-        </RateChange>
-      </Section>
-      <Section>
-        <TitleData>
-          <h3>노출수</h3>
-          <p>{sumData('imp').toLocaleString('ko-KR')}회</p>
-        </TitleData>
-        <RateChange $resultValue={diffData('imp')}>
-          <Triangle $resultValue={diffData('imp')} />
-          <p>{diffData('imp') ? `${diffData('imp')}%` : '-'}</p>
-        </RateChange>
-      </Section>
-      <Section>
-        <TitleData>
-          <h3>클릭수</h3>
-          <p>{sumData('click').toLocaleString('ko-KR')}회</p>
-        </TitleData>
-        <RateChange $resultValue={diffData('click')}>
-          <Triangle $resultValue={diffData('click')} />
-          <p>{diffData('click') ? `${diffData('click')}%` : '-'}</p>
-        </RateChange>
-      </Section>
-      <Section>
-        <TitleData>
-          <h3>전환수</h3>
-          <p>{sumData('conv').toLocaleString('ko-KR')}회</p>
-        </TitleData>
-        <RateChange $resultValue={diffData('conv')}>
-          <Triangle $resultValue={diffData('conv')} />
-          <p>{diffData('conv') ? `${diffData('conv')}%` : '-'}</p>
-        </RateChange>
-      </Section>
-      <Section>
-        <TitleData>
-          <h3>매출</h3>
-          <p>{sumData('convValue').toLocaleString('ko-KR')}원</p>
-        </TitleData>
-        <RateChange $resultValue={diffData('convValue')}>
-          <Triangle $resultValue={diffData('convValue')} />
-          <p>{diffData('convValue') ? `${diffData('convValue')}%` : '-'}</p>
-        </RateChange>
-      </Section>
-    </TableContainer>
-  );
+    );
+  });
+
+  return <TableContainer>{dataSection}</TableContainer>;
 }
 
 const TableContainer = styled.div`
