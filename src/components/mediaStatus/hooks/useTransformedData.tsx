@@ -22,6 +22,7 @@ function useTransformedData() {
 
   // 선택된 주간의 데이터 받아오기
   useEffect(() => {
+    if (!mediaData) return;
     if (mediaData) {
       const mediaDataCopy = [...mediaData];
 
