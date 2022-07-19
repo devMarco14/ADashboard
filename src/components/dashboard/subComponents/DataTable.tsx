@@ -1,10 +1,19 @@
 import React, { useState } from 'react';
 import { IoTriangle } from 'react-icons/io5';
 import styled from 'styled-components';
+import { ReportData } from 'types/dashboard';
 
 import useTotalData from '../hooks/useTotalData';
 
-export default function DataTable({ currentData, previousData }: any) {
+interface DataTableProps {
+  currentData: ReportData[] | undefined;
+  previousData: ReportData[] | undefined;
+}
+
+export default function DataTable({
+  currentData,
+  previousData,
+}: DataTableProps) {
   const { sumData, averageData, diffData } = useTotalData(
     currentData,
     previousData,
@@ -107,7 +116,7 @@ const TitleData = styled.div`
   margin-left: 30px;
 `;
 
-const RateChange = styled.div<{ $resultValue: number }>`
+const RateChange = styled.div<{ $resultValue: number | undefined }>`
   margin-right: 30px;
   display: flex;
   color: ${({ $resultValue, theme }) =>
@@ -119,9 +128,9 @@ const RateChange = styled.div<{ $resultValue: number }>`
       : theme.colors.lightGrayColor};
 `;
 
-const Triangle = styled(IoTriangle)<{ $resultValue: number }>`
+const Triangle = styled(IoTriangle)<{ $resultValue: number | undefined }>`
   margin-right: 3px;
   transform: ${({ $resultValue }) =>
-    $resultValue < 0 ? 'rotate(180deg)' : 'rotate(0)'};
+    $resultValue && $resultValue < 0 ? 'rotate(180deg)' : 'rotate(0)'};
   visibility: ${({ $resultValue }) => ($resultValue ? 'visible' : 'hidden')};
 `;

@@ -16,10 +16,13 @@ import { ReportData } from 'types/dashboard';
 import { GRAPH_LOADING_TYPE } from 'libs/utils/constants';
 import useReportLoad from '../hooks/useReportLoad';
 
-export default function LineGraph({ currentData }: any) {
-  /* ############### 임시 작성 ############### */
-  const { componentLoadingState, changeLoadingState } =
-    React.useContext(LoadContext);
+interface LineGraphProps {
+  currentData: ReportData[] | undefined;
+}
+
+export default function LineGraph({ currentData }: LineGraphProps) {
+  const { changeLoadingState } = React.useContext(LoadContext);
+
   React.useEffect(() => {
     changeLoadingState({
       type: GRAPH_LOADING_TYPE,
@@ -37,7 +40,6 @@ export default function LineGraph({ currentData }: any) {
       }, 0);
     }
   }, [currentData]);
-  /* ############### 임시 작성 ############### */
 
   return (
     <ResponsiveContainer width="100%" height="50%">

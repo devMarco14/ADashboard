@@ -7,7 +7,11 @@ import DataTable from './DataTable';
 import LineGraph from './LineGraph';
 import spinner from '../assets/Spinner-1s-200px.svg';
 
-export default function GraphLayout({ weeksList }: any) {
+interface GraphLayoutProps {
+  weeksList: string[][];
+}
+
+export default function GraphLayout({ weeksList }: GraphLayoutProps) {
   const { currentWeekData } = React.useContext(WeekContext);
   const { currentWeek, index } = currentWeekData;
   const { componentLoadingState } = React.useContext(LoadContext);
@@ -21,7 +25,6 @@ export default function GraphLayout({ weeksList }: any) {
     weeksList[index - 1] ? weeksList[index - 1][0] : '',
     weeksList[index - 1] ? weeksList[index - 1][1] : '',
   );
-  // console.log(currentData, previousData);
 
   React.useEffect(() => {
     if (componentLoadingState.report) {

@@ -6,8 +6,8 @@ import LineGraph from './subComponents/LineGraph';
 export default function TotalAdStatus() {
   return (
     <DataContainer>
-      <DataTable />
-      <LineGraph />
+      {/* <DataTable />
+      <LineGraph /> */}
     </DataContainer>
   );
 }

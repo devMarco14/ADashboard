@@ -3,7 +3,10 @@ import { WeekContext } from 'libs/context';
 import { ReportData, ReportType } from 'types/dashboard';
 import useReportLoad from './useReportLoad';
 
-export default function useTotalData(currentData: any, previousData: any) {
+export default function useTotalData(
+  currentData: ReportData[] | undefined,
+  previousData: ReportData[] | undefined,
+) {
   const [currentReport, setCurrentReport] = useState<ReportData[]>([]);
   const [previousReport, setPreviousReport] = useState<ReportData[]>([]);
   const isReportsEqual = React.useRef(true);
@@ -15,14 +18,14 @@ export default function useTotalData(currentData: any, previousData: any) {
     if (previousData && previousData.length > 1) {
       setPreviousReport(previousData);
       isReportsEqual.current = false;
-    } else {
-      setPreviousReport(currentData);
+    } else if (previousData && previousData.length <= 1) {
+      setPreviousReport(currentData as ReportData[]);
       isReportsEqual.current = true;
     }
   }, [currentData, previousData]);
 
   const sumData = useCallback(
-    (key: ReportType, dataArray = currentReport): any => {
+    (key: ReportType, dataArray = currentReport): number => {
       const result = dataArray
         .map((item) => item[key])
         .reduce(
@@ -36,14 +39,15 @@ export default function useTotalData(currentData: any, previousData: any) {
 
   const averageData = useCallback(
     (key: ReportType, dataArray = currentReport): number => {
-      const average = parseInt(sumData(key, dataArray), 10) / dataArray.length;
+      const average =
+        parseInt(String(sumData(key, dataArray)), 10) / dataArray.length;
       return average;
     },
     [currentReport, sumData],
   );
 
   const diffData = useCallback(
-    (key: ReportType): any => {
+    (key: ReportType): number | undefined => {
       let result;
       if (!isReportsEqual.current) {
         if (key === 'roas') {
@@ -55,12 +59,12 @@ export default function useTotalData(currentData: any, previousData: any) {
             ((sumData(key) - sumData(key, previousReport)) /
               sumData(key, previousReport)) *
             100;
-          result = diffResult.toFixed(2);
+          result = Number(diffResult.toFixed(2));
         }
       }
       return result;
     },
-    [currentReport, previousReport],
+    [previousReport, averageData, sumData],
   );
 
   return { sumData, averageData, diffData };
