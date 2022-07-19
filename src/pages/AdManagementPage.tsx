@@ -1,15 +1,15 @@
+import AdAddBox from 'components/adManagement/AdAddBox';
 import AdManagementArtcle from 'components/adManagement/AdManagementArticle';
 import useAdLoad from 'components/adManagement/hooks/useAdLoad';
 import useInput from 'hooks/useInput';
+import useToggle from 'hooks/useToggle';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
 function AdManagementPage() {
-  const [selectedAd, setSelectedAd] = useState<number | null>(null);
   const [stateAD, onChangeStateAD] = useInput('');
-
-  /* 추 후 수정되고 있는 섹션의 보더를 변경 */
   const { adData, setDetectData } = useAdLoad(stateAD as string);
+  const [isAddData, setIsAddData] = useToggle(false);
   return (
     <AdManagement>
       <AdManagementTitle>광고관리</AdManagementTitle>
@@ -28,7 +28,14 @@ function AdManagementPage() {
           </div>
           <AdManagementButton>광고 만들기</AdManagementButton>
         </AdManagementHeader>
-        <AdManagementArticle>
+
+        <AdManagementBox>
+          {isAddData && (
+            <AdAddBox
+              setDetectData={setDetectData}
+              handleAdd={() => setIsAddData()}
+            />
+          )}
           {adData.map((item) => (
             <AdManagementArtcle
               key={item.id}
@@ -36,7 +43,7 @@ function AdManagementPage() {
               setDetectData={setDetectData}
             />
           ))}
-        </AdManagementArticle>
+        </AdManagementBox>
       </AdManagementSection>
     </AdManagement>
   );
@@ -80,11 +87,17 @@ const AdManagementButton = styled.button`
   font-weight: bold;
 `;
 
-const AdManagementArticle = styled.article`
+const AdManagementBox = styled.article`
   display: grid;
   justify-content: space-between;
   margin: 30px 15px;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(5, 1fr);
+  ${({ theme }) => theme.media.xxlarge} {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  ${({ theme }) => theme.media.xlarge} {
+    grid-template-columns: repeat(3, 1fr);
+  }
   ${({ theme }) => theme.media.large} {
     grid-template-columns: repeat(2, 1fr);
   }

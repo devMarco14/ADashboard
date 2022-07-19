@@ -14,18 +14,19 @@ import styled from 'styled-components';
 import CustomTooltip from './CustomTooltip';
 import useTransformedData from './hooks/useTransformedData';
 
-type PositionData = {
+type tooltipPosition = {
   x?: number;
   y?: number;
 };
 
 function StackedBarChart() {
-  const [positionData, setPositionData] = useState<PositionData>({});
+  const [tooltipPosition, setTooltipPosition] = useState<tooltipPosition>({});
   const { getStackedBarData } = useTransformedData();
   const stackedBarData = getStackedBarData();
 
   const changeTooltipPosition = (positionX: number): void => {
-    positionX !== positionData.x && setPositionData({ x: positionX, y: 5 });
+    positionX !== tooltipPosition.x &&
+      setTooltipPosition({ x: positionX, y: 5 });
   };
 
   return (
@@ -42,8 +43,7 @@ function StackedBarChart() {
         margin={{
           top: 60,
           right: 30,
-          left: 20,
-          bottom: 5,
+          bottom: 15,
         }}
         data={stackedBarData}
       >
@@ -63,31 +63,31 @@ function StackedBarChart() {
         <Tooltip
           content={<CustomTooltip />}
           cursor={false}
-          position={{ x: positionData.x, y: positionData.y }}
+          position={{ x: tooltipPosition.x, y: tooltipPosition.y }}
         />
         <Bar
-          barSize={30}
+          barSize={40}
           dataKey="google"
           stackId="a"
           fill="#ac8af8"
           onMouseOver={({ x }) => changeTooltipPosition(x)}
         />
         <Bar
-          barSize={30}
+          barSize={40}
           dataKey="naver"
           stackId="a"
           fill="#85da47"
           onMouseOver={({ x }) => changeTooltipPosition(x)}
         />
         <Bar
-          barSize={30}
+          barSize={40}
           dataKey="kakao"
           stackId="a"
           fill="#fec107"
           onMouseOver={({ x }) => changeTooltipPosition(x)}
         />
         <Bar
-          barSize={30}
+          barSize={40}
           dataKey="facebook"
           stackId="a"
           fill="#4fadf7"
@@ -101,9 +101,7 @@ function StackedBarChart() {
 }
 
 const ChartLayout = styled(ResponsiveContainer)`
-  background-color: ${({ theme }) => theme.colors.whiteColor};
-  border-radius: 8px;
-  margin: 0 auto 16px;
+  margin: 0 auto 48px;
 `;
 
 export default StackedBarChart;

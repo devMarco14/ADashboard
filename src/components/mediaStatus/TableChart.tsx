@@ -1,85 +1,62 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
+import useHideScroll from 'components/dashboard/hooks/useHideScroll';
 import React from 'react';
 import styled from 'styled-components';
+import { CompanyType } from 'types/media-status';
 import useTransformedData from './hooks/useTransformedData';
 
 function TableChart() {
   const { getTableData } = useTransformedData();
   const tableData = getTableData();
+  const companeis: CompanyType[] = ['google', 'naver', 'kakao', 'facebook'];
+  const { onScrollCapture, onScroll, isScrollCaptured } = useHideScroll();
+
+  const columnHeader = tableData.map((data, index) => (
+    <th key={`${index}_${data.name}`} className="col" scope="col">
+      {data.name}
+    </th>
+  ));
+
+  const dataByCompany = companeis.map((company, index) => (
+    <tr key={`${index}_${company}_data`}>
+      <th key={`${index}_${company}`} className="flatform row" scope="row">
+        {company}
+      </th>
+      {tableData.map((data) => (
+        <td key={`${index}_${company}_${data.name}`}>
+          {Math.round(data[company])}
+        </td>
+      ))}
+    </tr>
+  ));
+
+  const totalData = (
+    <tr>
+      <th className="total row">총계</th>
+      {tableData.map((data, index) => (
+        <td key={`${index}_${data.name}_total`} className="total">
+          {Math.round(data.total)}
+        </td>
+      ))}
+    </tr>
+  );
 
   return (
-    <TableLayout>
+    <TableLayout
+      onScrollCapture={onScrollCapture}
+      onScroll={onScroll}
+      isScrollCaptured={isScrollCaptured}
+    >
       <Table>
-        <thead>
+        <thead aria-label="플랫폼 기준 데이터">
           <tr>
-            <th className="col flatform" aria-label="플랫폼" />
-            <th className="col" scope="col">
-              광고비
-            </th>
-            <th className="col" scope="col">
-              매출
-            </th>
-            <th className="col" scope="col">
-              ROAS
-            </th>
-            <th className="col" scope="col">
-              노출수
-            </th>
-            <th className="col" scope="col">
-              클릭수
-            </th>
-            <th className="col" scope="col">
-              클릭률 <br /> (CTR)
-            </th>
-            <th className="col" scope="col">
-              전환율 <br /> (CVR)
-            </th>
-            <th className="col" scope="col">
-              클릭당 비용 <br /> (CPC)
-            </th>
-            <th className="col" scope="col">
-              전환당 비용 <br /> (CPA)
-            </th>
+            <th className="col flatform" />
+            {columnHeader}
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <th className="flatform row" scope="row">
-              페이스북
-            </th>
-            {tableData.map((data) => (
-              <td>{Math.round(data.facebook)}</td>
-            ))}
-          </tr>
-          <tr>
-            <th className="flatform row" scope="row">
-              네이버
-            </th>
-            {tableData.map((data) => (
-              <td>{Math.round(data.naver)}</td>
-            ))}
-          </tr>
-          <tr>
-            <th className="flatform row" scope="row">
-              구글
-            </th>
-            {tableData.map((data) => (
-              <td>{Math.round(data.google)}</td>
-            ))}
-          </tr>
-          <tr>
-            <th className="flatform row" scope="row">
-              카카오
-            </th>
-            {tableData.map((data) => (
-              <td>{Math.round(data.kakao)}</td>
-            ))}
-          </tr>
-          <tr>
-            <th className="total row">총계</th>
-            {tableData.map((data) => (
-              <td className="total">{Math.round(data.total)}</td>
-            ))}
-          </tr>
+        <tbody aria-label="플랫폼">
+          {dataByCompany}
+          {totalData}
         </tbody>
       </Table>
     </TableLayout>
@@ -88,15 +65,30 @@ function TableChart() {
 
 export default TableChart;
 
-const TableLayout = styled.section`
-  overflow-x: scroll;
+const TableLayout = styled.section<{ isScrollCaptured: boolean }>`
   display: block;
+  overflow-x: scroll;
   width: 90%;
   min-width: 320px;
   margin: 0 auto 16px;
-  background-color: ${({ theme }) => theme.colors.whiteColor};
-  border-radius: 8px;
   font-weight: 300;
+
+  &::-webkit-scrollbar {
+    height: 18px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: ${({ theme }) => theme.colors.lightGrayColor};
+    border-radius: 10px;
+    ${({ theme }) => theme.media.small} {
+      visibility: ${(props) => (props.isScrollCaptured ? 'visible' : 'hidden')};
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    background: ${({ theme }) => theme.colors.backgroundColor};
+    border-radius: 10px;
+  }
 `;
 
 const Table = styled.table`
@@ -120,5 +112,6 @@ const Table = styled.table`
   & .total,
   & .total {
     color: ${({ theme }) => theme.colors.blueColor};
+    font-weight: 700;
   }
 `;

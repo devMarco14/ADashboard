@@ -1,20 +1,58 @@
-import apiClient from 'libs/api';
-import { useCallback, useEffect, useState } from 'react';
+/* eslint-disable dot-notation */
+/* eslint-disable no-param-reassign */
+import useMediaLoad from 'components/dashboard/hooks/useMediaLoad';
+import { WeekContext } from 'libs/context';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import {
-  MediaData,
   TransformedMediaData,
-  TargetType,
+  DataType,
   CompanyType,
+  KoreanDataType,
+  ExtendedMediaData,
 } from 'types/media-status';
+import { MediaData } from 'types/dashboard';
 
 function useTransformedData() {
   const [data, setData] = useState<MediaData[]>([]);
+  const { currentWeek } = useContext(WeekContext);
+  const { totalDataContainingDates: mediaData } = useMediaLoad(
+    currentWeek[0],
+    currentWeek[1],
+  );
 
-  // 더미 데이터 받아오기
+  // 선택된 주간의 데이터 받아오기
   useEffect(() => {
-    apiClient('/media?date_like=2022-02') //
-      .then((response) => setData(response.data));
-  }, []);
+    if (!mediaData) return;
+    if (mediaData) {
+      const mediaDataCopy = [...mediaData];
+
+      // 받아온 데이터에 매출 추가하기 (roas = (매출/cost) * 100 이용)
+      const addRevenueToMediaData = (CopyData: MediaData[]) => {
+        CopyData.forEach((dataItem) => {
+          dataItem.revenue = (dataItem.roas * dataItem.cost) / 100;
+        });
+      };
+
+      // 받아온 데이터에 한글 프로퍼티 추가하기
+      const addKoreanToMediaData = (CopyData: ExtendedMediaData[]) => {
+        CopyData.forEach((dataItem) => {
+          dataItem['광고비'] = dataItem['cost'];
+          dataItem['매출'] = dataItem['revenue'];
+          dataItem['노출수'] = dataItem['imp'];
+          dataItem['클릭수'] = dataItem['click'];
+          dataItem['전환수'] = dataItem['convValue'];
+          dataItem['클릭률 (CTR)'] = dataItem['ctr'];
+          dataItem['전환율 (CVR)'] = dataItem['cvr'];
+          dataItem['클릭당비용 (CPC)'] = dataItem['cpc'];
+          dataItem['전환당비용 (CPA)'] = dataItem['cpa'];
+        });
+      };
+
+      addRevenueToMediaData(mediaDataCopy);
+      addKoreanToMediaData(mediaDataCopy);
+      setData(mediaDataCopy);
+    }
+  }, [mediaData]);
 
   // filterDataByCompany('naver') => naver에 해당되는 데이터만 포함된 배열 반환
   const filterDataByCompany = useCallback(
@@ -26,9 +64,9 @@ function useTransformedData() {
 
   // sumTargetDataByCompany('naver', 'cost') => naver의 모든 cost를 더한 숫자 반환
   const sumTargetDataByCompany = useCallback(
-    (company: CompanyType, target: TargetType) => {
+    (company: CompanyType, target: DataType | KoreanDataType) => {
       return filterDataByCompany(company)
-        .map((item) => item[target])
+        .map((item: any) => item[target])
         .reduce((prev, current) => prev + current, 0);
     },
     [filterDataByCompany],
@@ -36,7 +74,7 @@ function useTransformedData() {
 
   // sumTargetDataOfCompanies(cost) => 모든 회사의 cost를 더한 숫자 반환
   const sumTargetDataOfCompanies = useCallback(
-    (target: TargetType): number => {
+    (target: DataType | KoreanDataType): number => {
       const companies: CompanyType[] = ['google', 'facebook', 'kakao', 'naver'];
       let total = 0;
 
@@ -49,34 +87,33 @@ function useTransformedData() {
     [sumTargetDataByCompany],
   );
 
-  // cost와 cpa를 이용해서 conv 계산하는 함수
-
   // 스택바 차트에 전달해야 하는 백분율 데이터를 얻을 수 있다
   const getStackedBarData = useCallback((): TransformedMediaData[] => {
     const transformedData: TransformedMediaData[] = [];
-    const targets: TargetType[] = ['cost', 'convValue', 'imp', 'click', 'cpa'];
+    const targets: KoreanDataType[] = [
+      '광고비',
+      '매출',
+      '노출수',
+      '클릭수',
+      '전환수',
+    ];
 
     data &&
-      targets.forEach((target: TargetType) => {
+      targets.forEach((target: KoreanDataType) => {
+        const totalTargetData = sumTargetDataOfCompanies(target);
+
         transformedData.push({
           name: target,
           google:
-            (sumTargetDataByCompany('google', target) /
-              sumTargetDataOfCompanies(target)) *
-            100,
+            (sumTargetDataByCompany('google', target) / totalTargetData) * 100,
           facebook:
-            (sumTargetDataByCompany('facebook', target) /
-              sumTargetDataOfCompanies(target)) *
+            (sumTargetDataByCompany('facebook', target) / totalTargetData) *
             100,
           naver:
-            (sumTargetDataByCompany('naver', target) /
-              sumTargetDataOfCompanies(target)) *
-            100,
+            (sumTargetDataByCompany('naver', target) / totalTargetData) * 100,
           kakao:
-            (sumTargetDataByCompany('kakao', target) /
-              sumTargetDataOfCompanies(target)) *
-            100,
-          total: sumTargetDataOfCompanies(target),
+            (sumTargetDataByCompany('kakao', target) / totalTargetData) * 100,
+          total: totalTargetData,
         });
       });
     return transformedData;
@@ -85,20 +122,20 @@ function useTransformedData() {
   // 테이블 차트에 전달해야 하는 데이터를 얻을 수 있다
   const getTableData = useCallback((): TransformedMediaData[] => {
     const transformedData: TransformedMediaData[] = [];
-    const targets: TargetType[] = [
-      'cost',
-      'convValue',
+    const targets: (DataType | KoreanDataType)[] = [
+      '광고비',
+      '노출수',
+      '클릭수',
+      '전환수',
       'roas',
-      'imp',
-      'click',
-      'ctr',
-      'cvr',
-      'cpc',
-      'cpa',
+      '클릭률 (CTR)',
+      '전환율 (CVR)',
+      '클릭당비용 (CPC)',
+      '전환당비용 (CPA)',
     ];
 
     data &&
-      targets.forEach((target: TargetType) => {
+      targets.forEach((target: DataType | KoreanDataType) => {
         transformedData.push({
           name: target,
           google: sumTargetDataByCompany('google', target),
