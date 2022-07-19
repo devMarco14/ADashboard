@@ -3,7 +3,7 @@ import AdManagementArtcle from 'components/adManagement/AdManagementArticle';
 import useAdLoad from 'components/adManagement/hooks/useAdLoad';
 import useInput from 'hooks/useInput';
 import useToggle from 'hooks/useToggle';
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 function AdManagementPage() {
@@ -74,6 +74,7 @@ const AdManagementSection = styled.section`
   margin: 40px auto;
   border-radius: 15px;
   background-color: ${({ theme }) => theme.colors.whiteColor};
+  box-shadow: 1px 1px 9px 1px ${({ theme }) => theme.colors.lightGrayColor};
 `;
 
 const AdManagementHeader = styled.header`

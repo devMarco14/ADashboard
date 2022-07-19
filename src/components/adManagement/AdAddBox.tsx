@@ -26,6 +26,7 @@ function AdAddBox({ setDetectData, handleAdd }: AdAddBoxProps) {
           name="title"
           value={form.title}
           onChange={onChangeForm}
+          placeholder="제목입력"
         />
       </UpdateTitle>
       <AdCard
