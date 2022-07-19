@@ -9,19 +9,21 @@ function TableChart() {
   const tableData = getTableData();
   const companeis: CompanyType[] = ['google', 'naver', 'kakao', 'facebook'];
 
-  const columnHeader = tableData.map((data) => (
-    <th key={data.name} className="col" scope="col">
+  const columnHeader = tableData.map((data, index) => (
+    <th key={`${index}_${data.name}`} className="col" scope="col">
       {data.name}
     </th>
   ));
 
-  const dataByCompany = companeis.map((company) => (
-    <tr key={Math.random().toString()}>
-      <th key={company} className="flatform row" scope="row">
+  const dataByCompany = companeis.map((company, index) => (
+    <tr key={`${index}_${company}_data`}>
+      <th key={`${index}_${company}`} className="flatform row" scope="row">
         {company}
       </th>
       {tableData.map((data) => (
-        <td key={`${company}_${data.name}`}>{Math.round(data[company])}</td>
+        <td key={`${index}_${company}_${data.name}`}>
+          {Math.round(data[company])}
+        </td>
       ))}
     </tr>
   ));
@@ -29,8 +31,8 @@ function TableChart() {
   const totalData = (
     <tr>
       <th className="total row">총계</th>
-      {tableData.map((data) => (
-        <td key={`${data.name}_total`} className="total">
+      {tableData.map((data, index) => (
+        <td key={`${index}_${data.name}_total`} className="total">
           {Math.round(data.total)}
         </td>
       ))}
@@ -66,11 +68,10 @@ const TableLayout = styled.section`
   font-weight: 300;
 
   &::-webkit-scrollbar {
-    width: 10px;
+    height: 18px;
   }
 
   &::-webkit-scrollbar-thumb {
-    height: 5%;
     background: ${({ theme }) => theme.colors.lightGrayColor};
     border-radius: 10px;
   }
