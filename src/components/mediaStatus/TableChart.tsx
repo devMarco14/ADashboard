@@ -80,9 +80,13 @@ const TableLayout = styled.section<{ isScrollCaptured: boolean }>`
   &::-webkit-scrollbar-thumb {
     background: ${({ theme }) => theme.colors.lightGrayColor};
     border-radius: 10px;
+<<<<<<< HEAD
     ${({ theme }) => theme.media.small} {
       visibility: ${(props) => (props.isScrollCaptured ? 'visible' : 'hidden')};
     }
+=======
+    visibility: ${(props) => (props.isScrollCaptured ? 'visible' : 'hidden')};
+>>>>>>> 3ebd630376d8a7348f467be82b427e565483da09
   }
 
   &::-webkit-scrollbar-track {
