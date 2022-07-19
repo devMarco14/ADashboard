@@ -50,6 +50,12 @@ export default function useTotalData(currentData: any, previousData: any) {
           const diffResult =
             averageData(key) - averageData(key, previousReport);
           result = Math.round(diffResult);
+        } else {
+          const diffResult =
+            ((sumData(key) - sumData(key, previousReport)) /
+              sumData(key, previousReport)) *
+            100;
+          result = diffResult.toFixed(2);
         }
       }
       return result;

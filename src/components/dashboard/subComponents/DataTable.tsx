@@ -29,7 +29,7 @@ export default function DataTable({ currentData, previousData }: any) {
         </TitleData>
         <RateChange>
           <Triangle />
-          <p>18%</p>
+          <p>{diffData('cost') ? `${diffData('cost')}%` : '-'}</p>
         </RateChange>
       </Section>
       <Section>
@@ -39,7 +39,7 @@ export default function DataTable({ currentData, previousData }: any) {
         </TitleData>
         <RateChange>
           <Triangle />
-          <p>18%</p>
+          <p>{diffData('imp') ? `${diffData('imp')}%` : '-'}</p>
         </RateChange>
       </Section>
       <Section>
@@ -49,7 +49,7 @@ export default function DataTable({ currentData, previousData }: any) {
         </TitleData>
         <RateChange>
           <Triangle />
-          <p>18%</p>
+          <p>{diffData('click') ? `${diffData('click')}%` : '-'}</p>
         </RateChange>
       </Section>
       <Section>
@@ -59,7 +59,7 @@ export default function DataTable({ currentData, previousData }: any) {
         </TitleData>
         <RateChange>
           <Triangle />
-          <p>18%</p>
+          <p>{diffData('conv') ? `${diffData('conv')}%` : '-'}</p>
         </RateChange>
       </Section>
       <Section>
@@ -69,7 +69,7 @@ export default function DataTable({ currentData, previousData }: any) {
         </TitleData>
         <RateChange>
           <Triangle />
-          <p>18%</p>
+          <p>{diffData('convValue') ? `${diffData('convValue')}%` : '-'}</p>
         </RateChange>
       </Section>
     </TableContainer>
