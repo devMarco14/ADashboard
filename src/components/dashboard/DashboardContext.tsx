@@ -2,7 +2,7 @@ import React from 'react';
 import { WeekProvider, LoadProvider } from 'libs/context';
 import DashboardLayout from './DashboardLayout';
 
-export default function ContextLayout() {
+export default function DashboardContext() {
   return (
     <WeekProvider>
       <LoadProvider>

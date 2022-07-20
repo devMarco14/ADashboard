@@ -6,7 +6,6 @@ import useReportLoad from './hooks/useReportLoad';
 import SelectBox from './subComponents/SelectBox';
 import useFormatize from './hooks/useFormatize';
 import TotalAdStatus from './TotalAdStatus';
-import TestLayout from './subComponents/TestLayout';
 
 export default function DashboardLayout() {
   // get 요청으로 받아온 첫 번째 데이터 저장
@@ -36,10 +35,7 @@ export default function DashboardLayout() {
         {/* 전체 Week 리스트 셀렉트 박스로 전달 */}
         <SelectBox weeksList={processedWeeks} />
       </DashboardHeaderBox>
-      <TotalAdStatus />
-      <MediaStatus />
-      <TestLayout target="report" />
-      <TestLayout target="media" />
+      <TotalAdStatus weeksList={processedWeeks} />
     </DashboardContainer>
   );
 }

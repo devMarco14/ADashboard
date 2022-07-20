@@ -14,7 +14,8 @@ import { MediaData } from 'types/dashboard';
 
 function useMediaData() {
   const [data, setData] = useState<MediaData[]>([]);
-  const { currentWeek } = useContext(WeekContext);
+  const { currentWeekData } = useContext(WeekContext);
+  const { currentWeek } = currentWeekData;
   const { totalDataContainingDates: mediaData } = useMediaLoad(
     currentWeek[0],
     currentWeek[1],
@@ -57,12 +58,12 @@ function useMediaData() {
   // filterDataByCompany('naver') => naver에 해당되는 데이터만 포함된 배열 반환
   const filterDataByCompany = useCallback(
     (company: CompanyType) => {
-      return data.filter((item) => item.channel === company);
+      return data.filter((dataItem) => dataItem.channel === company);
     },
     [data],
   );
 
-  // sumTargetDataByCompany('naver', 'cost') => naver의 모든 cost를 더한 숫자 반환
+  // sumTargetDataByCompany('naver', '광고비') => naver의 모든 광고비를 더한 숫자 반환
   const sumTargetDataByCompany = useCallback(
     (company: CompanyType, target: DataType | KoreanDataType) => {
       return filterDataByCompany(company)
@@ -85,6 +86,20 @@ function useMediaData() {
       return total;
     },
     [sumTargetDataByCompany],
+  );
+
+  // averageTargetDataByCompany(naver, cost) => naver의 평균 cost 반환
+  const averageTargetDataByCompany = useCallback(
+    (company: CompanyType, target: DataType | KoreanDataType) => {
+      const filteredData = filterDataByCompany(company);
+
+      return (
+        filteredData
+          .map((item: any) => item[target])
+          .reduce((prev, current) => prev + current, 0) / filteredData.length
+      );
+    },
+    [filterDataByCompany],
   );
 
   // 스택바 차트에 전달해야 하는 백분율 데이터를 얻을 수 있다
@@ -121,6 +136,7 @@ function useMediaData() {
 
   // 테이블 차트에 전달해야 하는 데이터를 얻을 수 있다
   const getTableData = useCallback((): TransformedMediaData[] => {
+    const companies: CompanyType[] = ['google', 'facebook', 'kakao', 'naver'];
     const transformedData: TransformedMediaData[] = [];
     const targets: (DataType | KoreanDataType)[] = [
       '광고비',
@@ -136,17 +152,41 @@ function useMediaData() {
 
     data &&
       targets.forEach((target: DataType | KoreanDataType) => {
-        transformedData.push({
-          name: target,
-          google: sumTargetDataByCompany('google', target),
-          facebook: sumTargetDataByCompany('facebook', target),
-          naver: sumTargetDataByCompany('naver', target),
-          kakao: sumTargetDataByCompany('kakao', target),
-          total: sumTargetDataOfCompanies(target),
-        });
+        if (
+          target === 'roas' ||
+          target === '클릭률 (CTR)' ||
+          target === '전환율 (CVR)'
+        ) {
+          // 비율 데이터는 평균을 구해서 반환
+          transformedData.push({
+            name: target,
+            google: averageTargetDataByCompany('google', target),
+            facebook: averageTargetDataByCompany('facebook', target),
+            naver: averageTargetDataByCompany('naver', target),
+            kakao: averageTargetDataByCompany('kakao', target),
+            total: companies
+              .map((company) => averageTargetDataByCompany(company, target))
+              .reduce((prev, current) => prev + current, 0),
+          });
+        } else {
+          // 그 외의 데이터는 합계를 구해서 반환
+          transformedData.push({
+            name: target,
+            google: sumTargetDataByCompany('google', target),
+            facebook: sumTargetDataByCompany('facebook', target),
+            naver: sumTargetDataByCompany('naver', target),
+            kakao: sumTargetDataByCompany('kakao', target),
+            total: sumTargetDataOfCompanies(target),
+          });
+        }
       });
     return transformedData;
-  }, [data, sumTargetDataByCompany, sumTargetDataOfCompanies]);
+  }, [
+    averageTargetDataByCompany,
+    data,
+    sumTargetDataByCompany,
+    sumTargetDataOfCompanies,
+  ]);
 
   return { getStackedBarData, getTableData };
 }
