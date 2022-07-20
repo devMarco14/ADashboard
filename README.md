@@ -84,25 +84,9 @@
 
 ## **6. 발생 에러**
 
-### # merge, refactor 작업: 앱 작동을 방해하는 오류
+### # 
 
 ```
-1. 서버에서 데이터를 받아 화면을 표시하는 기능의 오작동
-    - 원인: MainPage, useMovieModel에서 각각 axios.get에 사용하는 주소가 다르게 지정
-    - 해결: 주소를 constants로 만들어 통일
-
-2. SideNavBar가 모든 컴포넌트에서 표시되지 않는 문제
-    - 원인: 라우팅 설정 문제
-    - 해결: Route, Outlet을 사용한 중첩 라우팅 구성으로 해결
-3. 즐겨찾기 목록이 바뀔 때마다 페이지를 새로 렌더링하는 방법을 이용했을 때 무한 렌더링 발생
-    - 원인 : 요청 => state 업데이트 => 요청 ... 무한으로 발생 
-    - 해결 : js
-    const callback = (response) => {
-      const isSameLikeList =
-        JSON.stringify(response.data) === JSON.stringify(movieList);
-      if (isSameLikeList) return;
-      setMovieList(response.data);
-    };
  ```   
 
 <br />
