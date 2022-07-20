@@ -1,5 +1,5 @@
 import useToggle from 'hooks/useToggle';
-import { FlexAround, FlexCenter } from 'libs/style/commonStyles';
+import { FlexAround } from 'libs/style/commonStyles';
 import React from 'react';
 import styled from 'styled-components';
 import { AdsData } from 'types/ad';
@@ -52,8 +52,8 @@ function AdManagementArtcle({ ad, setDetectData }: AdArtcleProps) {
       <EditSection>
         {isUpdate ? (
           <FlexAround>
-            <EditButton onClick={onToggleUpdate}>취소</EditButton>
-            <EditButton onClick={handleRevise}>수정완료</EditButton>
+            <CancelButton onClick={onToggleUpdate}>취소</CancelButton>
+            <CompleteButton onClick={handleRevise}>수정완료</CompleteButton>
           </FlexAround>
         ) : (
           <EditButton onClick={onToggleUpdate}>수정하기</EditButton>
@@ -106,7 +106,7 @@ const EditSection = styled.div`
 const EditButton = styled.button`
   display: flex;
   justify-content: center;
-  width: 100px;
+  width: 110px;
   height: 30px;
   border: 1px solid ${({ theme }) => theme.colors.lightGrayColor};
   border-radius: 5px;
@@ -114,4 +114,13 @@ const EditButton = styled.button`
   font-weight: bold;
   align-items: center;
 `;
+
+const CancelButton = styled(EditButton)`
+  background-color: ${({ theme }) => theme.colors.cancelColor};
+`;
+
+const CompleteButton = styled(EditButton)`
+  background-color: ${({ theme }) => theme.colors.compeleteColor};
+`;
+
 export default AdManagementArtcle;

@@ -26,6 +26,7 @@ function AdAddBox({ setDetectData, handleAdd }: AdAddBoxProps) {
           name="title"
           value={form.title}
           onChange={onChangeForm}
+          placeholder="제목입력"
         />
       </UpdateTitle>
       <AdCard
@@ -36,15 +37,15 @@ function AdAddBox({ setDetectData, handleAdd }: AdAddBoxProps) {
       />
       <EditSection>
         <FlexAround>
-          <EditButton onClick={handleAdd}>취소</EditButton>
-          <EditButton
+          <CancleButton onClick={handleAdd}>취소</CancleButton>
+          <AddButton
             onClick={() => {
               onPostForm();
               handleAdd();
             }}
           >
             생성하기
-          </EditButton>
+          </AddButton>
         </FlexAround>
       </EditSection>
     </AdBox>
@@ -54,7 +55,7 @@ function AdAddBox({ setDetectData, handleAdd }: AdAddBoxProps) {
 const AdBox = styled.article`
   width: 270px;
   margin: 0 auto 10px auto;
-  border: 1px solid ${({ theme }) => theme.colors.lightGrayColor};
+  border: 1px solid ${({ theme }) => theme.colors.blueColor};
   border-radius: 5px;
 `;
 
@@ -63,10 +64,10 @@ const EditSection = styled.div`
   margin: 20px auto;
 `;
 
-const EditButton = styled.button`
+const CancleButton = styled.button`
   display: flex;
   justify-content: center;
-  width: 100px;
+  width: 110px;
   height: 30px;
   border: 1px solid ${({ theme }) => theme.colors.lightGrayColor};
   border-radius: 5px;
@@ -74,4 +75,6 @@ const EditButton = styled.button`
   font-weight: bold;
   align-items: center;
 `;
+
+const AddButton = styled(CancleButton)``;
 export default AdAddBox;

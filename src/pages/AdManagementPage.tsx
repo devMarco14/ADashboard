@@ -3,47 +3,53 @@ import AdManagementArtcle from 'components/adManagement/AdManagementArticle';
 import useAdLoad from 'components/adManagement/hooks/useAdLoad';
 import useInput from 'hooks/useInput';
 import useToggle from 'hooks/useToggle';
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 function AdManagementPage() {
   const [stateAD, onChangeStateAD] = useInput('');
   const { adData, setDetectData } = useAdLoad(stateAD as string);
   const [isAddData, setIsAddData] = useToggle(false);
+
   return (
     <AdManagement>
       <AdManagementTitle>광고관리</AdManagementTitle>
       <AdManagementSection>
         <AdManagementHeader>
-          <div>
-            <ADFilterSelect
-              name="filter"
-              value={stateAD}
-              onChange={onChangeStateAD}
-            >
-              <option value="">전체</option>
-              <option value="active">진행중</option>
-              <option value="ended">종료</option>
-            </ADFilterSelect>
-          </div>
-          <AdManagementButton>광고 만들기</AdManagementButton>
+          <ADFilterSelect
+            name="filter"
+            value={stateAD}
+            onChange={onChangeStateAD}
+          >
+            <option value="">전체</option>
+            <option value="active">진행중</option>
+            <option value="ended">종료</option>
+          </ADFilterSelect>
+          <AdManagementButton
+            onClick={() => {
+              setIsAddData();
+            }}
+          >
+            광고 만들기
+          </AdManagementButton>
         </AdManagementHeader>
-
-        <AdManagementBox>
-          {isAddData && (
-            <AdAddBox
-              setDetectData={setDetectData}
-              handleAdd={() => setIsAddData()}
-            />
-          )}
-          {adData.map((item) => (
-            <AdManagementArtcle
-              key={item.id}
-              ad={item}
-              setDetectData={setDetectData}
-            />
-          ))}
-        </AdManagementBox>
+        <Div>
+          <AdManagementBox>
+            {isAddData && (
+              <AdAddBox
+                setDetectData={setDetectData}
+                handleAdd={() => setIsAddData()}
+              />
+            )}
+            {adData.map((item) => (
+              <AdManagementArtcle
+                key={item.id}
+                ad={item}
+                setDetectData={setDetectData}
+              />
+            ))}
+          </AdManagementBox>
+        </Div>
       </AdManagementSection>
     </AdManagement>
   );
@@ -67,6 +73,7 @@ const AdManagementSection = styled.section`
   margin: 40px auto;
   border-radius: 15px;
   background-color: ${({ theme }) => theme.colors.whiteColor};
+  box-shadow: 1px 1px 9px 1px ${({ theme }) => theme.colors.lightGrayColor};
 `;
 
 const AdManagementHeader = styled.header`
@@ -86,6 +93,8 @@ const AdManagementButton = styled.button`
   color: #fcfcfc;
   font-weight: bold;
 `;
+
+const Div = styled.div``;
 
 const AdManagementBox = styled.article`
   display: grid;
@@ -110,7 +119,6 @@ const ADFilterSelect = styled.select`
   width: 100px;
   height: 32px;
   border-radius: 6px;
-  margin-left: 20px;
   border: 1px solid ${({ theme }) => theme.colors.lightGrayColor};
   ${({ theme }) => theme.media.small} {
     margin-left: 0px;

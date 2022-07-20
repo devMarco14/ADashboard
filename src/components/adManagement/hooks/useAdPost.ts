@@ -32,7 +32,7 @@ const useAdPost = (setDetectData: () => void) => {
   );
 
   const onPostForm = async () => {
-    const response = await postAddAPI(form);
+    await postAddAPI(form);
     setDetectData();
   };
 

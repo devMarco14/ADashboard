@@ -20,35 +20,48 @@ function AddCardInner({
   onChangeReportForm,
   setDetectData,
 }: CardInnerProps) {
-  const { adType, budget, endDate, id, report, startDate, status, title } =
-    form;
+  const { report, startDate, status } = form;
   return (
     <>
       <CardInnerStyled>
         <AdCategory>상태</AdCategory>
         <AdInputBox>
-          <AdInput name="status" onChange={onChangeForm} value={status} />
+          <AdSelectBox name="status" onChange={onChangeForm} value={status}>
+            <option value="active">진행중</option>
+            <option value="ended">종료</option>
+          </AdSelectBox>
         </AdInputBox>
       </CardInnerStyled>
       <CardInnerStyled>
         <AdCategory>광고 생성일</AdCategory>
         <AdInputBox>
-          <AdInput name="startDate" onChange={onChangeForm} value={startDate} />
+          <AdInput
+            type="date"
+            name="startDate"
+            onChange={onChangeForm}
+            value={startDate}
+          />
         </AdInputBox>
       </CardInnerStyled>
       <CardInnerStyled>
         <AdCategory>일 회망 예산</AdCategory>
         <AdInputBox>
-          <AdInput name="budget" onChange={onChangeForm} value={budget} />
+          <AdInput
+            type="number"
+            name="budget"
+            onChange={onChangeForm}
+            placeholder="일 희망 예산(숫자) 입력"
+          />
         </AdInputBox>
       </CardInnerStyled>
       <CardInnerStyled>
         <AdCategory>광고 수익률</AdCategory>
         <AdInputBox>
           <AdInput
+            type="number"
             name="roas"
             onChange={onChangeReportForm}
-            value={report.roas}
+            value={Math.round(report.roas)}
             disabled
           />
         </AdInputBox>
@@ -57,9 +70,10 @@ function AddCardInner({
         <AdCategory>매출</AdCategory>
         <AdInputBox>
           <AdInput
+            type="number"
             name="convValue"
             onChange={onChangeReportForm}
-            value={report.convValue}
+            placeholder="매출(숫자) 입력"
           />
         </AdInputBox>
       </CardInnerStyled>
@@ -67,9 +81,10 @@ function AddCardInner({
         <AdCategory>광고 비용</AdCategory>
         <AdInputBox>
           <AdInput
+            type="number"
             name="cost"
             onChange={onChangeReportForm}
-            value={report.cost}
+            placeholder="광고 비용(숫자) 입력"
           />
         </AdInputBox>
       </CardInnerStyled>
@@ -92,6 +107,15 @@ const AdCategory = styled.span`
 
 const AdInputBox = styled(FlexCenter)`
   align-items: center;
+`;
+
+const AdSelectBox = styled.select`
+  border: 1px solid ${({ theme }) => theme.colors.lightBlueColor};
+  border-radius: 4px;
+  height: 28px;
+  padding: 0 6px;
+  width: 160px;
+  font-weight: 600;
 `;
 
 const AdInput = styled.input`

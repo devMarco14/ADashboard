@@ -11,6 +11,8 @@ const colors = {
   lightGrayColor: '#d9d3c7',
   redColor: '#ea3a4a',
   greenColor: '#85da47',
+  cancelColor: '#ff6767',
+  compeleteColor: '#5066ff',
 };
 
 const darkTheme = {

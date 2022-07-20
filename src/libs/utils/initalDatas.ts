@@ -19,7 +19,7 @@ export const ADD_DATA = {
   adType: 'web',
   title: '',
   budget: 0,
-  status: '',
+  status: 'active',
   startDate: '달력',
   endDate: null,
   report: {
