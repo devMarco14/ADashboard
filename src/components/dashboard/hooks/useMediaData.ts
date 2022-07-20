@@ -13,7 +13,7 @@ import {
 import { MediaData } from 'types/dashboard';
 
 function useMediaData() {
-  const [data, setData] = useState<MediaData[]>([]);
+  const [data, setData] = useState<ExtendedMediaData[]>([]);
   const { currentWeek } = useContext(WeekContext);
   const { totalDataContainingDates: mediaData } = useMediaLoad(
     currentWeek[0],
@@ -57,12 +57,12 @@ function useMediaData() {
   // filterDataByCompany('naver') => naver에 해당되는 데이터만 포함된 배열 반환
   const filterDataByCompany = useCallback(
     (company: CompanyType) => {
-      return data.filter((item) => item.channel === company);
+      return data.filter((dataItem) => dataItem.channel === company);
     },
     [data],
   );
 
-  // sumTargetDataByCompany('naver', 'cost') => naver의 모든 cost를 더한 숫자 반환
+  // sumTargetDataByCompany('naver', '광고비') => naver의 모든 광고비를 더한 숫자 반환
   const sumTargetDataByCompany = useCallback(
     (company: CompanyType, target: DataType | KoreanDataType) => {
       return filterDataByCompany(company)
