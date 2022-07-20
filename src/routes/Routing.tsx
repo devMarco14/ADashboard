@@ -5,7 +5,7 @@ import NotFoundPage from 'pages/NotFoundPage';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import DashboardLayout from 'components/dashboard/DashboardLayout';
-import ContextLayout from 'components/dashboard/ContextLayout';
+import ContextLayout from 'components/dashboard/DashboardContext';
 import Path from './Path';
 
 function Routing() {
