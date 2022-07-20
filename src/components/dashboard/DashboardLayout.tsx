@@ -36,6 +36,7 @@ export default function DashboardLayout() {
         <SelectBox weeksList={processedWeeks} />
       </DashboardHeaderBox>
       <TotalAdStatus weeksList={processedWeeks} />
+      <MediaStatus />
     </DashboardContainer>
   );
 }

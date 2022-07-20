@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { TooltipProps } from 'recharts';
 
 function StackedBarTooltip({ active, payload }: TooltipProps<number, string>) {
-  if (active && payload && payload.length) {
+  if (active && payload) {
     const { total } = payload[0].payload;
     const format = (data: number) => {
       return Math.round(data).toLocaleString();
