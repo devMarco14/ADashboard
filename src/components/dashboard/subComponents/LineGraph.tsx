@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable consistent-return */
 import React, { useState } from 'react';
 import { format } from 'date-fns';
 import {
@@ -9,10 +11,11 @@ import {
   Tooltip,
   ResponsiveContainer,
   Label,
+  Legend,
 } from 'recharts';
 
 import { WeekContext } from 'libs/context';
-import { ReportData, ReportType } from 'types/dashboard';
+import { ReportData } from 'types/dashboard';
 import useReportLoad from '../hooks/useReportLoad';
 
 export default function LineGraph({ firstValue, secondValue }: any) {
@@ -25,18 +28,40 @@ export default function LineGraph({ firstValue, secondValue }: any) {
   );
   React.useEffect(() => {
     if (reportData) {
-      // console.log(reportData);
       const newReportData: ReportData[] = [];
       reportData.forEach((object) => {
         const newObject = { ...object };
         const newDate = format(new Date(newObject.date), 'MM월 dd일');
         newObject.newDate = newDate;
         newReportData.push(newObject);
-        // console.log(newReportData);
       });
       setReport(newReportData);
     }
   }, [reportData]);
+
+  const formatYAxis = (tickItem: { toLocaleString: () => string }) =>
+    tickItem.toLocaleString();
+
+  const formatValue = (value: string) => {
+    switch (value) {
+      case 'imp':
+        return '노출 수';
+      case 'click':
+        return '클릭 수';
+      case 'cost':
+        return '광고비';
+      case 'conv':
+        return '전환수';
+      case 'convValue':
+        return '매출';
+      case 'roas':
+        return 'ROAS';
+    }
+  };
+
+  const renderText = (value: string) => {
+    return <span>{formatValue(value)}</span>;
+  };
 
   return (
     <ResponsiveContainer width="100%" height="100%">
@@ -54,17 +79,17 @@ export default function LineGraph({ firstValue, secondValue }: any) {
           dataKey="newDate"
           stroke="5550bd"
           padding={{ left: 40, right: 40 }}
-          // domain={['dataMin', 'dataMax']}
         >
-          <Label value="date" position="bottom" />
+          <Label position="bottom" />
         </XAxis>
-        <YAxis yAxisId="left">
+        <YAxis yAxisId="left" tickFormatter={formatYAxis}>
           <Label angle={-90} position="left" />
         </YAxis>
-        <YAxis yAxisId="right" orientation="right">
+        <YAxis yAxisId="right" orientation="right" tickFormatter={formatYAxis}>
           <Label angle={90} position="right" />
         </YAxis>
         <Tooltip />
+        <Legend formatter={renderText} />
         <Line
           yAxisId="left"
           type="linear"

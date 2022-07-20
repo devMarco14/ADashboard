@@ -26,7 +26,7 @@ const Title = styled.h2`
 const DataContainer = styled.section`
   background-color: ${({ theme }) => theme.colors.whiteColor};
   width: 80vw;
-  height: 50vh;
+  height: 70vh;
   border-radius: 20px;
   box-shadow: 1px 1px 9px 1px ${({ theme }) => theme.colors.lightGrayColor};
 

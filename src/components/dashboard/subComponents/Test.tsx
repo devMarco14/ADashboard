@@ -33,7 +33,6 @@ export default function Test(props: any) {
 
   React.useEffect(() => {
     if (reportData) {
-      console.log(reportData);
       setTimeout(() => {
         changeLoadingState({
           type: GRAPH_LOADING_TYPE,
@@ -44,7 +43,7 @@ export default function Test(props: any) {
   }, [reportData]);
 
   React.useEffect(() => {
-    console.log(componentLoadingState);
+    // console.log(componentLoadingState);
   }, [componentLoadingState]);
 
   // MediaData 예시: 파라미터를 전달해야 데이터가 반환됨
