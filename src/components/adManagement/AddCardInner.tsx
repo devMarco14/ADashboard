@@ -58,9 +58,10 @@ function AddCardInner({
         <AdCategory>광고 수익률</AdCategory>
         <AdInputBox>
           <AdInput
+            type="number"
             name="roas"
             onChange={onChangeReportForm}
-            value={report.roas}
+            value={Math.round(report.roas)}
             disabled
           />
         </AdInputBox>

@@ -79,7 +79,7 @@ function CardInner({
             <AdInput
               name="roas"
               onChange={onChangeReportForm}
-              value={form.report.roas}
+              value={Math.round(form.report.roas)}
               disabled
             />
           </AdInputBox>
