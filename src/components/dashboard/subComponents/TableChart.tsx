@@ -24,7 +24,9 @@ function TableChart() {
       </th>
       {tableData.map((data) => (
         <td key={`${index}_${company}_${data.name}`}>
-          {isNaN(data[company]) ? 0 : Math.round(data[company])}
+          {isNaN(data[company])
+            ? 0
+            : Math.round(data[company]).toLocaleString()}
         </td>
       ))}
     </tr>
@@ -35,7 +37,7 @@ function TableChart() {
       <th className="total row">총계</th>
       {tableData.map((data, index) => (
         <td key={`${index}_${data.name}_total`} className="total">
-          {isNaN(data.total) ? 0 : Math.round(data.total)}
+          {isNaN(data.total) ? 0 : Math.round(data.total).toLocaleString()}
         </td>
       ))}
     </tr>
