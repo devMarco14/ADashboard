@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { BsFillCircleFill } from 'react-icons/bs';
 import LineGraph from './LineGraph';
 
 export default function SelectGraph({ currentData }: any) {
@@ -25,15 +24,25 @@ export default function SelectGraph({ currentData }: any) {
   return (
     <SelectGraphContainer>
       <SelectBoxContainer>
-        <SelectValue onChange={getfirtValue} value={firstValue}>
-          {options.map((option) => (
-            <option value={option.value}>{option.name}</option>
-          ))}
-        </SelectValue>
-        <SelectValue onChange={getSecondValue} value={secondValue}>
+        <SelectValue
+          key={firstValue}
+          onChange={getfirtValue}
+          value={firstValue}
+        >
           {options.map((option) => (
             <option key={option.value} value={option.value}>
-              <BsFillCircleFill />
+              {option.name}
+            </option>
+          ))}
+          s
+        </SelectValue>
+        <SelectValue
+          key={secondValue}
+          onChange={getSecondValue}
+          value={secondValue}
+        >
+          {options.map((option) => (
+            <option key={option.value} value={option.value}>
               {option.name}
             </option>
           ))}
@@ -44,7 +53,6 @@ export default function SelectGraph({ currentData }: any) {
         secondValue={secondValue}
         currentData={currentData}
       />
-      ;
     </SelectGraphContainer>
   );
 }
@@ -62,6 +70,7 @@ const SelectBoxContainer = styled.section`
 const SelectValue = styled.select`
   width: 100px;
   height: 50px;
+  background-color: ${({ theme }) => theme.colors.whiteColor};
   color: ${({ theme }) => theme.colors.fontColor};
   font-weight: bold;
   border-radius: 10px;

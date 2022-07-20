@@ -66,8 +66,8 @@ const TableContainer = styled.div`
 `;
 
 const Section = styled.section`
-  width: 300px;
-  height: 70px;
+  width: 30%;
+  height: 90px;
   background-color: ${({ theme }) => theme.colors.whiteColor};
   border: 1px solid ${({ theme }) => theme.colors.lightGrayColor};
   border-radius: 8px;
@@ -86,7 +86,7 @@ const Section = styled.section`
   }
 
   ${({ theme }) => theme.media.small} {
-    max-width: 40%;
+    min-width: 40%;
     max-height: 30%;
     margin: 0;
     font-size: 13px;

@@ -63,15 +63,14 @@ const Title = styled.h2`
 const DataContainer = styled.section`
   background-color: ${({ theme }) => theme.colors.whiteColor};
   width: 80vw;
-  min-height: 50vh;
-  height: max-content;
+  height: 70vh;
   border-radius: 20px;
   box-shadow: 1px 1px 9px 1px ${({ theme }) => theme.colors.lightGrayColor};
   display: flex;
   flex-direction: column;
-<<<<<<< HEAD
   justify-content: center;
   position: relative;
+  justify-content: space-evenly;
 `;
 const GraphLoad = styled.div<{ loadingState: boolean }>`
   position: absolute;
@@ -83,7 +82,4 @@ const GraphLoad = styled.div<{ loadingState: boolean }>`
   display: ${(props) => (props.loadingState ? 'flex' : 'none')};
   justify-content: center;
   align-items: center;
-=======
-  justify-content: space-evenly;
->>>>>>> b2f845d (#24 통합 광고 현황 미디어쿼리 적용)
 `;
