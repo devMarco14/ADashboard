@@ -37,28 +37,13 @@ export default function TotalAdStatus({ weeksList }: TotalAdStatusProps) {
   return (
     <DataContainer>
       <DataTable currentData={currentData} previousData={previousData} />
-      {/* <LineGraph currentData={currentData} /> */}
       <SelectGraph currentData={currentData} />
       <GraphLoad loadingState={childLoadingState}>
         <img src={spinner} alt="spinner" />
       </GraphLoad>
     </DataContainer>
-    // <div>
-    //   <Title>통합 광고 현황</Title>
-    //   <DataContainer>
-    //     <DataTable />
-    //     <SelectGraph />
-    //   </DataContainer>
-    // </div>
   );
 }
-
-const Title = styled.h2`
-  font-size: 20px;
-  text-align: left;
-  color: ${({ theme }) => theme.colors.fontColor};
-  margin-bottom: 18px;
-`;
 
 const DataContainer = styled.section`
   background-color: ${({ theme }) => theme.colors.whiteColor};
@@ -68,9 +53,8 @@ const DataContainer = styled.section`
   box-shadow: 1px 1px 9px 1px ${({ theme }) => theme.colors.lightGrayColor};
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  position: relative;
   justify-content: space-evenly;
+  position: relative;
 `;
 const GraphLoad = styled.div<{ loadingState: boolean }>`
   position: absolute;

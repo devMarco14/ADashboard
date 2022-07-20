@@ -110,6 +110,9 @@ const RateChange = styled.div<{ $resultValue: number | undefined }>`
         ? theme.colors.redColor
         : theme.colors.blueColor
       : theme.colors.lightGrayColor};
+  ${({ theme }) => theme.media.small} {
+    margin-right: 3px;
+  }
 `;
 
 const Triangle = styled(IoTriangle)<{ $resultValue: number | undefined }>`
@@ -117,7 +120,4 @@ const Triangle = styled(IoTriangle)<{ $resultValue: number | undefined }>`
   transform: ${({ $resultValue }) =>
     $resultValue && $resultValue < 0 ? 'rotate(180deg)' : 'rotate(0)'};
   visibility: ${({ $resultValue }) => ($resultValue ? 'visible' : 'hidden')};
-  ${({ theme }) => theme.media.small} {
-    margin-right: 3px;
-  }
 `;
