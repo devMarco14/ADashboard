@@ -7,16 +7,7 @@ import TableChart from './subComponents/TableChart';
 
 function MediaStatus() {
   const { componentLoadingState } = React.useContext(LoadContext);
-  const [childLoadingState, setChildLoadingState] =
-    React.useState<boolean>(false);
-
-  React.useEffect(() => {
-    if (componentLoadingState.media) {
-      setChildLoadingState(true);
-    } else {
-      setChildLoadingState(false);
-    }
-  }, [componentLoadingState]);
+  const { media: dataLoadingState } = componentLoadingState;
 
   return (
     <MediaStatusLayout>
@@ -24,9 +15,11 @@ function MediaStatus() {
       <Charts>
         <StackedBarChart />
         <TableChart />
-        <GraphLoad loadingState={childLoadingState}>
-          <img src={spinner} alt="spinner" />
-        </GraphLoad>
+        {dataLoadingState === true && (
+          <GraphLoad loadingState={dataLoadingState}>
+            <img src={spinner} alt="spinner" />
+          </GraphLoad>
+        )}
       </Charts>
     </MediaStatusLayout>
   );
