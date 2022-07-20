@@ -20,8 +20,7 @@ function AddCardInner({
   onChangeReportForm,
   setDetectData,
 }: CardInnerProps) {
-  const { adType, budget, endDate, id, report, startDate, status, title } =
-    form;
+  const { budget, report, startDate, status } = form;
   return (
     <>
       <CardInnerStyled>
