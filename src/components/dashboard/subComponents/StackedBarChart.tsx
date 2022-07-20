@@ -40,7 +40,8 @@ function StackedBarChart() {
   }, []);
 
   useEffect(() => {
-    componentLoadingState.media === true &&
+    stackedBarData &&
+      componentLoadingState.media === true &&
       setTimeout(() => {
         changeLoadingState({
           type: GRAPH_LOADING_TYPE,
