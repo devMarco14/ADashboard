@@ -71,10 +71,13 @@ const CancleButton = styled.button`
   height: 30px;
   border: 1px solid ${({ theme }) => theme.colors.lightGrayColor};
   border-radius: 5px;
+  background-color: ${({ theme }) => theme.colors.cancelColor};
   color: ${({ theme }) => theme.colors.fontColor};
   font-weight: bold;
   align-items: center;
 `;
 
-const AddButton = styled(CancleButton)``;
+const AddButton = styled(CancleButton)`
+  background-color: ${({ theme }) => theme.colors.compeleteColor};
+`;
 export default AdAddBox;
