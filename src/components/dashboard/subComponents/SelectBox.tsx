@@ -111,6 +111,9 @@ const SelectBoxLayout = styled.section`
   justify-content: flex-end;
   align-items: center;
   position: relative;
+  * {
+    /* border: 1px solid black; */
+  }
   strong {
     min-width: 235px;
   }
@@ -125,4 +128,8 @@ const SelectedWeek = styled.section`
   justify-content: flex-end;
   align-items: center;
   cursor: pointer;
+
+  svg {
+    fill: ${({ theme }) => theme.colors.fontColor};
+  }
 `;
