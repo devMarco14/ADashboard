@@ -8,10 +8,10 @@ interface CardInnerProps {
   isUpdate: boolean;
   form: AdsData;
   onChangeForm: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => void;
   onChangeReportForm: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => void;
 }
 

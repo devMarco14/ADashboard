@@ -40,7 +40,6 @@ interface LoadContextType {
 function weekReducer(state: CurrentWeekType, action: WeekActionType<string[]>) {
   switch (action.type) {
     case WEEK_CHANGE_TYPE:
-      // return state.slice(state.length).concat(action.payload);
       return {
         ...state,
         currentWeek: state.currentWeek
@@ -56,7 +55,6 @@ function weekReducer(state: CurrentWeekType, action: WeekActionType<string[]>) {
 function loadingReducer(state: LoadingState, action: ActionType<LoadingState>) {
   switch (action.type) {
     case GRAPH_LOADING_TYPE:
-      // console.log(state, action.payload, { ...state, ...action.payload });
       return { ...state, ...action.payload };
     default:
       return state;

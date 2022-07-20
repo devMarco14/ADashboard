@@ -18,7 +18,6 @@ function ThemeProvider({ children }: ThemeProviderProps) {
   const themeObject = ThemeMode ? defaultTheme : darkTheme;
   const onToggleTheme = () => {
     setThemeMode((prev) => !prev);
-    // console.log(ThemeMode);
   };
 
   const memoedValue = React.useMemo(

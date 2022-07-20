@@ -13,24 +13,21 @@ import {
   Label,
   Legend,
 } from 'recharts';
-
-import { WeekContext, LoadContext } from 'libs/context';
-import { ReportData, ReportType } from 'types/dashboard';
+import { LoadContext } from 'libs/context';
+import { ReportData } from 'types/dashboard';
 import { GRAPH_LOADING_TYPE } from 'libs/utils/constants';
-import useReportLoad from '../hooks/useReportLoad';
-
-// export default function LineGraph({ currentData }: LineGraphProps) {
-//   const { changeLoadingState } = React.useContext(LoadContext);
 
 interface LineGraphProps {
   currentData: ReportData[] | undefined;
+  firstValue: string;
+  secondValue: string;
 }
 
 export default function LineGraph({
   firstValue,
   secondValue,
   currentData,
-}: any) {
+}: LineGraphProps) {
   const [report, setReport] = useState<ReportData[]>();
   const { changeLoadingState } = React.useContext(LoadContext);
   // const { currentWeek } = React.useContext(WeekContext);
@@ -50,9 +47,7 @@ export default function LineGraph({
           payload: { report: false },
         });
       }, 1000);
-    // if (reportData) {
       const newReportData: ReportData[] = [];
-      // reportData.forEach((object) => {
       currentData.forEach((object: ReportData) => {
         const newObject = { ...object };
         const newDate = format(new Date(newObject.date), 'MM월 dd일');
@@ -90,7 +85,7 @@ export default function LineGraph({
   return (
     <ResponsiveContainer width="100%" height="100%">
       <LineChart
-        data={currentData}
+        data={report}
         margin={{
           top: 30,
           right: 30,

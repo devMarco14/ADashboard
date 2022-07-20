@@ -1,7 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { WeekContext } from 'libs/context';
 import { ReportData, ReportType } from 'types/dashboard';
-import useReportLoad from './useReportLoad';
 
 export default function useTotalData(
   currentData: ReportData[] | undefined,

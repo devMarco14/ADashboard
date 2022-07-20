@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { IoTriangle } from 'react-icons/io5';
 import styled from 'styled-components';
-import { ReportData, ReportType } from 'types/dashboard';
+import { ReportData } from 'types/dashboard';
 import { HEADERS_ARRAY, DATA_KEYS } from 'libs/utils/constants';
 
 import useTotalData from '../hooks/useTotalData';

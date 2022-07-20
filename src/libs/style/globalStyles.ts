@@ -17,7 +17,7 @@ a {
   text-decoration: none;
 }
 html{
-  -webkit-tap-highlight-color: transparent; // @Note 모바일에서 클릭했을 때 파란 배경 없애 주는 코드
+  -webkit-tap-highlight-color: transparent;
 }
 input:focus{
   outline: none;
@@ -116,7 +116,6 @@ video {
   font-size: 100%;
   vertical-align: baseline;
 }
-/* HTML5 display-role reset for older browsers */
 article,
 aside,
 details,
@@ -137,7 +136,6 @@ body {
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* 폰트 사이즈 정의 */
   font-size: 14px;
   font-weight:400;
 }
@@ -163,7 +161,6 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
-/** 버튼회색배경, 보더 없애기, 커서 포인터 주기**/
 button {
   border: 0 none;
   background-color: transparent;

@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import spinner from 'components/dashboard/assets/Spinner-1s-200px.svg';
 import useReportLoad from './hooks/useReportLoad';
 import DataTable from './subComponents/DataTable';
-import LineGraph from './subComponents/LineGraph';
 import SelectGraph from './subComponents/SelectGraph';
 
 interface TotalAdStatusProps {

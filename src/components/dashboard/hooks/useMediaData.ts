@@ -21,20 +21,17 @@ function useMediaData() {
     currentWeek[1],
   );
 
-  // 선택된 주간의 데이터 받아오기
   useEffect(() => {
     if (!mediaData) return;
     if (mediaData) {
       const mediaDataCopy = [...mediaData];
 
-      // 받아온 데이터에 매출 추가하기 (roas = (매출/cost) * 100 이용)
       const addRevenueToMediaData = (CopyData: MediaData[]) => {
         CopyData.forEach((dataItem) => {
           dataItem.revenue = (dataItem.roas * dataItem.cost) / 100;
         });
       };
 
-      // 받아온 데이터에 한글 프로퍼티 추가하기
       const addKoreanToMediaData = (CopyData: ExtendedMediaData[]) => {
         CopyData.forEach((dataItem) => {
           dataItem['광고비'] = dataItem['cost'];
@@ -55,7 +52,6 @@ function useMediaData() {
     }
   }, [mediaData]);
 
-  // filterDataByCompany('naver') => naver에 해당되는 데이터만 포함된 배열 반환
   const filterDataByCompany = useCallback(
     (company: CompanyType) => {
       return data.filter((dataItem) => dataItem.channel === company);
@@ -63,7 +59,6 @@ function useMediaData() {
     [data],
   );
 
-  // sumTargetDataByCompany('naver', '광고비') => naver의 모든 광고비를 더한 숫자 반환
   const sumTargetDataByCompany = useCallback(
     (company: CompanyType, target: DataType | KoreanDataType) => {
       return filterDataByCompany(company)
@@ -73,7 +68,6 @@ function useMediaData() {
     [filterDataByCompany],
   );
 
-  // sumTargetDataOfCompanies(cost) => 모든 회사의 cost를 더한 숫자 반환
   const sumTargetDataOfCompanies = useCallback(
     (target: DataType | KoreanDataType): number => {
       const companies: CompanyType[] = ['google', 'facebook', 'kakao', 'naver'];
@@ -88,7 +82,6 @@ function useMediaData() {
     [sumTargetDataByCompany],
   );
 
-  // averageTargetDataByCompany(naver, cost) => naver의 평균 cost 반환
   const averageTargetDataByCompany = useCallback(
     (company: CompanyType, target: DataType | KoreanDataType) => {
       const filteredData = filterDataByCompany(company);
@@ -102,7 +95,6 @@ function useMediaData() {
     [filterDataByCompany],
   );
 
-  // 스택바 차트에 전달해야 하는 백분율 데이터를 얻을 수 있다
   const getStackedBarData = useCallback((): TransformedMediaData[] => {
     const transformedData: TransformedMediaData[] = [];
     const targets: KoreanDataType[] = [
@@ -134,7 +126,6 @@ function useMediaData() {
     return transformedData;
   }, [data, sumTargetDataByCompany, sumTargetDataOfCompanies]);
 
-  // 테이블 차트에 전달해야 하는 데이터를 얻을 수 있다
   const getTableData = useCallback((): TransformedMediaData[] => {
     const companies: CompanyType[] = ['google', 'facebook', 'kakao', 'naver'];
     const transformedData: TransformedMediaData[] = [];
@@ -157,7 +148,6 @@ function useMediaData() {
           target === '클릭률 (CTR)' ||
           target === '전환율 (CVR)'
         ) {
-          // 비율 데이터는 평균을 구해서 반환
           transformedData.push({
             name: target,
             google: averageTargetDataByCompany('google', target),
@@ -169,7 +159,6 @@ function useMediaData() {
               .reduce((prev, current) => prev + current, 0),
           });
         } else {
-          // 그 외의 데이터는 합계를 구해서 반환
           transformedData.push({
             name: target,
             google: sumTargetDataByCompany('google', target),

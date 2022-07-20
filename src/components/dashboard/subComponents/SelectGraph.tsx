@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { ReportData } from 'types/dashboard';
 import LineGraph from './LineGraph';
 
-export default function SelectGraph({ currentData }: any) {
+interface SelectGraphProps {
+  currentData: ReportData[] | undefined;
+}
+
+export default function SelectGraph({ currentData }: SelectGraphProps) {
   const options = [
     { value: 'imp', name: '노출 수' },
     { value: 'click', name: '클릭 수' },

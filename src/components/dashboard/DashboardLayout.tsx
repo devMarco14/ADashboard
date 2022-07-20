@@ -8,9 +8,7 @@ import useFormatize from './hooks/useFormatize';
 import TotalAdStatus from './TotalAdStatus';
 
 export default function DashboardLayout() {
-  // get 요청으로 받아온 첫 번째 데이터 저장
   const { firstReportData } = useReportLoad();
-  // 추출된 date를 dateFormat 형태로 가공한 데이터 저장
   const { processedWeeks } = useFormatize(firstReportData);
   const { componentLoadingState } = React.useContext(LoadContext);
   const [childrenLoadingStates, setChildrenLoadingStates] =
@@ -32,7 +30,6 @@ export default function DashboardLayout() {
     <DashboardContainer isLoading={childrenLoadingStates}>
       <DashboardHeaderBox>
         <DashboardHeader>대시보드</DashboardHeader>
-        {/* 전체 Week 리스트 셀렉트 박스로 전달 */}
         <SelectBox weeksList={processedWeeks} />
       </DashboardHeaderBox>
       <TotalAdStatus weeksList={processedWeeks} />

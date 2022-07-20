@@ -4,7 +4,6 @@ import { INITIAL_WEEK_STATE } from 'libs/utils/constants';
 import { MediaData } from 'types/dashboard';
 
 const useMediaLoad = (gteDate: string, lteDate: string) => {
-  // locaohost:json-server/report의 모든 데이터를 저장하는 state: Week 데이터로 가공하기 전 상태
   const [totalDataContainingDates, setTotalData] =
     React.useState<MediaData[]>();
 
