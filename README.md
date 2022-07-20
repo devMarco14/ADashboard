@@ -1,7 +1,6 @@
 # [Wanted Pre Onboarding FE 5th] 팀 과제 #  3-1
 
 - 주제: 광고 플랫폼 대시보드
-<img src="https://user-images.githubusercontent.com/73277502/178656762-a651e524-d0a2-4d4a-96ff-0d463c2ccfa1.svg" width=300px;/>
 
 - 프로젝트 기간: 2022.07.14 ~ 2022.07.20
 
@@ -12,12 +11,18 @@
 ### # <a href="https://github.com/chaengs">심채영</a>
 
 ```
-
+- 통합 광고 현황 마크업, CSS
+- recharts 라이브러리를 사용하여 선 그래프 구현
+- 주간별 총합/평균 데이터를 보여주는 테이블 구현
 ```
 
 ### # <a href="https://github.com/leejiho9898">이지호</a>
 
 ```
+- 반응형 헤더, 사이드바 구현
+- 광고 관리 카드 수정 작업
+- 광고 카드 진행중, 종료 필터링 작업
+- 다크, 라이트 테마 작업 
 
 ```
 
@@ -60,7 +65,98 @@
 ## **4. 프로젝트 구조**
 
 ```
-
+📦public
+ ┣ 📜favicon.ico
+ ┣ 📜index.html
+ ┣ 📜logo192.png
+ ┣ 📜logo512.png
+ ┣ 📜manifest.json
+ ┗ 📜robots.txt
+ 📦src
+ ┣ 📂components
+ ┃ ┣ 📂adManagement
+ ┃ ┃ ┣ 📂hooks
+ ┃ ┃ ┃ ┣ 📜useAdLoad.ts
+ ┃ ┃ ┃ ┣ 📜useAdPost.ts
+ ┃ ┃ ┃ ┗ 📜useAdUpdateForm.ts
+ ┃ ┃ ┣ 📜AdAddBox.tsx
+ ┃ ┃ ┣ 📜AdManagementArticle.tsx
+ ┃ ┃ ┣ 📜AddCardInner.tsx
+ ┃ ┃ ┗ 📜CardInner.tsx
+ ┃ ┣ 📂dashboard
+ ┃ ┃ ┣ 📂assets
+ ┃ ┃ ┃ ┗ 📜Spinner-1s-200px.svg
+ ┃ ┃ ┣ 📂hooks
+ ┃ ┃ ┃ ┣ 📜useFormatize.ts
+ ┃ ┃ ┃ ┣ 📜useHideScroll.ts
+ ┃ ┃ ┃ ┣ 📜useMediaData.ts
+ ┃ ┃ ┃ ┣ 📜useMediaLoad.ts
+ ┃ ┃ ┃ ┣ 📜useReportLoad.ts
+ ┃ ┃ ┃ ┗ 📜useTotalData.ts
+ ┃ ┃ ┣ 📂subComponents
+ ┃ ┃ ┃ ┣ 📜DataTable.tsx
+ ┃ ┃ ┃ ┣ 📜LineGraph.tsx
+ ┃ ┃ ┃ ┣ 📜SelectBox.tsx
+ ┃ ┃ ┃ ┣ 📜StackedBarChart.tsx
+ ┃ ┃ ┃ ┣ 📜StackedBarTooltip.tsx
+ ┃ ┃ ┃ ┣ 📜TableChart.tsx
+ ┃ ┃ ┃ ┣ 📜Test.tsx
+ ┃ ┃ ┃ ┗ 📜WeekList.tsx
+ ┃ ┃ ┣ 📂util
+ ┃ ┃ ┃ ┗ 📜index.ts
+ ┃ ┃ ┣ 📜DashboardContext.tsx
+ ┃ ┃ ┣ 📜DashboardLayout.tsx
+ ┃ ┃ ┣ 📜MediaStatus.tsx
+ ┃ ┃ ┗ 📜TotalAdStatus.tsx
+ ┃ ┗ 📂header
+ ┃ ┃ ┣ 📜AppLayout.tsx
+ ┃ ┃ ┣ 📜Header.tsx
+ ┃ ┃ ┣ 📜MobileSideBar.tsx
+ ┃ ┃ ┣ 📜SideBarInner.tsx
+ ┃ ┃ ┣ 📜ToggleButton.tsx
+ ┃ ┃ ┗ 📜WebSideBar.tsx
+ ┣ 📂database
+ ┃ ┗ 📜database.json
+ ┣ 📂hooks
+ ┃ ┣ 📜useForm.ts
+ ┃ ┣ 📜useInput.ts
+ ┃ ┗ 📜useToggle.ts
+ ┣ 📂libs
+ ┃ ┣ 📂api
+ ┃ ┃ ┣ 📜adAPI.ts
+ ┃ ┃ ┣ 📜getDataAPI.ts
+ ┃ ┃ ┗ 📜index.ts
+ ┃ ┣ 📂context
+ ┃ ┃ ┣ 📜index.tsx
+ ┃ ┃ ┗ 📜theme.tsx
+ ┃ ┣ 📂style
+ ┃ ┃ ┣ 📂theme
+ ┃ ┃ ┃ ┣ 📜darkTheme.ts
+ ┃ ┃ ┃ ┗ 📜defaultTheme.ts
+ ┃ ┃ ┣ 📜commonStyles.tsx
+ ┃ ┃ ┗ 📜globalStyles.ts
+ ┃ ┗ 📂utils
+ ┃ ┃ ┣ 📜constants.ts
+ ┃ ┃ ┣ 📜initalDatas.ts
+ ┃ ┃ ┗ 📜sideBar.ts
+ ┣ 📂pages
+ ┃ ┣ 📜AdManagementPage.tsx
+ ┃ ┣ 📜LandingPage.tsx
+ ┃ ┗ 📜NotFoundPage.tsx
+ ┣ 📂routes
+ ┃ ┣ 📜Path.ts
+ ┃ ┗ 📜Routing.tsx
+ ┣ 📂types
+ ┃ ┣ 📜ad.d.ts
+ ┃ ┣ 📜dashboard.d.ts
+ ┃ ┣ 📜media-status.d.ts
+ ┃ ┗ 📜styled-components.d.ts
+ ┣ 📜App.css
+ ┣ 📜App.tsx
+ ┣ 📜index.css
+ ┣ 📜index.tsx
+ ┣ 📜logo.svg
+ ┗ 📜react-app-env.d.ts
 ```
 
 <br />
