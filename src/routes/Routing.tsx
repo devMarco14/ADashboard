@@ -3,7 +3,7 @@ import AdManagementPage from 'pages/AdManagementPage';
 import NotFoundPage from 'pages/NotFoundPage';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import DashboardContext from 'components/dashboard/DashboardContext';
+import LandingPage from 'pages/LandingPage';
 import Path from './Path';
 
 function Routing() {
@@ -12,7 +12,7 @@ function Routing() {
       <Route path="*" element={<NotFoundPage />} />
 
       <Route element={<AppLayout />}>
-        <Route path={Path.LandingPage} element={<DashboardContext />} />
+        <Route path={Path.LandingPage} element={<LandingPage />} />
         <Route path={Path.ADManagementPage} element={<AdManagementPage />} />
       </Route>
     </Routes>
