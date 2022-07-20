@@ -106,7 +106,7 @@ const EditSection = styled.div`
 const EditButton = styled.button`
   display: flex;
   justify-content: center;
-  width: 100px;
+  width: 110px;
   height: 30px;
   border: 1px solid ${({ theme }) => theme.colors.lightGrayColor};
   border-radius: 5px;
