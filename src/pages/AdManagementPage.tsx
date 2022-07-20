@@ -3,7 +3,7 @@ import AdManagementArtcle from 'components/adManagement/AdManagementArticle';
 import useAdLoad from 'components/adManagement/hooks/useAdLoad';
 import useInput from 'hooks/useInput';
 import useToggle from 'hooks/useToggle';
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 function AdManagementPage() {
