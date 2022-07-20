@@ -16,17 +16,15 @@ function AdManagementPage() {
       <AdManagementTitle>광고관리</AdManagementTitle>
       <AdManagementSection>
         <AdManagementHeader>
-          <div>
-            <ADFilterSelect
-              name="filter"
-              value={stateAD}
-              onChange={onChangeStateAD}
-            >
-              <option value="">전체</option>
-              <option value="active">진행중</option>
-              <option value="ended">종료</option>
-            </ADFilterSelect>
-          </div>
+          <ADFilterSelect
+            name="filter"
+            value={stateAD}
+            onChange={onChangeStateAD}
+          >
+            <option value="">전체</option>
+            <option value="active">진행중</option>
+            <option value="ended">종료</option>
+          </ADFilterSelect>
           <AdManagementButton
             onClick={() => {
               setIsAddData();
@@ -35,22 +33,23 @@ function AdManagementPage() {
             광고 만들기
           </AdManagementButton>
         </AdManagementHeader>
-
-        <AdManagementBox>
-          {isAddData && (
-            <AdAddBox
-              setDetectData={setDetectData}
-              handleAdd={() => setIsAddData()}
-            />
-          )}
-          {adData.map((item) => (
-            <AdManagementArtcle
-              key={item.id}
-              ad={item}
-              setDetectData={setDetectData}
-            />
-          ))}
-        </AdManagementBox>
+        <Div>
+          <AdManagementBox>
+            {isAddData && (
+              <AdAddBox
+                setDetectData={setDetectData}
+                handleAdd={() => setIsAddData()}
+              />
+            )}
+            {adData.map((item) => (
+              <AdManagementArtcle
+                key={item.id}
+                ad={item}
+                setDetectData={setDetectData}
+              />
+            ))}
+          </AdManagementBox>
+        </Div>
       </AdManagementSection>
     </AdManagement>
   );
@@ -95,6 +94,8 @@ const AdManagementButton = styled.button`
   font-weight: bold;
 `;
 
+const Div = styled.div``;
+
 const AdManagementBox = styled.article`
   display: grid;
   justify-content: space-between;
@@ -118,7 +119,6 @@ const ADFilterSelect = styled.select`
   width: 100px;
   height: 32px;
   border-radius: 6px;
-  margin-left: 20px;
   border: 1px solid ${({ theme }) => theme.colors.lightGrayColor};
   ${({ theme }) => theme.media.small} {
     margin-left: 0px;

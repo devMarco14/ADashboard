@@ -14,6 +14,6 @@ export const FlexBetween = styled.div`
 
 export const FlexAround = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 `;
