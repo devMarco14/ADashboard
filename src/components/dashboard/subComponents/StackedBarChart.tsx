@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   BarChart,
   Bar,
@@ -11,6 +11,8 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import styled from 'styled-components';
+import { LoadContext } from 'libs/context';
+import { GRAPH_LOADING_TYPE } from 'libs/utils/constants';
 import StackedBarTooltip from './StackedBarTooltip';
 import useMediaData from '../hooks/useMediaData';
 
@@ -22,12 +24,30 @@ type tooltipPosition = {
 function StackedBarChart() {
   const [tooltipPosition, setTooltipPosition] = useState<tooltipPosition>({});
   const { getStackedBarData } = useMediaData();
+  const { changeLoadingState, componentLoadingState } = useContext(LoadContext);
   const stackedBarData = getStackedBarData();
 
   const changeTooltipPosition = (positionX: number): void => {
     positionX !== tooltipPosition.x &&
       setTooltipPosition({ x: positionX, y: 5 });
   };
+
+  useEffect(() => {
+    changeLoadingState({
+      type: GRAPH_LOADING_TYPE,
+      payload: { media: true },
+    });
+  }, []);
+
+  useEffect(() => {
+    componentLoadingState.media === true &&
+      setTimeout(() => {
+        changeLoadingState({
+          type: GRAPH_LOADING_TYPE,
+          payload: { media: false },
+        });
+      }, 1000);
+  }, [componentLoadingState.media, stackedBarData]);
 
   return (
     <ChartLayout
