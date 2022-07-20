@@ -1,6 +1,6 @@
 import darkTheme from 'libs/style/theme/darkTheme';
 import defaultTheme from 'libs/style/theme/defaultTheme';
-import React, { createContext, useState, useContext, useCallback } from 'react';
+import React, { createContext, useState } from 'react';
 import { ThemeProvider as StyledProvider } from 'styled-components';
 
 interface ThemeProviderProps {
