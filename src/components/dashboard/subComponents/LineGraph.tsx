@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import styled from 'styled-components';
+import React, { useState } from 'react';
+import { format } from 'date-fns';
 import {
   LineChart,
   Line,
@@ -54,7 +53,7 @@ export default function LineGraph({ currentData }: LineGraphProps) {
       >
         <CartesianGrid strokeDasharray="1" vertical={false} />
         <XAxis
-          dataKey="date"
+          dataKey="newDate"
           stroke="5550bd"
           domain={['dataMin', 'dataMax']}
           padding={{ left: 40, right: 40 }}

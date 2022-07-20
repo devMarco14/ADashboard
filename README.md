@@ -1,46 +1,118 @@
-# Getting Started with Create React App
+# [Wanted Pre Onboarding FE 5th] 팀 과제 #  3-1
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- 주제: 광고 플랫폼 대시보드
+<img src="https://user-images.githubusercontent.com/73277502/178656762-a651e524-d0a2-4d4a-96ff-0d463c2ccfa1.svg" width=300px;/>
 
-## Available Scripts
+- 프로젝트 기간: 2022.07.14 ~ 2022.07.20
 
-In the project directory, you can run:
+<br />
 
-### `npm start`
+## **1. 팀원 소개 · 맡은 부분**
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### # <a href="https://github.com/chaengs">심채영</a>
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```
 
-### `npm test`
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### # <a href="https://github.com/leejiho9898">이지호</a>
 
-### `npm run build`
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### # <a href="https://github.com/godcl1623">이치행<a>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+- Week리스트 구현 및 그래프에서 데이터를 수령하기 위한 API 구현
+- 데이터 로딩 중 조작 방지 로직 구현
+- 이전 데이터 대비 증감률 계산 및 표시 로직 구현
+```
 
-### `npm run eject`
+### # <a href="https://github.com/devMarco14">임종혁</a>
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```
+- 광고관리 페이지 레이아웃
+- 광고관리 카드 신규생성(post)
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### # <a href="https://github.com/HyeonJu-C">천현주</a>
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```
 
-## Learn More
+<br />
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## **2. 기술 스택**
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+`react` `type-script` `styled-components` `axios` `json server` `context-API`
+
+<br />
+
+## **3. 프로젝트 소개**
+
+![_광고 플랫폼 대시보드](https://user-images.githubusercontent.com/99126860/179872824-b7efead0-0c26-4b17-99e8-b519423af817.jpg)
+
+<br />
+
+## **4. 프로젝트 구조**
+
+```
+
+```
+
+<br />
+
+## **5. 컨벤션**
+
+### # 협업을 위한 git 커밋 컨벤션 설정
+
+| 커밋명   | 내용                                                   |
+| -------- | ------------------------------------------------------ |
+| feat     | 새로운 기능을 추가                                     |
+| fix      | 버그 수정                                              |
+| design   | CSS 등 사용자 UI 디자인 변경                           |
+| docs     | 문서 생성, 추가, 수정(README.md)                       |
+| refactor | 코드 리팩토링                                          |
+| chore    | 간단한 코드 변경, 로직에 큰 영향을 주지 않는 작은 변경 |
+| test     | 테스트 코드 추가 및 리팩토링                           |
+| rename   | 파일 혹은 폴더명을 수정, 이동                          |
+| !HOTFIX  | 치명적인 버그의 긴급한 수정                            |
+
+<br />
+
+## **6. 발생 에러**
+
+### # 
+
+```
+ ```   
+
+<br />
+
+## **7. 프로젝트 설치 · 실행 방법**
+
+### # 프로젝트 클론
+
+```
+$ git clone https://github.com/Wanted-Pre-Onboarding-Team1/Oneflix
+```
+
+### # 패키지 설치
+
+```
+$ npm install
+```
+
+### # develop 서버 실행
+
+```
+$ npm start
+```
+
+### # branch에서 작업
+
+```
+$ git checkout -b feature/page
+```

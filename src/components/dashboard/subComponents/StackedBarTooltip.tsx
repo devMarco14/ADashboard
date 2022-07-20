@@ -1,28 +1,33 @@
 import React from 'react';
 import styled from 'styled-components';
+import { TooltipProps } from 'recharts';
 
-// active, payload | Recharts Tooltips 컴포넌트에서 자동으로 전달해 주는 데이터
-// active가 true이면 tooltip이 보여지고 있다는 것을 의미
-// payload은 현재 선택된 bar의 데이터를 담고있다
-function CustomTooltip({ active, payload }: any) {
+function StackedBarTooltip({ active, payload }: TooltipProps<number, string>) {
   if (active && payload && payload.length) {
     const { total } = payload[0].payload;
-    return <ToolTip>{`${total}`}</ToolTip>;
+    const format = (data: number) => {
+      return Math.round(data).toLocaleString();
+    };
+
+    return <ToolTip>{`${format(total)}`}</ToolTip>;
   }
 
   return null;
 }
 
-export default CustomTooltip;
+export default StackedBarTooltip;
 
 const ToolTip = styled.strong`
-  position: relative;
+  position: absolute;
+  left: 50%;
   display: block;
+  text-align: center;
   padding: 16px 32px;
   border-radius: 8px;
   background-color: ${({ theme }) => theme.colors.fontColor};
   color: ${({ theme }) => theme.colors.whiteColor};
-  transform: translateX(-33%);
+  // bar 차트 너비의 절반(20px) 만큼 오른쪽으로 이동 추가
+  transform: translateX(-50%) translateX(20px);
 
   &:after {
     content: '';

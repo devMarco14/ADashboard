@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import Routing from 'routes/Routing';
-import styled, { ThemeProvider } from 'styled-components';
-import theme from 'libs/style/theme';
+import styled from 'styled-components';
 import GlobalStyles from 'libs/style/globalStyles';
+import { ThemeContext, ThemeProvider } from 'libs/context/theme';
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider>
       <AppLayout>
         <GlobalStyles />
         <Routing />
