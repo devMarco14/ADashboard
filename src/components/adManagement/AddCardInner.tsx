@@ -6,10 +6,10 @@ import { AdsData } from 'types/ad';
 interface CardInnerProps {
   form: AdsData;
   onChangeForm: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => void;
   onChangeReportForm: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => void;
   setDetectData: () => void;
 }

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { AiFillCaretLeft as ExitIcon } from 'react-icons/ai';
 import { ThemeContext } from 'libs/context/theme';
-import { FlexBetween, FlexCenter } from 'libs/style/commonStyles';
+import { FlexCenter } from 'libs/style/commonStyles';
 import SideBarInner from './SideBarInner';
 import ToggleButton from './ToggleButton';
 

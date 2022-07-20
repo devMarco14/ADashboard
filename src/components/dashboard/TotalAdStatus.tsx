@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import spinner from 'components/dashboard/assets/Spinner-1s-200px.svg';
 import useReportLoad from './hooks/useReportLoad';
 import DataTable from './subComponents/DataTable';
-import LineGraph from './subComponents/LineGraph';
+import SelectGraph from './subComponents/SelectGraph';
 
 interface TotalAdStatusProps {
   weeksList: string[][];
@@ -36,7 +36,7 @@ export default function TotalAdStatus({ weeksList }: TotalAdStatusProps) {
   return (
     <DataContainer>
       <DataTable currentData={currentData} previousData={previousData} />
-      <LineGraph currentData={currentData} />
+      <SelectGraph currentData={currentData} />
       <GraphLoad loadingState={childLoadingState}>
         <img src={spinner} alt="spinner" />
       </GraphLoad>
@@ -44,23 +44,15 @@ export default function TotalAdStatus({ weeksList }: TotalAdStatusProps) {
   );
 }
 
-const Title = styled.h2`
-  font-size: 20px;
-  text-align: left;
-  color: ${({ theme }) => theme.colors.fontColor};
-  margin-bottom: 18px;
-`;
-
 const DataContainer = styled.section`
   background-color: ${({ theme }) => theme.colors.whiteColor};
   width: 80vw;
-  min-height: 50vh;
-  height: max-content;
+  height: 70vh;
   border-radius: 20px;
   box-shadow: 1px 1px 9px 1px ${({ theme }) => theme.colors.lightGrayColor};
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   position: relative;
 `;
 const GraphLoad = styled.div<{ loadingState: boolean }>`

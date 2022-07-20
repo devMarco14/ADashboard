@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { IoTriangle } from 'react-icons/io5';
 import styled from 'styled-components';
-import { ReportData, ReportType } from 'types/dashboard';
+import { ReportData } from 'types/dashboard';
 import { HEADERS_ARRAY, DATA_KEYS } from 'libs/utils/constants';
 
 import useTotalData from '../hooks/useTotalData';
@@ -61,17 +61,17 @@ export default function DataTable({
 
 const TableContainer = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   flex-wrap: wrap;
 `;
 
 const Section = styled.section`
-  width: 300px;
-  height: 70px;
+  width: 30%;
+  height: 90px;
   background-color: ${({ theme }) => theme.colors.whiteColor};
   border: 1px solid ${({ theme }) => theme.colors.lightGrayColor};
   border-radius: 8px;
-  margin: 10px;
+  margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -84,10 +84,20 @@ const Section = styled.section`
   & p {
     font-weight: bold;
   }
+
+  ${({ theme }) => theme.media.small} {
+    min-width: 40%;
+    max-height: 30%;
+    margin: 0;
+    font-size: 13px;
+  }
 `;
 
 const TitleData = styled.div`
   margin-left: 30px;
+  ${({ theme }) => theme.media.small} {
+    margin-left: 3px;
+  }
 `;
 
 const RateChange = styled.div<{ $resultValue: number | undefined }>`
@@ -100,6 +110,9 @@ const RateChange = styled.div<{ $resultValue: number | undefined }>`
         ? theme.colors.redColor
         : theme.colors.blueColor
       : theme.colors.lightGrayColor};
+  ${({ theme }) => theme.media.small} {
+    margin-right: 3px;
+  }
 `;
 
 const Triangle = styled(IoTriangle)<{ $resultValue: number | undefined }>`

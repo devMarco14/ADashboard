@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable consistent-return */
 import React, { useState } from 'react';
 import { format } from 'date-fns';
 import {
@@ -8,19 +10,27 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  Label,
+  Legend,
 } from 'recharts';
-
-import { WeekContext, LoadContext } from 'libs/context';
+import { LoadContext } from 'libs/context';
 import { ReportData } from 'types/dashboard';
 import { GRAPH_LOADING_TYPE } from 'libs/utils/constants';
-import useReportLoad from '../hooks/useReportLoad';
 
 interface LineGraphProps {
   currentData: ReportData[] | undefined;
+  firstValue: string;
+  secondValue: string;
 }
 
-export default function LineGraph({ currentData }: LineGraphProps) {
+export default function LineGraph({
+  firstValue,
+  secondValue,
+  currentData,
+}: LineGraphProps) {
+  const [report, setReport] = useState<ReportData[]>();
   const { changeLoadingState } = React.useContext(LoadContext);
+  // const { currentWeek } = React.useContext(WeekContext);
 
   React.useEffect(() => {
     changeLoadingState({
@@ -37,13 +47,45 @@ export default function LineGraph({ currentData }: LineGraphProps) {
           payload: { report: false },
         });
       }, 1000);
+      const newReportData: ReportData[] = [];
+      currentData.forEach((object: ReportData) => {
+        const newObject = { ...object };
+        const newDate = format(new Date(newObject.date), 'MM월 dd일');
+        newObject.newDate = newDate;
+        newReportData.push(newObject);
+      });
+      setReport(newReportData);
     }
   }, [currentData]);
 
+  const formatYAxis = (tickItem: { toLocaleString: () => string }) =>
+    tickItem.toLocaleString();
+
+  const formatValue = (value: string) => {
+    switch (value) {
+      case 'imp':
+        return '노출 수';
+      case 'click':
+        return '클릭 수';
+      case 'cost':
+        return '광고비';
+      case 'conv':
+        return '전환수';
+      case 'convValue':
+        return '매출';
+      case 'roas':
+        return 'ROAS';
+    }
+  };
+
+  const renderText = (value: string) => {
+    return <span>{formatValue(value)}</span>;
+  };
+
   return (
-    <ResponsiveContainer width="100%" height="50%">
+    <ResponsiveContainer width="100%" height="100%">
       <LineChart
-        data={currentData}
+        data={report}
         margin={{
           top: 30,
           right: 30,
@@ -55,21 +97,30 @@ export default function LineGraph({ currentData }: LineGraphProps) {
         <XAxis
           dataKey="newDate"
           stroke="5550bd"
-          domain={['dataMin', 'dataMax']}
           padding={{ left: 40, right: 40 }}
-        />
-        <YAxis />
+        >
+          <Label position="bottom" />
+        </XAxis>
+        <YAxis yAxisId="left" tickFormatter={formatYAxis}>
+          <Label angle={-90} position="left" />
+        </YAxis>
+        <YAxis yAxisId="right" orientation="right" tickFormatter={formatYAxis}>
+          <Label angle={90} position="right" />
+        </YAxis>
         <Tooltip />
+        <Legend formatter={renderText} />
         <Line
+          yAxisId="left"
           type="linear"
-          dataKey="roas"
+          dataKey={firstValue}
           stroke="#596cf6"
           activeDot={{ r: 6 }}
           strokeWidth={2}
         />
         <Line
+          yAxisId="right"
           type="linear"
-          dataKey="click"
+          dataKey={secondValue}
           stroke="#85da47"
           activeDot={{ r: 6 }}
           strokeWidth={2}
