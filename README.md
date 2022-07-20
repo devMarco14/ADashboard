@@ -11,7 +11,9 @@
 ### # <a href="https://github.com/chaengs">심채영</a>
 
 ```
-
+- 통합 광고 현황 마크업, CSS
+- recharts 라이브러리를 사용하여 선 그래프 구현
+- 주간별 총합/평균 데이터를 보여주는 테이블 구현
 ```
 
 ### # <a href="https://github.com/leejiho9898">이지호</a>
