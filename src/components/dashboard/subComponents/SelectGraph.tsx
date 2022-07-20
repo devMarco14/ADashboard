@@ -29,23 +29,14 @@ export default function SelectGraph({ currentData }: SelectGraphProps) {
   return (
     <SelectGraphContainer>
       <SelectBoxContainer>
-        <SelectValue
-          key={firstValue}
-          onChange={getfirtValue}
-          value={firstValue}
-        >
+        <SelectValue onChange={getfirtValue} value={firstValue}>
           {options.map((option) => (
             <option key={option.value} value={option.value}>
               {option.name}
             </option>
           ))}
-          s
         </SelectValue>
-        <SelectValue
-          key={secondValue}
-          onChange={getSecondValue}
-          value={secondValue}
-        >
+        <SelectValue onChange={getSecondValue} value={secondValue}>
           {options.map((option) => (
             <option key={option.value} value={option.value}>
               {option.name}
