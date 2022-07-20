@@ -10,37 +10,40 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-import { WeekContext } from 'libs/context';
+import { WeekContext, LoadContext } from 'libs/context';
 import { ReportData } from 'types/dashboard';
+import { GRAPH_LOADING_TYPE } from 'libs/utils/constants';
 import useReportLoad from '../hooks/useReportLoad';
 
-export default function LineGraph() {
-  const [report, setReport] = useState<ReportData[]>();
-  const { currentWeek } = React.useContext(WeekContext);
+interface LineGraphProps {
+  currentData: ReportData[] | undefined;
+}
 
-  const { totalDataContainingDates: reportData } = useReportLoad(
-    currentWeek[0],
-    currentWeek[1],
-  );
+export default function LineGraph({ currentData }: LineGraphProps) {
+  const { changeLoadingState } = React.useContext(LoadContext);
+
   React.useEffect(() => {
-    if (reportData) {
-      // console.log(reportData);
-      const newReportData: ReportData[] = [];
-      reportData.forEach((object) => {
-        const newObject = { ...object };
-        const newDate = format(new Date(newObject.date), 'MM월 dd일');
-        newObject.newDate = newDate;
-        newReportData.push(newObject);
-        // console.log(newReportData);
-      });
-      setReport(newReportData);
+    changeLoadingState({
+      type: GRAPH_LOADING_TYPE,
+      payload: { report: true },
+    });
+  }, []);
+
+  React.useEffect(() => {
+    if (currentData) {
+      setTimeout(() => {
+        changeLoadingState({
+          type: GRAPH_LOADING_TYPE,
+          payload: { report: false },
+        });
+      }, 1000);
     }
-  }, [reportData]);
+  }, [currentData]);
 
   return (
     <ResponsiveContainer width="100%" height="50%">
       <LineChart
-        data={report}
+        data={currentData}
         margin={{
           top: 30,
           right: 30,

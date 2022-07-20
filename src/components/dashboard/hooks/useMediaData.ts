@@ -13,8 +13,9 @@ import {
 import { MediaData } from 'types/dashboard';
 
 function useMediaData() {
-  const [data, setData] = useState<ExtendedMediaData[]>([]);
-  const { currentWeek } = useContext(WeekContext);
+  const [data, setData] = useState<MediaData[]>([]);
+  const { currentWeekData } = useContext(WeekContext);
+  const { currentWeek } = currentWeekData;
   const { totalDataContainingDates: mediaData } = useMediaLoad(
     currentWeek[0],
     currentWeek[1],
