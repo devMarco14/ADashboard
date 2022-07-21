@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { TooltipProps } from 'recharts';
 
 function StackedBarTooltip({ active, payload }: TooltipProps<number, string>) {
-  if (active && payload && payload.length) {
+  if (active && payload) {
     const { total } = payload[0].payload;
     const format = (data: number) => {
       return Math.round(data).toLocaleString();
@@ -26,7 +26,6 @@ const ToolTip = styled.strong`
   border-radius: 8px;
   background-color: ${({ theme }) => theme.colors.fontColor};
   color: ${({ theme }) => theme.colors.whiteColor};
-  // bar 차트 너비의 절반(20px) 만큼 오른쪽으로 이동 추가
   transform: translateX(-50%) translateX(20px);
 
   &:after {

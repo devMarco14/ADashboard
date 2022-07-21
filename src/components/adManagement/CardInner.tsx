@@ -8,10 +8,10 @@ interface CardInnerProps {
   isUpdate: boolean;
   form: AdsData;
   onChangeForm: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => void;
   onChangeReportForm: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => void;
 }
 
@@ -79,7 +79,7 @@ function CardInner({
             <AdInput
               name="roas"
               onChange={onChangeReportForm}
-              value={form.report.roas}
+              value={Math.round(form.report.roas)}
               disabled
             />
           </AdInputBox>

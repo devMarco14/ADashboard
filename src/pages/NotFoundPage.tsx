@@ -1,7 +1,7 @@
 import React from 'react';
 
 function NotFoundPage() {
-  return <div>가나다라마바사</div>;
+  return <div>NotFoundPage</div>;
 }
 
 export default NotFoundPage;

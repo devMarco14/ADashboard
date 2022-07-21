@@ -13,23 +13,42 @@ import {
   Label,
   Legend,
 } from 'recharts';
-
-import { WeekContext } from 'libs/context';
+import { LoadContext } from 'libs/context';
 import { ReportData } from 'types/dashboard';
-import useReportLoad from '../hooks/useReportLoad';
+import { GRAPH_LOADING_TYPE } from 'libs/utils/constants';
 
-export default function LineGraph({ firstValue, secondValue }: any) {
+interface LineGraphProps {
+  currentData: ReportData[] | undefined;
+  firstValue: string;
+  secondValue: string;
+}
+
+export default function LineGraph({
+  firstValue,
+  secondValue,
+  currentData,
+}: LineGraphProps) {
   const [report, setReport] = useState<ReportData[]>();
-  const { currentWeek } = React.useContext(WeekContext);
+  const { changeLoadingState } = React.useContext(LoadContext);
+  // const { currentWeek } = React.useContext(WeekContext);
 
-  const { totalDataContainingDates: reportData } = useReportLoad(
-    currentWeek[0],
-    currentWeek[1],
-  );
   React.useEffect(() => {
-    if (reportData) {
+    changeLoadingState({
+      type: GRAPH_LOADING_TYPE,
+      payload: { report: true },
+    });
+  }, []);
+
+  React.useEffect(() => {
+    if (currentData) {
+      setTimeout(() => {
+        changeLoadingState({
+          type: GRAPH_LOADING_TYPE,
+          payload: { report: false },
+        });
+      }, 1000);
       const newReportData: ReportData[] = [];
-      reportData.forEach((object) => {
+      currentData.forEach((object: ReportData) => {
         const newObject = { ...object };
         const newDate = format(new Date(newObject.date), 'MM월 dd일');
         newObject.newDate = newDate;
@@ -37,7 +56,7 @@ export default function LineGraph({ firstValue, secondValue }: any) {
       });
       setReport(newReportData);
     }
-  }, [reportData]);
+  }, [currentData]);
 
   const formatYAxis = (tickItem: { toLocaleString: () => string }) =>
     tickItem.toLocaleString();

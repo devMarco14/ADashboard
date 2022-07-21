@@ -18,6 +18,8 @@ const colors = {
   lightGrayColor: '#c8ced8',
   redColor: '#ea3a4a',
   greenColor: '#85da47',
+  cancelColor: '#ffdbdb',
+  compeleteColor: '#e6e9ff',
 };
 
 export const mediaQuery = (maxWidth: number) => `

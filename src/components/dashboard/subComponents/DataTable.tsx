@@ -1,75 +1,62 @@
-import React, { useState } from 'react';
-import { IoTriangle as Triangle } from 'react-icons/io5';
+import React from 'react';
+import { IoTriangle } from 'react-icons/io5';
 import styled from 'styled-components';
+import { ReportData } from 'types/dashboard';
+import { HEADERS_ARRAY, DATA_KEYS } from 'libs/utils/constants';
 
 import useTotalData from '../hooks/useTotalData';
 
-export default function DataTable() {
-  const { sumData, averageData } = useTotalData();
-  return (
-    <TableContainer>
-      <Section>
-        <TitleData>
-          <h3>ROAS</h3>
-          <p>{Math.round(averageData('roas'))}%</p>
-        </TitleData>
-        <RateChange>
-          <Triangle />
-          <p>18%</p>
-        </RateChange>
-      </Section>
-      <Section>
-        <TitleData>
-          <h3>광고비</h3>
-          <p>{sumData('cost').toLocaleString('ko-KR')}원</p>
-        </TitleData>
-        <RateChange>
-          <Triangle />
-          <p>18%</p>
-        </RateChange>
-      </Section>
-      <Section>
-        <TitleData>
-          <h3>노출수</h3>
-          <p>{sumData('imp').toLocaleString('ko-KR')}회</p>
-        </TitleData>
-        <RateChange>
-          <Triangle />
-          <p>18%</p>
-        </RateChange>
-      </Section>
-      <Section>
-        <TitleData>
-          <h3>클릭수</h3>
-          <p>{sumData('click').toLocaleString('ko-KR')}회</p>
-        </TitleData>
-        <RateChange>
-          <Triangle />
-          <p>18%</p>
-        </RateChange>
-      </Section>
-      <Section>
-        <TitleData>
-          <h3>전환수</h3>
-          <p>{sumData('conv').toLocaleString('ko-KR')}회</p>
-        </TitleData>
-        <RateChange>
-          <Triangle />
-          <p>18%</p>
-        </RateChange>
-      </Section>
-      <Section>
-        <TitleData>
-          <h3>매출</h3>
-          <p>{sumData('convValue').toLocaleString('ko-KR')}원</p>
-        </TitleData>
-        <RateChange>
-          <Triangle />
-          <p>18%</p>
-        </RateChange>
-      </Section>
-    </TableContainer>
+interface DataTableProps {
+  currentData: ReportData[] | undefined;
+  previousData: ReportData[] | undefined;
+}
+
+export default function DataTable({
+  currentData,
+  previousData,
+}: DataTableProps) {
+  const { sumData, averageData, diffData } = useTotalData(
+    currentData,
+    previousData,
   );
+
+  const returnUnits = (header: string) => {
+    switch (header) {
+      case 'ROAS':
+        return '%';
+      case '광고비' || '매출':
+        return '원';
+      default:
+        return '회';
+    }
+  };
+
+  const dataSection = HEADERS_ARRAY.map((header: string, index: number) => {
+    const displayingValue =
+      header === 'ROAS'
+        ? Math.round(averageData(DATA_KEYS[index]))
+        : sumData(DATA_KEYS[index]).toLocaleString('ko-KR');
+    const diffValue = diffData(DATA_KEYS[index]);
+    const diffValueUnit = header === 'ROAS' ? '%p' : '%';
+
+    return (
+      <Section key={`${header}_${index}`}>
+        <TitleData>
+          <h3>{header}</h3>
+          <p>
+            {displayingValue}
+            {returnUnits(header)}
+          </p>
+        </TitleData>
+        <RateChange $resultValue={diffValue}>
+          <Triangle $resultValue={diffValue} />
+          <p>{diffValue ? `${diffValue}${diffValueUnit}` : '-'}</p>
+        </RateChange>
+      </Section>
+    );
+  });
+
+  return <TableContainer>{dataSection}</TableContainer>;
 }
 
 const TableContainer = styled.div`
@@ -113,10 +100,24 @@ const TitleData = styled.div`
   }
 `;
 
-const RateChange = styled.div`
+const RateChange = styled.div<{ $resultValue: number | undefined }>`
   margin-right: 30px;
   display: flex;
+  color: ${({ $resultValue, theme }) =>
+    // eslint-disable-next-line no-nested-ternary
+    $resultValue
+      ? $resultValue > 0
+        ? theme.colors.redColor
+        : theme.colors.blueColor
+      : theme.colors.lightGrayColor};
   ${({ theme }) => theme.media.small} {
     margin-right: 3px;
   }
+`;
+
+const Triangle = styled(IoTriangle)<{ $resultValue: number | undefined }>`
+  margin-right: 3px;
+  transform: ${({ $resultValue }) =>
+    $resultValue && $resultValue < 0 ? 'rotate(180deg)' : 'rotate(0)'};
+  visibility: ${({ $resultValue }) => ($resultValue ? 'visible' : 'hidden')};
 `;

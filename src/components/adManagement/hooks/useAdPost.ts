@@ -6,16 +6,16 @@ const useAdPost = (setDetectData: () => void) => {
   const [form, setForms] = useState(ADD_DATA);
 
   const onChangeForm = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-      const { name, value } = e.target;
+    (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+      const { name, value } = event.target;
       setForms({ ...form, [name]: value });
     },
     [form],
   );
 
   const onChangeReportForm = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-      const { name, value } = e.target;
+    (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+      const { name, value } = event.target;
       setForms((prev) => ({
         ...prev,
         report: {
@@ -32,7 +32,7 @@ const useAdPost = (setDetectData: () => void) => {
   );
 
   const onPostForm = async () => {
-    const response = await postAddAPI(form);
+    await postAddAPI(form);
     setDetectData();
   };
 

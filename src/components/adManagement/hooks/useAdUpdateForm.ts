@@ -6,16 +6,16 @@ const useAdUpdateForm = (initialData: AdsData) => {
   const [form, setForms] = useState(initialData);
 
   const onChangeForm = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-      const { name, value } = e.target;
+    (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+      const { name, value } = event.target;
       setForms({ ...form, [name]: value });
     },
     [form],
   );
 
   const onChangeReportForm = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-      const { name, value } = e.target;
+    (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+      const { name, value } = event.target;
       setForms((prev) => ({
         ...prev,
         report: {
